@@ -7,9 +7,10 @@ import kotlinx.coroutines.launch
 
 class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel() {
     val allBaseDatas: LiveData<List<BaseDataModel>> = repository.allBaseDatas.asLiveData()
+   var insertId: Long = 0
 
     fun insert(baseData: BaseDataModel) = viewModelScope.launch {
-        repository.insert(baseData)
+        insertId = repository.insert(baseData)
     }
 }
 

@@ -10,7 +10,14 @@ class AmbangLebarPengontrolSegiempatRepository(private val alpsDao: AmbangLebarP
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
-    suspend fun insert(alpsModel: AmbangLebarPengontrolSegiempatModel) {
-        alpsDao.insert(alpsModel)
+    suspend fun insert(alpsModel: AmbangLebarPengontrolSegiempatModel): Long {
+        return alpsDao.insert(alpsModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(idAlps: Int, data: FloatArray) {
+        alpsDao.update(idAlps, data[0].toInt(), data[1].toInt(), data[2].toInt(), data[3].toInt(),
+            data[4].toInt(), data[5].toInt(), data[6].toInt())
     }
 }

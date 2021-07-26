@@ -1,13 +1,12 @@
 package id.ias.calculationwaterdebit.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
-import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.database.model.BaseDataModel
-import id.ias.calculationwaterdebit.database.repository.BaseDataRepository
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDataInformasiBinding
@@ -70,6 +69,9 @@ class DataInformasiActivity : AppCompatActivity() {
             mBinding.etNoPengukuran.text.toString(),
             mBinding.etNamaPengukur.text.toString()
         )
-        baseDataViewModel.insert(baseData)
+        val intent = Intent(this@DataInformasiActivity, TipeBangunanUkurActivity::class.java)
+        intent.putExtra("id_base_data", baseDataViewModel.insertId)
+        startActivity(intent)
+        finish()
     }
 }

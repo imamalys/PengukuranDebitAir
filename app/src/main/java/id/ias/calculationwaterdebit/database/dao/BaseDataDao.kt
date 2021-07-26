@@ -16,5 +16,5 @@ interface BaseDataDao {
     fun getBaseDataById(id: Int): Flow<BaseDataModel>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(baseDataModel: BaseDataModel)
+    suspend fun insert(baseDataModel: BaseDataModel): Long
 }

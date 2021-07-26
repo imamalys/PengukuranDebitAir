@@ -10,14 +10,14 @@ data class BaseDataModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
     @ColumnInfo(name = "nama_daerah_irigasi")
-    val namaDaerahIrigasi: String,
+    var namaDaerahIrigasi: String,
     @ColumnInfo(name = "wilayah_kewenangan")
-    val wilayahKewenangan: String,
-    val provinsi: String,
-    val kabupaten: String,
-    val tanggal: String,
+    var wilayahKewenangan: String,
+    var provinsi: String,
+    var kabupaten: String,
+    var tanggal: String,
     @ColumnInfo(name = "no_pengukuran")
-    val noPengukuran: String,
+    var noPengukuran: String,
     @ColumnInfo(name = "nama_pengukur")
-    val namaPengukur: String
+    var namaPengukur: String
     )

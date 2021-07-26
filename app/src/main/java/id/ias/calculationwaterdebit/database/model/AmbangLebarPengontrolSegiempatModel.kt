@@ -7,21 +7,23 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "alps")
 data class AmbangLebarPengontrolSegiempatModel (
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    val id: Int?,
     @ColumnInfo(name = "id_base_data")
     var idBaseData: Int,
+    @ColumnInfo(name = "id_pengambilan_data")
+    var idPengambilanData: Int?,
     @ColumnInfo(name = "lebar_ambang")
-    var lebarAmbang: Int,
+    var lebarAmbang: Float,
     @ColumnInfo(name = "lebar_dasar")
-    var lebarDasar: Int,
+    var lebarDasar: Float,
     @ColumnInfo(name = "panjang_ambang")
-    var panjangAmbang: Int,
+    var panjangAmbang: Float,
     @ColumnInfo(name = "tinggi_ambang")
-    var tinggiAmbang: Int,
+    var tinggiAmbang: Float,
     @ColumnInfo(name = "tinggi_di_atas_ambang")
-    var tinggiDiatasAmbang: Int,
+    var tinggiDiatasAmbang: Float,
     @ColumnInfo(name = "tinggi_di_bawah_ambang")
-    var tinggiDibawahAmbang: Int,
+    var tinggiDibawahAmbang: Float,
     @ColumnInfo(name = "lebar_atas")
-    var lebarAtas: Int,
+    var lebarAtas: Float,
     )

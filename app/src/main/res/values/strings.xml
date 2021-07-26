@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">CalculationWaterDebit</string>
+    <string-array name="bangunan_ukur">
+        <item>Ambang Lebar Pengontrol Segiempat</item>
+        <item>Ambang Lebar Pengontrol Trapesium</item>
+        <item>Ambang Tajam Segiempat</item>
+        <item>Ambang Tajam Segitiga</item>
+        <item>Cipoletti</item>
+        <item>Parshall Flume</item>
+        <item>Long Throated Flume</item>
+        <item>Cut Throated Flume</item>
+        <item>Orifice</item>
+        <item>Romijn</item>
+        <item>Crump- De Gyuter</item>
+    </string-array>
 </resources>
