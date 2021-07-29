@@ -85,7 +85,6 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 tipeBangunanUkurViewModel.tipeBangunan.value = list[position]
             }
         }
-
     }
 
     private fun setViewModel() {

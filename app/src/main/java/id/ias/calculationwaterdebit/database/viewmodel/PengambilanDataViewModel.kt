@@ -7,9 +7,10 @@ import kotlinx.coroutines.launch
 
 class PengambilanDataViewModel(private val repository: PengambilanDataRepository): ViewModel() {
     val allPengambilanDatas: LiveData<List<PengambilanDataModel>> = repository.allPengambilanDatas.asLiveData()
+    var idPengambilanData: Long = 0
 
     fun insert(pengambilanData: PengambilanDataModel) = viewModelScope.launch {
-        repository.insert(pengambilanData)
+        idPengambilanData = repository.insert(pengambilanData)
     }
 }
 

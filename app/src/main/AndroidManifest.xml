@@ -11,33 +11,36 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".ui.FormDataActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
             android:name=".ui.PengambilanDataActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
-
         </activity>
         <activity
             android:name=".ui.DetailBangunanActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".ui.TipeBangunanUkurActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.DataInformasiActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".ui.MainMenuActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.MainMenuActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

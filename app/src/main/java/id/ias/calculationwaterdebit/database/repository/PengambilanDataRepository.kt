@@ -10,7 +10,7 @@ class PengambilanDataRepository(private val pengambilanDataDao: PengambilanDataD
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
-    suspend fun insert(pengambilanDataModel: PengambilanDataModel) {
-        pengambilanDataDao.insert(pengambilanDataModel)
+    suspend fun insert(pengambilanDataModel: PengambilanDataModel): Long {
+        return pengambilanDataDao.insert(pengambilanDataModel)
     }
 }

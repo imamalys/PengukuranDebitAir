@@ -13,4 +13,11 @@
         <item>Romijn</item>
         <item>Crump- De Gyuter</item>
     </string-array>
+    <string-array name="metode_pengambilan_3">
+        <item>Dua Titik</item>
+        <item>Tiga Titik</item>
+    </string-array>
+    <string-array name="metode_pengambilan_1">
+        <item>Satu Titik</item>
+    </string-array>
 </resources>

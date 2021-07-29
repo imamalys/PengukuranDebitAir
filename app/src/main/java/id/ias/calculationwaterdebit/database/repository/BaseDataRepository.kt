@@ -12,6 +12,5 @@ class BaseDataRepository(private val baseDataDao: BaseDataDao) {
     @WorkerThread
     suspend fun insert(baseDataModel: BaseDataModel): Long {
         return baseDataDao.insert(baseDataModel)
-
     }
 }

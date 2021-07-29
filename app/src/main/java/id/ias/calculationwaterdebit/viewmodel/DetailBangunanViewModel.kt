@@ -53,7 +53,7 @@ class DetailBangunanViewModel: ViewModel() {
 
     fun checkHaveValue(): Boolean {
         for (detail in detailBangunanValue.value!!) {
-            if (detail.toString() == "0") {
+            if (detail.toInt().toString() == "0" || detail.toString() == "") {
                 return false
             }
         }
@@ -76,7 +76,7 @@ class DetailBangunanViewModel: ViewModel() {
             }
         }
 
-        detailBangunanValue.postValue(FloatArray(detailBangunans.size))
+        detailBangunanValue.postValue(FloatArray(detailBangunans.size - 1))
 
         return detailBangunans
     }

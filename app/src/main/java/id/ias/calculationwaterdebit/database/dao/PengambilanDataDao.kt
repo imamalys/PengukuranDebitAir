@@ -16,5 +16,5 @@ interface PengambilanDataDao {
     fun getPengambilanDataById(id: Int): Flow<PengambilanDataModel>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(pengambilanDataModel: PengambilanDataModel)
+    suspend fun insert(pengambilanDataModel: PengambilanDataModel): Long
 }

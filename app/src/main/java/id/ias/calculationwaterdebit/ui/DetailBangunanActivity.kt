@@ -1,5 +1,6 @@
 package id.ias.calculationwaterdebit.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,11 @@ class DetailBangunanActivity : AppCompatActivity() {
         mBinding.btnNext.setOnClickListener {
             if (detailBangunanViewModel.checkHaveValue()) {
                 alpsViewModel.update(idTipeBangunan.toInt(), detailBangunanViewModel.detailBangunanValue.value!!)
+                val intent = Intent(this@DetailBangunanActivity, PengambilanDataActivity::class.java)
+                intent.putExtra("id_tipe_bangunan", idTipeBangunan)
+                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+                startActivity(intent)
+                finish()
             } else {
                 ToastUtils.showLong("Data masih ada yang kosong, silahkan diisi terlebih dahulu")
             }
@@ -62,9 +68,9 @@ class DetailBangunanActivity : AppCompatActivity() {
                 object: DetailBangunanAdapter.Listener {
                     override fun onChanged(value: String, position: Int) {
                         if (value != "") {
-                            detailBangunanViewModel.detailBangunanValue.value!![position] = value.toFloat()
+                            detailBangunanViewModel.detailBangunanValue.value!![position - 1] = value.toFloat()
                         } else {
-                            detailBangunanViewModel.detailBangunanValue.value!![position] = "0".toFloat()
+                            detailBangunanViewModel.detailBangunanValue.value!![position - 1] = "0".toFloat()
                         }
                     }
                 }

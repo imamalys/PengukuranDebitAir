@@ -20,4 +20,10 @@ class AmbangLebarPengontrolSegiempatRepository(private val alpsDao: AmbangLebarP
         alpsDao.update(idAlps, data[0].toInt(), data[1].toInt(), data[2].toInt(), data[3].toInt(),
             data[4].toInt(), data[5].toInt(), data[6].toInt())
     }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun updateIdPengambilanData(idAlps: Int, id: Int) {
+        alpsDao.updateIdPengambilanData(idAlps, id)
+    }
 }
