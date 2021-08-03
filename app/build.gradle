@@ -11,10 +11,11 @@ android {
 
     defaultConfig {
         applicationId "id.ias.calculationwaterdebit"
-        minSdkVersion 21
+        minSdkVersion 22
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -77,6 +78,6 @@ dependencies {
     })
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
     implementation 'com.blankj:utilcodex:1.30.4'
-    implementation 'com.evrencoskun.library:tableview:0.8.9.4'
-
+    implementation "androidx.multidex:multidex:$rootProject.multidex_version"
+    implementation 'com.github.levitnudi:LegacyTableView:1.4'
 }

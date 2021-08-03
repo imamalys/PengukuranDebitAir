@@ -5,13 +5,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import id.ias.calculationwaterdebit.database.model.FormDataModel
+import id.ias.calculationwaterdebit.database.model.PiasModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FormDataDao {
-    @Query("SELECT * FROM form_data WHERE id_pengambilan_data = :id")
-    fun getFormDataByPengambilanData(id: Int): Flow<List<FormDataModel>>
+interface PiasDao {
+    @Query("SELECT * FROM pias WHERE id_form_data = :id")
+    fun getPiasByFormData(id: Int): Flow<List<PiasModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(formDataModel: FormDataModel): Long
+    suspend fun insert(piasModel: PiasModel): Long
 }

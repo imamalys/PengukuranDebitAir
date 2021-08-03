@@ -46,6 +46,7 @@ class PengambilanDataActivity : AppCompatActivity() {
         }
 
         setAction()
+        setViewModel()
     }
 
     private fun setAction() {
@@ -58,15 +59,6 @@ class PengambilanDataActivity : AppCompatActivity() {
                         pengambilanDataActivityViewModel.pengambilValue.value!![2]
                 )
                 pengambilanDataViewModel.insert(pengambilanData)
-                alpsViewModel.updateIdPengambilanData(idTipeBangunan.toInt(), pengambilanDataViewModel.idPengambilanData.toInt())
-                val intent = Intent(this@PengambilanDataActivity, FormDataActivity::class.java)
-                intent.putExtra("id_tipe_bangunan", idTipeBangunan)
-                intent.putExtra("tipe_bangunan", pengambilanDataActivityViewModel.detailBangunan.value)
-                intent.putExtra("id_pengambilan_data", pengambilanDataViewModel.idPengambilanData.toInt())
-                intent.putExtra("jumlah_pias", mBinding.etJumlahPias.text.toString())
-                intent.putExtra("variasi_Ketinggian_air", pengambilanDataActivityViewModel.pengambilValue.value!![2].toInt())
-                startActivity(intent)
-                finish()
             } else {
                 ToastUtils.showLong("Data masih ada yang kosong, silahkan diisi terlebih dahulu")
             }
@@ -78,7 +70,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString() != "") {
+                if (s.toString() != "" && s.toString() != ".") {
                     pengambilanDataActivityViewModel.pengambilValue.value!![0] = s.toString().toFloat()
                     if (mBinding.etJmlhSaluranBasah.text.toString() != "") {
                         mBinding.etRangeAntarPias.setText((s.toString().toFloat() / mBinding.etJmlhSaluranBasah.text.toString().toFloat()).toString())
@@ -101,7 +93,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString() != "") {
+                if (s.toString() != "" && s.toString() != ".") {
                     pengambilanDataActivityViewModel.pengambilValue.value!![1] = s.toString().toFloat()
                     mBinding.etJumlahPias.setText((s.toString().toInt() - 1).toString())
                     if (mBinding.etLebarSaluran.text.toString() != "") {
@@ -128,7 +120,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString() != "") {
+                if (s.toString() != "" && s.toString() != ".") {
                     pengambilanDataActivityViewModel.pengambilValue.value!![2] = s.toString().toFloat()
                 } else {
                     pengambilanDataActivityViewModel.pengambilValue.value!![2] = "0".toFloat()
@@ -137,6 +129,22 @@ class PengambilanDataActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
 
+            }
+        })
+    }
+
+    private fun setViewModel() {
+        pengambilanDataViewModel.idPengambilanData.observe(this, {
+            if (it.toInt() != 0) {
+                alpsViewModel.updateIdPengambilanData(idTipeBangunan.toInt(), it.toInt())
+                val intent = Intent(this@PengambilanDataActivity, FormDataActivity::class.java)
+                intent.putExtra("id_tipe_bangunan", idTipeBangunan)
+                intent.putExtra("tipe_bangunan", pengambilanDataActivityViewModel.detailBangunan.value)
+                intent.putExtra("id_pengambilan_data", it.toInt())
+                intent.putExtra("jumlah_pias", mBinding.etJumlahPias.text.toString().toInt())
+                intent.putExtra("variasi_Ketinggian_air", pengambilanDataActivityViewModel.pengambilValue.value!![2].toInt())
+                startActivity(intent)
+                finish()
             }
         })
     }

@@ -1,15 +1,12 @@
 package id.ias.calculationwaterdebit
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import id.ias.calculationwaterdebit.database.BaseRoomDatabase
-import id.ias.calculationwaterdebit.database.repository.AmbangLebarPengontrolSegiempatRepository
-import id.ias.calculationwaterdebit.database.repository.BaseDataRepository
-import id.ias.calculationwaterdebit.database.repository.FormDataRepository
-import id.ias.calculationwaterdebit.database.repository.PengambilanDataRepository
+import id.ias.calculationwaterdebit.database.repository.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
-class Application: Application() {
+class Application: MultiDexApplication() {
     // No need to cancel this scope as it'll be torn down with the process
     val applicationScope = CoroutineScope(SupervisorJob())
 
@@ -19,4 +16,6 @@ class Application: Application() {
     val baseDataRepository by lazy { BaseDataRepository(database.baseDataDao()) }
     val alpsRepository by lazy { AmbangLebarPengontrolSegiempatRepository(database.alpsDao()) }
     val pengambilanDataRepository by lazy { PengambilanDataRepository(database.pengambilanDataDao()) }
+    val piasRepository by lazy { PiasDataRepository(database.piasDao()) }
+    val formDataRepository by lazy { FormDataRepository(database.formDataDao()) }
 }
