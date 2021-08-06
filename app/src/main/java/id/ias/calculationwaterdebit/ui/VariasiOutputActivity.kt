@@ -1,6 +1,8 @@
 package id.ias.calculationwaterdebit.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.levitnudi.legacytableview.LegacyTableView
@@ -46,15 +48,56 @@ class VariasiOutputActivity : AppCompatActivity() {
         }
 
         setViewModel()
+        setAction()
+    }
+
+    private fun setAction() {
+        mBinding.btnNext.setOnClickListener {
+            if (currentFormData < variasiOutputViewModel.formDatas.size) {
+                currentFormData += 1
+            }
+            setViewModel()
+        }
+
+        mBinding.btnPrevious.setOnClickListener {
+            if (currentFormData != 0) {
+                currentFormData -= 1
+                setViewModel()
+            }
+        }
+
+        mBinding.btnNextCalc.setOnClickListener {
+
+            when(variasiOutputViewModel.detailBangunan) {
+                "Ambang Lebar Pengontrol Segiempat" -> {
+                    val alps = Intent(this@VariasiOutputActivity, AmbangLebarPengontrolSegiempatActivity::class.java)
+                    alps.putExtra("id_tipe_bangunan", idTipeBangunan)
+                    alps.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                    alps.putExtra("id_pengambilan_data", variasiOutputViewModel.idPengambilanData)
+                    startActivity(alps)
+                    finish()
+                }
+            }
+        }
     }
 
     private fun setOutput(piasDatas: List<PiasModel>) {
         //set table title labels
+        if (currentFormData + 1 == variasiOutputViewModel.formDatas.size) {
+            mBinding.btnNext.visibility = View.GONE
+            mBinding.btnPrevious.visibility = View.GONE
+            mBinding.btnNextCalc.visibility = View.VISIBLE
+        } else {
+            mBinding.btnNext.visibility = View.VISIBLE
+            mBinding.btnPrevious.visibility = View.VISIBLE
+            mBinding.btnNextCalc.visibility = View.GONE
+        }
+
         LegacyTableView.insertLegacyTitle("Jarak", "H2", "Saluran Basah ke-",
             "Metode Pengambilan", "0,8D", "0,6D", "0,2D", "Rai (m/s)", "Rata-rata (m/s",
             "Luas Basah (m2)", "Debit (m3)")
 
-        LegacyTableView.insertLegacyContent("0", "0", "Tepi", "-", "-", "-", "0", "0", "0")
+        LegacyTableView.insertLegacyContent("0", "0", "Tepi", " ", "-", "-", "-", "0", "0", "0", "0")
         val jarak = variasiOutputViewModel.pengambilanDataById.lebarSaluranPengukuran / variasiOutputViewModel.pengambilanDataById.jumlahSaluranBasah
 
         mBinding.etH1.setText(String.format("%.3f", variasiOutputViewModel.formDatas[currentFormData].h1))
@@ -98,8 +141,7 @@ class VariasiOutputActivity : AppCompatActivity() {
             }
             val debit = luasBasah * rataRata
             LegacyTableView.insertLegacyContent(String.format("%.3f", jarak), String.format("%.3f", piasDatas[i].h2),
-                String.format("%.3f"), (i + 1).toString(),
-                piasDatas[i].metodePengmbilan, String.format("%.3f", piasDatas[i].d8),
+                (i + 1).toString(), piasDatas[i].metodePengmbilan, String.format("%.3f", piasDatas[i].d8),
                 String.format("%.3f", piasDatas[i].d6), String.format("%.3f", piasDatas[i].d2),
                 String.format("%.3f", currentRai),  String.format("%.3f", rataRata),
                 String.format("%.3f", luasBasah), String.format("%.3f", debit))
@@ -121,28 +163,24 @@ class VariasiOutputActivity : AppCompatActivity() {
         mBinding.legacyTableView.setTablePadding(7);
 
         //to enable users to zoom in and out:
-        mBinding.legacyTableView.setZoomEnabled(true);
-        mBinding.legacyTableView.setShowZoomControls(true);
+        mBinding.legacyTableView.setZoomEnabled(true)
+        mBinding.legacyTableView.setShowZoomControls(true)
 
         //remember to build your table as the last step
         mBinding.legacyTableView.build()
     }
 
     private fun setViewModel() {
-        pengambilanDataViewModel.getPengambilanDataById(variasiOutputViewModel.idPengambilanData)
-
-        pengambilanDataViewModel.pengambilanDataById.observe(this, {
+        pengambilanDataViewModel.getPengambilanDataById(variasiOutputViewModel.idPengambilanData).observe(this, {
             variasiOutputViewModel.pengambilanDataById = it
-            formDataViewModel.getformDatas(variasiOutputViewModel.idPengambilanData)
-        })
+            formDataViewModel.getformDatas(variasiOutputViewModel.idPengambilanData).observe(this, { formData ->
+                if (formData.isNotEmpty()) {
+                    variasiOutputViewModel.formDatas = formData
 
-        formDataViewModel.formDatas.observe(this, { formData ->
-            if (formData.isNotEmpty()) {
-                variasiOutputViewModel.formDatas = formData
-            }
-
-            piasDataViewModel.getPiasDatas(variasiOutputViewModel.formDatas[currentFormData].id!!).observe(this, { piasData ->
-                setOutput(piasData)
+                    piasDataViewModel.getPiasDatas(formData[currentFormData].id!!).observe(this, { piasData ->
+                        setOutput(piasData)
+                    })
+                }
             })
         })
     }

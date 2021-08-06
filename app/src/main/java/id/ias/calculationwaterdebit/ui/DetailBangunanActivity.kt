@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.adapter.DetailBangunanAdapter
+import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
@@ -24,6 +25,7 @@ class DetailBangunanActivity : AppCompatActivity() {
         AmbangLebarPengontrolSegiempatViewModelFactory((application as Application).alpsRepository)
     }
     var idTipeBangunan: Long = 0
+    var idBaseData: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +34,9 @@ class DetailBangunanActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         intent.let {
-            if (it.hasExtra("tipe_bangunan") && it.hasExtra("id_tipe_bangunan")) {
+            if (it.hasExtra("tipe_bangunan")) {
                 detailBangunanViewModel.detailBangunan.value = it.getStringExtra("tipe_bangunan")!!
-                idTipeBangunan = it.getLongExtra("id_tipe_bangunan", 0)
+                idBaseData = it.getLongExtra("id_base_data", 0)
             }
         }
 
@@ -45,12 +47,22 @@ class DetailBangunanActivity : AppCompatActivity() {
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
             if (detailBangunanViewModel.checkHaveValue()) {
-                alpsViewModel.update(idTipeBangunan.toInt(), detailBangunanViewModel.detailBangunanValue.value!!)
-                val intent = Intent(this@DetailBangunanActivity, PengambilanDataActivity::class.java)
-                intent.putExtra("id_tipe_bangunan", idTipeBangunan)
-                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
-                startActivity(intent)
-                finish()
+                when (detailBangunanViewModel.detailBangunan.value!!) {
+                    "Ambang Lebar Pengontrol Segiempat" -> {
+                        val alpsData = AmbangLebarPengontrolSegiempatModel(
+                                null,
+                                idBaseData.toInt(),
+                                null,
+                                detailBangunanViewModel.detailBangunanValue.value!![0],
+                                detailBangunanViewModel.detailBangunanValue.value!![1],
+                                detailBangunanViewModel.detailBangunanValue.value!![2],
+                                detailBangunanViewModel.detailBangunanValue.value!![3],
+                                detailBangunanViewModel.detailBangunanValue.value!![4],
+                                detailBangunanViewModel.detailBangunanValue.value!![5],
+                                detailBangunanViewModel.detailBangunanValue.value!![6])
+                        alpsViewModel.insert(alpsData)
+                    }
+                }
             } else {
                 ToastUtils.showLong("Data masih ada yang kosong, silahkan diisi terlebih dahulu")
             }
@@ -77,5 +89,15 @@ class DetailBangunanActivity : AppCompatActivity() {
             )
             mBinding.rvDetailBangunan.adapter = adapter
         }
+
+        alpsViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                val intent = Intent(this@DetailBangunanActivity, PengambilanDataActivity::class.java)
+                intent.putExtra("id_tipe_bangunan", it)
+                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 }

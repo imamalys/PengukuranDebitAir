@@ -2,6 +2,8 @@ package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -21,6 +23,10 @@ import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityFormDataBinding
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModelFactory
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 class FormDataActivity : AppCompatActivity() {
 
@@ -380,39 +386,38 @@ class FormDataActivity : AppCompatActivity() {
 
     private fun setViewModel() {
         piasViewModel.insertId.observe(this, {
-            piasViewModel.getPiasDatas(formDataActivityViewModel.idFormData)
+            piasViewModel.getPiasDataById(formDataActivityViewModel.idFormData)
         })
 
-        formDataViewModel.formDatas.observe(this, {
-            if (it.isNotEmpty()) {
-                formDataActivityViewModel.currentFormDataSize = it.size
+        piasViewModel.piasDatas.observe(this, { piasData ->
+            if (piasData.isNotEmpty()) {
+                formDataActivityViewModel.currentPiasSize = piasData.size
+                clearView(piasData)
             }
         })
 
-        formDataViewModel.idFormData.observe(this, {
-            if (it.toInt() != 0) {
-                formDataViewModel.getformDatas(formDataActivityViewModel.idPengambilanData)
-                formDataActivityViewModel.idFormData = it.toInt()
-                val piasModel = PiasModel(
-                        null,
-                        formDataActivityViewModel.idFormData,
-                        formDataActivityViewModel.h2.toFloat(),
-                        formDataActivityViewModel.kecepatanAirValues.value!![0],
-                        mBinding.d8.text.toString().toFloat(),
-                        formDataActivityViewModel.kecepatanAirValues.value!![1],
-                        mBinding.d6.text.toString().toFloat(),
-                        formDataActivityViewModel.kecepatanAirValues.value!![2],
-                        mBinding.d2.text.toString().toFloat(),
-                        formDataActivityViewModel.metodePengambilan.value!!
-                )
-                piasViewModel.insert(piasModel)
-
-                piasViewModel.getPiasDatas(it.toInt()).observe(this, { piasData ->
-                    if (piasData.isNotEmpty()) {
-                        formDataActivityViewModel.currentPiasSize = piasData.size
-                        clearView(piasData)
+        formDataViewModel.idFormData.observe(this, { id ->
+            if (id.toInt() != 0) {
+                formDataViewModel.getformDatas(formDataActivityViewModel.idPengambilanData).observe(this, { formData ->
+                    if (formData.isNotEmpty()) {
+                        formDataActivityViewModel.currentFormDataSize = formData.size
                     }
                 })
+                formDataActivityViewModel.idFormData = id.toInt()
+
+                val piasModel = PiasModel(
+                    null,
+                    id.toInt(),
+                    formDataActivityViewModel.h2.toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![0],
+                    mBinding.d8.text.toString().toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![1],
+                    mBinding.d6.text.toString().toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![2],
+                    mBinding.d2.text.toString().toFloat(),
+                    formDataActivityViewModel.metodePengambilan.value!!
+                )
+                piasViewModel.insert(piasModel)
             }
         })
     }

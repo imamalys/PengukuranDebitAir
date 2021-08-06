@@ -1,12 +1,21 @@
 package id.ias.calculationwaterdebit
 
-import androidx.multidex.MultiDexApplication
+import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDex
 import id.ias.calculationwaterdebit.database.BaseRoomDatabase
 import id.ias.calculationwaterdebit.database.repository.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
-class Application: MultiDexApplication() {
+
+class Application: Application() {
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     // No need to cancel this scope as it'll be torn down with the process
     val applicationScope = CoroutineScope(SupervisorJob())
 

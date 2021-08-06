@@ -2,15 +2,21 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
+import id.ias.calculationwaterdebit.database.model.FormDataModel
 import id.ias.calculationwaterdebit.database.repository.AmbangLebarPengontrolSegiempatRepository
 import kotlinx.coroutines.launch
 
 class AmbangLebarPengontrolSegiempatViewModel(private val repository: AmbangLebarPengontrolSegiempatRepository): ViewModel() {
     val allAlpsDatas: LiveData<List<AmbangLebarPengontrolSegiempatModel>> = repository.allAlpsDatas.asLiveData()
-    var idTipeBangunan: Long = 0
+    var idTipeBangunan: MutableLiveData<Long> = MutableLiveData(0)
+    val alpsById: MutableLiveData<AmbangLebarPengontrolSegiempatModel> = MutableLiveData()
+
+    fun getalpsDataById(id: Int) = viewModelScope.launch {
+        alpsById.value = repository.getAlpsDataById(id)
+    }
 
     fun insert(alpsData: AmbangLebarPengontrolSegiempatModel) = viewModelScope.launch {
-        idTipeBangunan = repository.insert(alpsData)
+        idTipeBangunan.value = repository.insert(alpsData)
     }
 
     fun update(idAlps: Int, data: FloatArray) = viewModelScope.launch {

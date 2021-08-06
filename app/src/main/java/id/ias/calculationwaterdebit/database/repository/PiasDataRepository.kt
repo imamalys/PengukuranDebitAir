@@ -11,6 +11,10 @@ class PiasDataRepository(private val piasDataDao: PiasDao) {
         return piasDataDao.getPiasByFormData(id)
     }
 
+    suspend fun piasByid(id: Int): List<PiasModel> {
+        return piasDataDao.getPiasById(id)
+    }
+
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
     suspend fun insert(piasModel: PiasModel): Long {

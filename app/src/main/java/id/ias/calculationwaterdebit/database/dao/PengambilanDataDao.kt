@@ -13,7 +13,7 @@ interface PengambilanDataDao {
     fun getPengambilanDatas(): Flow<List<PengambilanDataModel>>
 
     @Query("SELECT * FROM pengambilan_data WHERE id = :id")
-    suspend fun getPengambilanDataById(id: Int): PengambilanDataModel
+    fun getPengambilanDataById(id: Int): Flow<PengambilanDataModel>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(pengambilanDataModel: PengambilanDataModel): Long

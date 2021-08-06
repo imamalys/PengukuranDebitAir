@@ -13,6 +13,9 @@ interface PiasDao {
     @Query("SELECT * FROM pias WHERE id_form_data = :id")
     fun getPiasByFormData(id: Int): Flow<List<PiasModel>>
 
+    @Query("SELECT * FROM pias WHERE id_form_data = :id")
+    suspend fun getPiasById(id: Int): List<PiasModel>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(piasModel: PiasModel): Long
 }

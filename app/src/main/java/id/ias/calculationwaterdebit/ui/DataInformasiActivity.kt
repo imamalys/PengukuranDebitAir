@@ -25,6 +25,7 @@ class DataInformasiActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         setAction()
+        setViewModel()
     }
 
     private fun setAction() {
@@ -69,9 +70,17 @@ class DataInformasiActivity : AppCompatActivity() {
             mBinding.etNoPengukuran.text.toString(),
             mBinding.etNamaPengukur.text.toString()
         )
-        val intent = Intent(this@DataInformasiActivity, TipeBangunanUkurActivity::class.java)
-        intent.putExtra("id_base_data", baseDataViewModel.insertId)
-        startActivity(intent)
-        finish()
+        baseDataViewModel.insert(baseData)
+    }
+
+    private fun setViewModel() {
+        baseDataViewModel.insertId.observe(this, {
+            if (it.toInt() != 0) {
+                val intent = Intent(this@DataInformasiActivity, TipeBangunanUkurActivity::class.java)
+                intent.putExtra("id_base_data", it)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 }

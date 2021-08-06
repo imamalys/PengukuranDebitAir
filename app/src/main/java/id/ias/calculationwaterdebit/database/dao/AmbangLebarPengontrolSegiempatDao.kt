@@ -13,7 +13,7 @@ interface AmbangLebarPengontrolSegiempatDao {
     fun getAllalps(): Flow<List<AmbangLebarPengontrolSegiempatModel>>
 
     @Query("SELECT * FROM alps WHERE id = :id")
-    fun getAlpsById(id: Int): Flow<AmbangLebarPengontrolSegiempatModel>
+    suspend fun getAlpsById(id: Int): AmbangLebarPengontrolSegiempatModel
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(alpsModel: AmbangLebarPengontrolSegiempatModel): Long

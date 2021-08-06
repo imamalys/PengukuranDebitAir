@@ -10,9 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.VariasiOutputActivity">
-
-        </activity>
+        <activity android:name=".ui.AmbangLebarPengontrolSegiempatActivity"></activity>
+        <activity android:name=".ui.VariasiOutputActivity"></activity>
         <activity
             android:name=".ui.FormDataActivity"
             android:screenOrientation="portrait"
@@ -20,7 +19,7 @@
         <activity
             android:name=".ui.PengambilanDataActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.DetailBangunanActivity"
             android:screenOrientation="portrait"

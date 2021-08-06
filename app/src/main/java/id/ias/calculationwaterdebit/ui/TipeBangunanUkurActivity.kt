@@ -47,20 +47,8 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
             val intent = Intent(this@TipeBangunanUkurActivity, DetailBangunanActivity::class.java)
-            when(tipeBangunanUkurViewModel.tipeBangunan.value!!) {
-                "Ambang Lebar Pengontrol Segiempat" -> {
-                    val alpsData = AmbangLebarPengontrolSegiempatModel(
-                        null,
-                        idBaseData.toInt(),
-                        null,
-                        "0".toFloat(), "0".toFloat(), "0".toFloat(), "0".toFloat(), "0".toFloat(),"0".toFloat(),
-                        "0".toFloat())
-                    alpsViewModel.insert(alpsData)
-                    intent.putExtra("tipe_bangunan", tipeBangunanUkurViewModel.tipeBangunan.value)
-                    intent.putExtra("id_tipe_bangunan", alpsViewModel.idTipeBangunan)
-                }
-            }
-
+            intent.putExtra("tipe_bangunan", tipeBangunanUkurViewModel.tipeBangunan.value)
+            intent.putExtra("id_base_data", idBaseData)
             startActivity(intent)
             finish()
         }

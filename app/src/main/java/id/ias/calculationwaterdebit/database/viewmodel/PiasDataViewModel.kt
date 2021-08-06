@@ -10,7 +10,10 @@ class PiasDataViewModel(private val repository: PiasDataRepository): ViewModel()
     val insertId: MutableLiveData<Long> = MutableLiveData(0)
 
     fun getPiasDatas(id: Int): LiveData<List<PiasModel>> = repository.piasByFormData(id).asLiveData()
-    
+
+    fun getPiasDataById(id: Int) = viewModelScope.launch {
+        piasDatas.value = repository.piasByid(id)
+    }
     fun insert(piasModel: PiasModel) = viewModelScope.launch {
         insertId.value = repository.insert(piasModel)
     }
