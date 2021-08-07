@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class PengambilanDataRepository(private val pengambilanDataDao: PengambilanDataDao) {
     val allPengambilanDatas: Flow<List<PengambilanDataModel>> = pengambilanDataDao.getPengambilanDatas()
 
-    fun getPengambilanDataById(id: Int): Flow<PengambilanDataModel> {
+    fun getPengambilanDataById(id: Int): Flow<List<PengambilanDataModel>> {
         return pengambilanDataDao.getPengambilanDataById(id)
     }
 
@@ -16,5 +16,11 @@ class PengambilanDataRepository(private val pengambilanDataDao: PengambilanDataD
     @WorkerThread
     suspend fun insert(pengambilanDataModel: PengambilanDataModel): Long {
         return pengambilanDataDao.insert(pengambilanDataModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(id: Int, jumlahRataRata: Float): Int {
+        return pengambilanDataDao.update(id, jumlahRataRata)
     }
 }

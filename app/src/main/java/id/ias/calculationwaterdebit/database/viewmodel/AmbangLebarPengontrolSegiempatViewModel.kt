@@ -2,7 +2,6 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
-import id.ias.calculationwaterdebit.database.model.FormDataModel
 import id.ias.calculationwaterdebit.database.repository.AmbangLebarPengontrolSegiempatRepository
 import kotlinx.coroutines.launch
 
@@ -21,10 +20,6 @@ class AmbangLebarPengontrolSegiempatViewModel(private val repository: AmbangLeba
 
     fun update(idAlps: Int, data: FloatArray) = viewModelScope.launch {
         repository.update(idAlps, data)
-    }
-
-    fun updateIdPengambilanData(idAlps: Int, id: Int) = viewModelScope.launch {
-        repository.updateIdPengambilanData(idAlps, id)
     }
 }
 

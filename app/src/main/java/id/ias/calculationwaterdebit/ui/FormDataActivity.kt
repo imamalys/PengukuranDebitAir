@@ -2,8 +2,6 @@ package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -14,19 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.R
-import id.ias.calculationwaterdebit.database.model.FormDataModel
 import id.ias.calculationwaterdebit.database.model.PiasModel
-import id.ias.calculationwaterdebit.database.viewmodel.FormDataViewModel
-import id.ias.calculationwaterdebit.database.viewmodel.FormDataViewModelFactory
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityFormDataBinding
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModelFactory
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
 
 class FormDataActivity : AppCompatActivity() {
 
@@ -34,15 +25,14 @@ class FormDataActivity : AppCompatActivity() {
     val formDataActivityViewModel: FormDataActivityViewModel by viewModels {
         FormDataActivityViewModelFactory()
     }
-    private val formDataViewModel: FormDataViewModel by viewModels {
-        FormDataViewModelFactory((application as Application).formDataRepository)
-    }
 
     private val piasViewModel: PiasDataViewModel by viewModels {
         PiasDataViewModelFactory((application as Application).piasRepository)
     }
 
     var idTipeBangunan: Long = 0
+    var isLast = false
+    var idBaseData: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,12 +45,20 @@ class FormDataActivity : AppCompatActivity() {
                 formDataActivityViewModel.detailBangunan = it.getStringExtra("tipe_bangunan")!!
                 idTipeBangunan = it.getLongExtra("id_tipe_bangunan", 0)
                 formDataActivityViewModel.idPengambilanData = it.getIntExtra("id_pengambilan_data", 0)
+                idBaseData = it.getLongExtra("id_base_data", 0)
                 formDataActivityViewModel.jumlahPias = it.getIntExtra("jumlah_pias", 0)
                 formDataActivityViewModel.variasiKetinggianAir = it.getIntExtra("variasi_Ketinggian_air", 0)
+                formDataActivityViewModel.h1 = it.getFloatExtra("h1", "0".toFloat()).toString()
+                formDataActivityViewModel.hb = it.getFloatExtra("hb", "0".toFloat()).toString()
+                isLast = it.getBooleanExtra("is_last", false)
             }
         }
 
+        mBinding.etH1.setText(formDataActivityViewModel.h1)
+        mBinding.etHb.setText(formDataActivityViewModel.hb)
+
         setAction()
+        setSpinner()
         setViewModel()
     }
 
@@ -71,25 +69,6 @@ class FormDataActivity : AppCompatActivity() {
             } else {
                 mBinding.tvPias.text = "Pias ke 1"
             }
-
-        }
-
-        mBinding.etHb.isEnabled = false
-        mBinding.etH1.isEnabled = false
-        if (formDataActivityViewModel.hb != "0") {
-            mBinding.etHb.setText(formDataActivityViewModel.hb)
-        } else {
-            mBinding.etHb.setText("")
-            mBinding.etHb.hint = "0"
-            mBinding.etHb.isEnabled = true
-        }
-
-        if (formDataActivityViewModel.h1 != "0") {
-            mBinding.etH1.setText(formDataActivityViewModel.h1)
-        } else {
-            mBinding.etH1.setText("")
-            mBinding.etH1.hint = "0"
-            mBinding.etH1.isEnabled = true
         }
 
         mBinding.btnNext.isEnabled = true
@@ -98,56 +77,6 @@ class FormDataActivity : AppCompatActivity() {
     }
 
     fun setAction() {
-        mBinding.etHb.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-            ) {
-
-            }
-
-            override fun onTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    before: Int,
-                    count: Int
-            ) {
-                formDataActivityViewModel.hb = if (s.toString() != "" && s.toString() != ".") s.toString() else "0"
-                setSpinner()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        mBinding.etH1.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-            ) {
-
-            }
-
-            override fun onTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    before: Int,
-                    count: Int
-            ) {
-                formDataActivityViewModel.h1 = if (s.toString() != "" && s.toString() != ".") s.toString() else "0"
-                setSpinner()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
         mBinding.etH2.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                     s: CharSequence?,
@@ -165,6 +94,31 @@ class FormDataActivity : AppCompatActivity() {
                     count: Int
             ) {
                 formDataActivityViewModel.h2 = if (s.toString() != ""  && s.toString() != ".") s.toString() else "0"
+                setKecepatanAir()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
+        mBinding.etJarakPias.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                formDataActivityViewModel.jarakPias = if (s.toString() != ""  && s.toString() != ".") s.toString() else "0"
                 setKecepatanAir()
             }
 
@@ -246,50 +200,30 @@ class FormDataActivity : AppCompatActivity() {
         })
 
         mBinding.btnNext.setOnClickListener {
-            if (mBinding.etH1.text.toString() == "") {
-                ToastUtils.showLong("H1 belum diisi")
-            } else if(mBinding.etH2.toString() == "") {
+            if(mBinding.etH2.toString() == "") {
                 ToastUtils.showLong("H2 belum diisi")
-            } else if(mBinding.etHb.toString() == "") {
-                ToastUtils.showLong("Hb belum diisi")
-            } else if(!formDataActivityViewModel.checkHaveValue()) {
+            } else if(mBinding.etJarakPias.toString() == "") {
+                ToastUtils.showLong("Jarak Antar Pias belum diisi")
+            }
+            else if(!formDataActivityViewModel.checkHaveValue()) {
                 ToastUtils.showLong("Kecepatan air data belum diisi")
             } else {
                 mBinding.btnNext.isEnabled = false
-                if (formDataActivityViewModel.idFormData == 0 ||
-                        formDataActivityViewModel.currentPiasSize == formDataActivityViewModel.jumlahPias) {
-                    if (formDataActivityViewModel.currentFormDataSize < formDataActivityViewModel.variasiKetinggianAir) {
-                        val formData = FormDataModel(
-                                null,
-                                formDataActivityViewModel.idPengambilanData,
-                                formDataActivityViewModel.h1.toFloat(),
-                                formDataActivityViewModel.h2.toFloat()
-                        )
-                        formDataViewModel.insert(formData)
-                        formDataActivityViewModel.idFormData = formDataViewModel.idFormData.value!!.toInt()
-                    } else {
-                        val intent = Intent(this@FormDataActivity, VariasiOutputActivity::class.java)
-                        intent.putExtra("id_tipe_bangunan", idTipeBangunan)
-                        intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
-                        intent.putExtra("id_pengambilan_data", formDataActivityViewModel.idPengambilanData)
-                        startActivity(intent)
-                        finish()
-                    }
-                } else {
-                    val piasModel = PiasModel(
-                            null,
-                            formDataActivityViewModel.idFormData,
-                            formDataActivityViewModel.h2.toFloat(),
-                            formDataActivityViewModel.kecepatanAirValues.value!![0],
-                            mBinding.d8.text.toString().toFloat(),
-                            formDataActivityViewModel.kecepatanAirValues.value!![1],
-                            mBinding.d6.text.toString().toFloat(),
-                            formDataActivityViewModel.kecepatanAirValues.value!![2],
-                            mBinding.d2.text.toString().toFloat(),
-                            formDataActivityViewModel.metodePengambilan.value!!
-                    )
-                    piasViewModel.insert(piasModel)
-                }
+
+                val piasModel = PiasModel(
+                    null,
+                    formDataActivityViewModel.idPengambilanData,
+                    formDataActivityViewModel.h2.toFloat(),
+                    formDataActivityViewModel.jarakPias.toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![0],
+                    mBinding.d8.text.toString().toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![1],
+                    mBinding.d6.text.toString().toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![2],
+                    mBinding.d2.text.toString().toFloat(),
+                    formDataActivityViewModel.metodePengambilan.value!!
+                )
+                piasViewModel.insert(piasModel)
             }
         }
     }
@@ -299,29 +233,31 @@ class FormDataActivity : AppCompatActivity() {
             if (it.size < formDataActivityViewModel.jumlahPias) {
 //                mBinding.etH1.setText("")
                 mBinding.etH2.setText("")
+                mBinding.etH2.hint = "0"
+                mBinding.etJarakPias.setText("")
+                mBinding.etJarakPias.hint = "0"
                 formDataActivityViewModel.h2 = "0"
+                formDataActivityViewModel.jarakPias = "0"
                 formDataActivityViewModel.kecepatanAirValues.value = FloatArray(3)
                 formDataActivityViewModel.kecepatanAirs = ArrayList()
                 mBinding.svView.fullScroll(View.FOCUS_UP)
                 mBinding.svView.pageScroll(View.FOCUS_UP)
                 mBinding.svView.smoothScrollTo(0, 0)
                 setView(piasModel)
-            } else if(formDataActivityViewModel.currentFormDataSize < formDataActivityViewModel.variasiKetinggianAir) {
-                mBinding.etH2.setText("")
-                formDataActivityViewModel.h1 = "0"
-                formDataActivityViewModel.h2 = "0"
-                formDataActivityViewModel.hb = "0"
-                formDataActivityViewModel.kecepatanAirValues.value = FloatArray(3)
-                formDataActivityViewModel.kecepatanAirs = ArrayList()
-                mBinding.svView.fullScroll(View.FOCUS_UP)
-                mBinding.svView.pageScroll(View.FOCUS_UP)
-                mBinding.svView.smoothScrollTo(0, 0)
-                setView(piasModel)
-            } else {
+            }  else if (isLast) {
                 val intent = Intent(this@FormDataActivity, VariasiOutputActivity::class.java)
                 intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                 intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
-                intent.putExtra("id_pengambilan_data", formDataActivityViewModel.idPengambilanData)
+                intent.putExtra("id_base_data", idBaseData)
+                startActivity(intent)
+                finish()
+            }
+            else {
+                val intent = Intent(this@FormDataActivity, PengambilanDataActivity::class.java)
+                intent.putExtra("id_tipe_bangunan", idTipeBangunan)
+                intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
+                intent.putExtra("id_base_data", idBaseData)
+                intent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
                 startActivity(intent)
                 finish()
             }
@@ -386,38 +322,13 @@ class FormDataActivity : AppCompatActivity() {
 
     private fun setViewModel() {
         piasViewModel.insertId.observe(this, {
-            piasViewModel.getPiasDataById(formDataActivityViewModel.idFormData)
+            piasViewModel.getPiasDataById(formDataActivityViewModel.idPengambilanData)
         })
 
         piasViewModel.piasDatas.observe(this, { piasData ->
             if (piasData.isNotEmpty()) {
                 formDataActivityViewModel.currentPiasSize = piasData.size
                 clearView(piasData)
-            }
-        })
-
-        formDataViewModel.idFormData.observe(this, { id ->
-            if (id.toInt() != 0) {
-                formDataViewModel.getformDatas(formDataActivityViewModel.idPengambilanData).observe(this, { formData ->
-                    if (formData.isNotEmpty()) {
-                        formDataActivityViewModel.currentFormDataSize = formData.size
-                    }
-                })
-                formDataActivityViewModel.idFormData = id.toInt()
-
-                val piasModel = PiasModel(
-                    null,
-                    id.toInt(),
-                    formDataActivityViewModel.h2.toFloat(),
-                    formDataActivityViewModel.kecepatanAirValues.value!![0],
-                    mBinding.d8.text.toString().toFloat(),
-                    formDataActivityViewModel.kecepatanAirValues.value!![1],
-                    mBinding.d6.text.toString().toFloat(),
-                    formDataActivityViewModel.kecepatanAirValues.value!![2],
-                    mBinding.d2.text.toString().toFloat(),
-                    formDataActivityViewModel.metodePengambilan.value!!
-                )
-                piasViewModel.insert(piasModel)
             }
         })
     }

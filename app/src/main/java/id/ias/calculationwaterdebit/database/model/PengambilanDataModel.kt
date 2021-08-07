@@ -8,10 +8,14 @@ import androidx.room.PrimaryKey
 data class PengambilanDataModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
-    @ColumnInfo(name = "lebar_saluran_pengukuran")
-    var lebarSaluranPengukuran: Float,
+    @ColumnInfo(name = "id_base_data")
+    var idBaseData: Int,
+    var h1: Float,
+    var hb: Float,
     @ColumnInfo(name = "jumlah_saluran_basah")
     var jumlahSaluranBasah: Float,
     @ColumnInfo(name = "variasi_ketinggian_air")
-    var variasaiKetinggianAir: Float
+    var variasaiKetinggianAir: Float,
+    @ColumnInfo(name = "jumlah_rata_rata")
+    var jumlahRataRata: Float?,
 )

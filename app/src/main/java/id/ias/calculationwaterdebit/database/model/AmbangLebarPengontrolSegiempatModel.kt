@@ -10,8 +10,6 @@ data class AmbangLebarPengontrolSegiempatModel (
     val id: Int?,
     @ColumnInfo(name = "id_base_data")
     var idBaseData: Int,
-    @ColumnInfo(name = "id_pengambilan_data")
-    var idPengambilanData: Int?,
     @ColumnInfo(name = "lebar_ambang")
     var lebarAmbang: Float,
     @ColumnInfo(name = "lebar_dasar")

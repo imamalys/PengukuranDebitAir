@@ -16,6 +16,7 @@ import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModelF
 import id.ias.calculationwaterdebit.databinding.ActivityPengambilanDataBinding
 import id.ias.calculationwaterdebit.viewmodel.PengambilanDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.PengambilanDataActivityViewModelFactory
+import kotlin.math.sign
 
 class PengambilanDataActivity : AppCompatActivity() {
 
@@ -26,11 +27,11 @@ class PengambilanDataActivity : AppCompatActivity() {
     private val pengambilanDataViewModel: PengambilanDataViewModel by viewModels {
         PengambilanDataViewModelFactory((application as Application).pengambilanDataRepository)
     }
-    private val alpsViewModel: AmbangLebarPengontrolSegiempatViewModel by viewModels {
-        AmbangLebarPengontrolSegiempatViewModelFactory((application as Application).alpsRepository)
-    }
 
     var idTipeBangunan: Long = 0
+    var variasiKetinggianAir: String = ""
+    var idBaseData: Long = 0
+    var isLast = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,8 @@ class PengambilanDataActivity : AppCompatActivity() {
             if (it.hasExtra("tipe_bangunan") && it.hasExtra("id_tipe_bangunan")) {
                 pengambilanDataActivityViewModel.detailBangunan.value = it.getStringExtra("tipe_bangunan")!!
                 idTipeBangunan = it.getLongExtra("id_tipe_bangunan", 0)
+                variasiKetinggianAir = it.getStringExtra("variasi_ketinggian_air")!!
+                idBaseData = it.getLongExtra("id_base_data", 0)
             }
         }
 
@@ -54,9 +57,12 @@ class PengambilanDataActivity : AppCompatActivity() {
             if (pengambilanDataActivityViewModel.checkHaveValue()) {
                 val pengambilanData = PengambilanDataModel(
                     null,
-                        pengambilanDataActivityViewModel.pengambilValue.value!![0],
-                        pengambilanDataActivityViewModel.pengambilValue.value!![1],
-                        pengambilanDataActivityViewModel.pengambilValue.value!![2]
+                    idBaseData.toInt(),
+                    pengambilanDataActivityViewModel.pengambilValue.value!![0],
+                    pengambilanDataActivityViewModel.pengambilValue.value!![1],
+                    pengambilanDataActivityViewModel.pengambilValue.value!![2],
+                    variasiKetinggianAir.toFloat(),
+                    null
                 )
                 pengambilanDataViewModel.insert(pengambilanData)
             } else {
@@ -64,7 +70,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
         }
 
-        mBinding.etLebarSaluran.addTextChangedListener(object: TextWatcher {
+        mBinding.etKetinggianBangunanUkur.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -72,13 +78,26 @@ class PengambilanDataActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString() != "" && s.toString() != ".") {
                     pengambilanDataActivityViewModel.pengambilValue.value!![0] = s.toString().toFloat()
-                    if (mBinding.etJmlhSaluranBasah.text.toString() != "") {
-                        mBinding.etRangeAntarPias.setText((s.toString().toFloat() / mBinding.etJmlhSaluranBasah.text.toString().toFloat()).toString())
-                    }
                 } else {
                     pengambilanDataActivityViewModel.pengambilValue.value!![0] = "0".toFloat()
-                    mBinding.etRangeAntarPias.setText("")
-                    mBinding.etRangeAntarPias.hint = "0"
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
+        mBinding.etKetinggianAirHulu.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString() != "" && s.toString() != ".") {
+                    pengambilanDataActivityViewModel.pengambilValue.value!![1] = s.toString().toFloat()
+                } else {
+                    pengambilanDataActivityViewModel.pengambilValue.value!![1] = "0".toFloat()
                 }
             }
 
@@ -94,57 +113,46 @@ class PengambilanDataActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString() != "" && s.toString() != ".") {
-                    pengambilanDataActivityViewModel.pengambilValue.value!![1] = s.toString().toFloat()
-                    mBinding.etJumlahPias.setText((s.toString().toInt() - 1).toString())
-                    if (mBinding.etLebarSaluran.text.toString() != "") {
-                        mBinding.etRangeAntarPias.setText((s.toString().toFloat() / mBinding.etLebarSaluran.text.toString().toFloat()).toString())
-                    }
-                } else {
-                    pengambilanDataActivityViewModel.pengambilValue.value!![1] = "0".toFloat()
-                    mBinding.etRangeAntarPias.setText("")
-                    mBinding.etRangeAntarPias.hint = "0"
-                    mBinding.etJumlahPias.setText("")
-                    mBinding.etJumlahPias.hint = "0"
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-        })
-
-        mBinding.etVariasiKetinggianAir.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString() != "" && s.toString() != ".") {
                     pengambilanDataActivityViewModel.pengambilValue.value!![2] = s.toString().toFloat()
+                    mBinding.etJumlahPias.setText((s.toString().toInt() - 1).toString())
                 } else {
                     pengambilanDataActivityViewModel.pengambilValue.value!![2] = "0".toFloat()
+                    mBinding.etJumlahPias.setText("")
+                    mBinding.etJumlahPias.setHint("0")
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
 
             }
+
         })
     }
 
     private fun setViewModel() {
         pengambilanDataViewModel.idPengambilanData.observe(this, {
             if (it.toInt() != 0) {
-                alpsViewModel.updateIdPengambilanData(idTipeBangunan.toInt(), it.toInt())
                 val intent = Intent(this@PengambilanDataActivity, FormDataActivity::class.java)
                 intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                 intent.putExtra("tipe_bangunan", pengambilanDataActivityViewModel.detailBangunan.value)
                 intent.putExtra("id_pengambilan_data", it.toInt())
+                intent.putExtra("id_base_data", idBaseData)
                 intent.putExtra("jumlah_pias", mBinding.etJumlahPias.text.toString().toInt())
+                intent.putExtra("h1", pengambilanDataActivityViewModel.pengambilValue.value!![0])
+                intent.putExtra("hb", pengambilanDataActivityViewModel.pengambilValue.value!![1])
                 intent.putExtra("variasi_Ketinggian_air", pengambilanDataActivityViewModel.pengambilValue.value!![2].toInt())
+                intent.putExtra("is_last", isLast)
                 startActivity(intent)
                 finish()
+            }
+        })
+
+        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt()).observe(this, {
+            if (it.size < variasiKetinggianAir.toInt()) {
+                if (variasiKetinggianAir.toInt() - it.size == 1) {
+                    isLast = true
+                }
+                mBinding.tvTitle.text = String.format("Data Pengambilan Variasi Air Ke-%s", (it.size + 1).toString() )
             }
         })
     }

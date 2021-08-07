@@ -21,6 +21,7 @@ class FormDataActivityViewModel: ViewModel() {
     var h1: String = "0"
     var h2: String = "0"
     var hb: String = "0"
+    var jarakPias: String = "0"
 
     fun checkHaveValue(): Boolean {
         for (i in 1..kecepatanAirValues.value!!.size) {

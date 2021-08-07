@@ -10,8 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.AmbangLebarPengontrolSegiempatActivity"></activity>
-        <activity android:name=".ui.VariasiOutputActivity"></activity>
+        <activity android:name=".ui.VariasiKetinggianAirActivity"></activity>
+        <activity android:name=".ui.AmbangLebarPengontrolSegiempatActivity" />
+        <activity android:name=".ui.VariasiOutputActivity" />
         <activity
             android:name=".ui.FormDataActivity"
             android:screenOrientation="portrait"

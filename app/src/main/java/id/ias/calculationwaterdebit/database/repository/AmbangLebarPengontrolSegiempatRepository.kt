@@ -3,7 +3,6 @@ package id.ias.calculationwaterdebit.database.repository
 import androidx.annotation.WorkerThread
 import id.ias.calculationwaterdebit.database.dao.AmbangLebarPengontrolSegiempatDao
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
-import id.ias.calculationwaterdebit.database.model.FormDataModel
 import kotlinx.coroutines.flow.Flow
 
 class AmbangLebarPengontrolSegiempatRepository(private val alpsDao: AmbangLebarPengontrolSegiempatDao) {
@@ -26,11 +25,5 @@ class AmbangLebarPengontrolSegiempatRepository(private val alpsDao: AmbangLebarP
     suspend fun update(idAlps: Int, data: FloatArray) {
         alpsDao.update(idAlps, data[0].toInt(), data[1].toInt(), data[2].toInt(), data[3].toInt(),
             data[4].toInt(), data[5].toInt(), data[6].toInt())
-    }
-
-    @Suppress("RedudantSuspendModifier")
-    @WorkerThread
-    suspend fun updateIdPengambilanData(idAlps: Int, id: Int) {
-        alpsDao.updateIdPengambilanData(idAlps, id)
     }
 }

@@ -2,14 +2,12 @@ package id.ias.calculationwaterdebit.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import id.ias.calculationwaterdebit.database.model.FormDataModel
 import id.ias.calculationwaterdebit.database.model.PengambilanDataModel
 
 class VariasiOutputViewModel: ViewModel() {
     var detailBangunan: String = ""
     var idPengambilanData: Int = 0
-    var formDatas: List<FormDataModel> = ArrayList()
-    lateinit var pengambilanDataById: PengambilanDataModel
+    lateinit var pengambilanDataById: List<PengambilanDataModel>
 }
 
 class VariasiOutputViewModelFactory : ViewModelProvider.Factory {

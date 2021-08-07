@@ -52,7 +52,6 @@ class DetailBangunanActivity : AppCompatActivity() {
                         val alpsData = AmbangLebarPengontrolSegiempatModel(
                                 null,
                                 idBaseData.toInt(),
-                                null,
                                 detailBangunanViewModel.detailBangunanValue.value!![0],
                                 detailBangunanViewModel.detailBangunanValue.value!![1],
                                 detailBangunanViewModel.detailBangunanValue.value!![2],
@@ -92,9 +91,10 @@ class DetailBangunanActivity : AppCompatActivity() {
 
         alpsViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
-                val intent = Intent(this@DetailBangunanActivity, PengambilanDataActivity::class.java)
+                val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
                 intent.putExtra("id_tipe_bangunan", it)
                 intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+                intent.putExtra("id_base_data", idBaseData)
                 startActivity(intent)
                 finish()
             }

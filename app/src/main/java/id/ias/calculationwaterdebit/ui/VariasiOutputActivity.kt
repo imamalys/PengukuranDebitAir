@@ -23,15 +23,12 @@ class VariasiOutputActivity : AppCompatActivity() {
         PengambilanDataViewModelFactory((application as Application).pengambilanDataRepository)
     }
 
-    private val formDataViewModel: FormDataViewModel by viewModels {
-        FormDataViewModelFactory((application as Application).formDataRepository)
-    }
-
     private val piasDataViewModel: PiasDataViewModel by viewModels {
         PiasDataViewModelFactory((application as Application).piasRepository)
     }
     var idTipeBangunan: Long = 0
     var currentFormData: Int = 0
+    var idBaseData: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +40,7 @@ class VariasiOutputActivity : AppCompatActivity() {
             if (it.hasExtra("tipe_bangunan") && it.hasExtra("id_tipe_bangunan")) {
                 variasiOutputViewModel.detailBangunan = it.getStringExtra("tipe_bangunan")!!
                 idTipeBangunan = it.getLongExtra("id_tipe_bangunan", 0)
-                variasiOutputViewModel.idPengambilanData = it.getIntExtra("id_pengambilan_data", 0)
+                idBaseData = it.getLongExtra("id_base_data", 0)
             }
         }
 
@@ -53,7 +50,7 @@ class VariasiOutputActivity : AppCompatActivity() {
 
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
-            if (currentFormData < variasiOutputViewModel.formDatas.size) {
+            if (currentFormData < variasiOutputViewModel.pengambilanDataById.size) {
                 currentFormData += 1
             }
             setViewModel()
@@ -73,7 +70,7 @@ class VariasiOutputActivity : AppCompatActivity() {
                     val alps = Intent(this@VariasiOutputActivity, AmbangLebarPengontrolSegiempatActivity::class.java)
                     alps.putExtra("id_tipe_bangunan", idTipeBangunan)
                     alps.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
-                    alps.putExtra("id_pengambilan_data", variasiOutputViewModel.idPengambilanData)
+                    alps.putExtra("id_base_data", idBaseData)
                     startActivity(alps)
                     finish()
                 }
@@ -83,7 +80,7 @@ class VariasiOutputActivity : AppCompatActivity() {
 
     private fun setOutput(piasDatas: List<PiasModel>) {
         //set table title labels
-        if (currentFormData + 1 == variasiOutputViewModel.formDatas.size) {
+        if (currentFormData + 1 == variasiOutputViewModel.pengambilanDataById.size) {
             mBinding.btnNext.visibility = View.GONE
             mBinding.btnPrevious.visibility = View.GONE
             mBinding.btnNextCalc.visibility = View.VISIBLE
@@ -98,12 +95,11 @@ class VariasiOutputActivity : AppCompatActivity() {
             "Luas Basah (m2)", "Debit (m3)")
 
         LegacyTableView.insertLegacyContent("0", "0", "Tepi", " ", "-", "-", "-", "0", "0", "0", "0")
-        val jarak = variasiOutputViewModel.pengambilanDataById.lebarSaluranPengukuran / variasiOutputViewModel.pengambilanDataById.jumlahSaluranBasah
-
-        mBinding.etH1.setText(String.format("%.3f", variasiOutputViewModel.formDatas[currentFormData].h1))
+        mBinding.etH1.setText(String.format("%.3f", variasiOutputViewModel.pengambilanDataById[currentFormData].h1))
         var debitSaluran = "0".toFloat()
-
+        var jumlahRataRata = "0".toFloat()
         for (i in piasDatas.indices) {
+            val jarak = piasDatas[i].jarakAntarPias
             var previousRai: Float
             var currentRai: Float
             when (piasDatas[i].metodePengmbilan) {
@@ -147,8 +143,10 @@ class VariasiOutputActivity : AppCompatActivity() {
                 String.format("%.3f", luasBasah), String.format("%.3f", debit))
 
             debitSaluran += debit
+            jumlahRataRata += rataRata
             if (i + 1 == piasDatas.size) {
                 mBinding.etDebitSaluran.setText(String.format("%.3f", debitSaluran))
+                pengambilanDataViewModel.update(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!, jumlahRataRata)
             }
         }
 
@@ -171,16 +169,10 @@ class VariasiOutputActivity : AppCompatActivity() {
     }
 
     private fun setViewModel() {
-        pengambilanDataViewModel.getPengambilanDataById(variasiOutputViewModel.idPengambilanData).observe(this, {
+        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt()).observe(this, {
             variasiOutputViewModel.pengambilanDataById = it
-            formDataViewModel.getformDatas(variasiOutputViewModel.idPengambilanData).observe(this, { formData ->
-                if (formData.isNotEmpty()) {
-                    variasiOutputViewModel.formDatas = formData
-
-                    piasDataViewModel.getPiasDatas(formData[currentFormData].id!!).observe(this, { piasData ->
-                        setOutput(piasData)
-                    })
-                }
+            piasDataViewModel.getPiasDatas(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!).observe(this, { piasData ->
+                setOutput(piasData)
             })
         })
     }

@@ -8,9 +8,11 @@ import androidx.room.PrimaryKey
 data class PiasModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
-    @ColumnInfo(name = "id_form_data")
-    var idFormData: Int,
+    @ColumnInfo(name = "id_pengambilan_data")
+    var idPengambilanData: Int?,
     var h2: Float,
+    @ColumnInfo(name = "jarak_antar_pias")
+    var jarakAntarPias: Float,
     var d8: Float,
     var d8Calculation: Float,
     var d6: Float,
