@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class PengambilanDataRepository(private val pengambilanDataDao: PengambilanDataDao) {
     val allPengambilanDatas: Flow<List<PengambilanDataModel>> = pengambilanDataDao.getPengambilanDatas()
 
-    fun getPengambilanDataById(id: Int): Flow<List<PengambilanDataModel>> {
+    suspend fun getPengambilanDataById(id: Int): List<PengambilanDataModel> {
         return pengambilanDataDao.getPengambilanDataById(id)
     }
 

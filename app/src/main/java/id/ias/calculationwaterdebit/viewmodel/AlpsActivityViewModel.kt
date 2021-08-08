@@ -7,8 +7,7 @@ import id.ias.calculationwaterdebit.database.model.PengambilanDataModel
 
 class AlpsActivityViewModel: ViewModel() {
     var detailBangunan: String = ""
-    var idPengambilanData: Int = 0
-    var pengambilanDataByBangunan: List<PengambilanDataModel> = ArrayList()
+    var pengambilanData: List<PengambilanDataModel> = ArrayList()
     var alpsData: AmbangLebarPengontrolSegiempatModel = AmbangLebarPengontrolSegiempatModel(null, 0, "0".toFloat() ,"0".toFloat() ,"0".toFloat(),"0".toFloat(),"0".toFloat(), "0".toFloat(), "0".toFloat())
 }
 

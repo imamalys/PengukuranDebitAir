@@ -169,7 +169,8 @@ class VariasiOutputActivity : AppCompatActivity() {
     }
 
     private fun setViewModel() {
-        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt()).observe(this, {
+        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt())
+        pengambilanDataViewModel.pengambilanDataById.observe(this, {
             variasiOutputViewModel.pengambilanDataById = it
             piasDataViewModel.getPiasDatas(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!).observe(this, { piasData ->
                 setOutput(piasData)

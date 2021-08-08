@@ -78,7 +78,7 @@ class DetailBangunanActivity : AppCompatActivity() {
                 detailBangunanViewModel.getDetailBangunan(it),
                 object: DetailBangunanAdapter.Listener {
                     override fun onChanged(value: String, position: Int) {
-                        if (value != "") {
+                        if (value != "" && value != ".") {
                             detailBangunanViewModel.detailBangunanValue.value!![position - 1] = value.toFloat()
                         } else {
                             detailBangunanViewModel.detailBangunanValue.value!![position - 1] = "0".toFloat()

@@ -230,36 +230,39 @@ class FormDataActivity : AppCompatActivity() {
 
     private fun clearView(piasModel: List<PiasModel>) {
         piasModel.let {
-            if (it.size < formDataActivityViewModel.jumlahPias) {
-//                mBinding.etH1.setText("")
-                mBinding.etH2.setText("")
-                mBinding.etH2.hint = "0"
-                mBinding.etJarakPias.setText("")
-                mBinding.etJarakPias.hint = "0"
-                formDataActivityViewModel.h2 = "0"
-                formDataActivityViewModel.jarakPias = "0"
-                formDataActivityViewModel.kecepatanAirValues.value = FloatArray(3)
-                formDataActivityViewModel.kecepatanAirs = ArrayList()
-                mBinding.svView.fullScroll(View.FOCUS_UP)
-                mBinding.svView.pageScroll(View.FOCUS_UP)
-                mBinding.svView.smoothScrollTo(0, 0)
-                setView(piasModel)
-            }  else if (isLast) {
-                val intent = Intent(this@FormDataActivity, VariasiOutputActivity::class.java)
-                intent.putExtra("id_tipe_bangunan", idTipeBangunan)
-                intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
-                intent.putExtra("id_base_data", idBaseData)
-                startActivity(intent)
-                finish()
-            }
-            else {
-                val intent = Intent(this@FormDataActivity, PengambilanDataActivity::class.java)
-                intent.putExtra("id_tipe_bangunan", idTipeBangunan)
-                intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
-                intent.putExtra("id_base_data", idBaseData)
-                intent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
-                startActivity(intent)
-                finish()
+            when {
+                it.size < formDataActivityViewModel.jumlahPias -> {
+    //                mBinding.etH1.setText("")
+                    mBinding.etH2.setText("")
+                    mBinding.etH2.hint = "0"
+                    mBinding.etJarakPias.setText("")
+                    mBinding.etJarakPias.hint = "0"
+                    formDataActivityViewModel.h2 = "0"
+                    formDataActivityViewModel.jarakPias = "0"
+                    formDataActivityViewModel.kecepatanAirValues.value = FloatArray(3)
+                    formDataActivityViewModel.kecepatanAirs = ArrayList()
+                    mBinding.svView.fullScroll(View.FOCUS_UP)
+                    mBinding.svView.pageScroll(View.FOCUS_UP)
+                    mBinding.svView.smoothScrollTo(0, 0)
+                    setView(piasModel)
+                }
+                isLast -> {
+                    val intent = Intent(this@FormDataActivity, VariasiOutputActivity::class.java)
+                    intent.putExtra("id_tipe_bangunan", idTipeBangunan)
+                    intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
+                    intent.putExtra("id_base_data", idBaseData)
+                    startActivity(intent)
+                    finish()
+                }
+                else -> {
+                    val intent = Intent(this@FormDataActivity, PengambilanDataActivity::class.java)
+                    intent.putExtra("id_tipe_bangunan", idTipeBangunan)
+                    intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
+                    intent.putExtra("id_base_data", idBaseData)
+                    intent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }

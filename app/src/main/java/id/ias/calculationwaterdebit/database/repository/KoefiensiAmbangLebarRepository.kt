@@ -6,9 +6,11 @@ import id.ias.calculationwaterdebit.database.dao.PengambilanDataDao
 import id.ias.calculationwaterdebit.database.model.KoefisiensiAmbangLebarModel
 import id.ias.calculationwaterdebit.database.model.PengambilanDataModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 
 class KoefiensiAmbangLebarRepository(private val koefisiensiAmbangLebarDao: KoefisiensiAmbangLebarDao) {
-    fun getKoefiensiAmbangLebarById(nilai: Float): Flow<KoefisiensiAmbangLebarModel> {
+
+    fun getKoefiensiAmbangLebarById(nilai: Float): KoefisiensiAmbangLebarModel {
         return koefisiensiAmbangLebarDao.getKoefiensiAmbangLebarById(nilai)
     }
 

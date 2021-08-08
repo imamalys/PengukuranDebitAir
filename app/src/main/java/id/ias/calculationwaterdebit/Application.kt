@@ -26,4 +26,5 @@ class Application: Application() {
     val alpsRepository by lazy { AmbangLebarPengontrolSegiempatRepository(database.alpsDao()) }
     val pengambilanDataRepository by lazy { PengambilanDataRepository(database.pengambilanDataDao()) }
     val piasRepository by lazy { PiasDataRepository(database.piasDao()) }
+    val koefisiensiAmbangLebarRepository by lazy { KoefiensiAmbangLebarRepository(database.koefisiensiDao()) }
 }

@@ -13,11 +13,11 @@ interface PengambilanDataDao {
     fun getPengambilanDatas(): Flow<List<PengambilanDataModel>>
 
     @Query("SELECT * FROM pengambilan_data WHERE id_base_data = :id")
-    fun getPengambilanDataById(id: Int): Flow<List<PengambilanDataModel>>
+    suspend fun getPengambilanDataById(id: Int): List<PengambilanDataModel>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(pengambilanDataModel: PengambilanDataModel): Long
 
-    @Query("UPDATE pengambilan_data SET id = :id WHERE jumlah_rata_rata = :jumlahRataRata")
+    @Query("UPDATE pengambilan_data SET jumlah_rata_rata = :jumlahRataRata WHERE id = :id")
     suspend fun update(id: Int, jumlahRataRata: Float): Int
 }

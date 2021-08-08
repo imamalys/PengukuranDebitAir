@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface KoefisiensiAmbangLebarDao {
     @Query("SELECT * FROM koefiensi_ambang_lebar WHERE nilai = :nilai")
-    fun getKoefiensiAmbangLebarById(nilai: Float): Flow<KoefisiensiAmbangLebarModel>
+    fun getKoefiensiAmbangLebarById(nilai: Float): KoefisiensiAmbangLebarModel
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(koefisiensiAmbangLebarModel: KoefisiensiAmbangLebarModel)

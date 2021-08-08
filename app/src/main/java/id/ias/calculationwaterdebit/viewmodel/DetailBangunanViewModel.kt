@@ -53,7 +53,7 @@ class DetailBangunanViewModel: ViewModel() {
 
     fun checkHaveValue(): Boolean {
         for (detail in detailBangunanValue.value!!) {
-            if (detail.toInt().toString() == "0" || detail.toString() == "") {
+            if (detail.toString() == "0.0" || detail.toString() == "") {
                 return false
             }
         }

@@ -9,7 +9,10 @@ class PengambilanDataViewModel(private val repository: PengambilanDataRepository
     val allPengambilanDatas: LiveData<List<PengambilanDataModel>> = repository.allPengambilanDatas.asLiveData()
     var idPengambilanData: MutableLiveData<Long> = MutableLiveData(0)
     var pengambilanDataUpdate: MutableLiveData<Int> = MutableLiveData()
-    fun getPengambilanDataById(id: Int): LiveData<List<PengambilanDataModel>> = repository.getPengambilanDataById(id).asLiveData()
+    var pengambilanDataById: MutableLiveData<List<PengambilanDataModel>> = MutableLiveData()
+    fun getPengambilanDataById(id: Int) = viewModelScope.launch {
+        pengambilanDataById.value = repository.getPengambilanDataById(id)
+    }
 
     fun insert(pengambilanData: PengambilanDataModel) = viewModelScope.launch {
         idPengambilanData.value = repository.insert(pengambilanData)

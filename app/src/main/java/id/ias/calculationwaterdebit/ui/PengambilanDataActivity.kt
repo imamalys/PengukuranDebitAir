@@ -48,6 +48,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
         }
 
+        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt())
         setAction()
         setViewModel()
     }
@@ -140,16 +141,16 @@ class PengambilanDataActivity : AppCompatActivity() {
                 intent.putExtra("jumlah_pias", mBinding.etJumlahPias.text.toString().toInt())
                 intent.putExtra("h1", pengambilanDataActivityViewModel.pengambilValue.value!![0])
                 intent.putExtra("hb", pengambilanDataActivityViewModel.pengambilValue.value!![1])
-                intent.putExtra("variasi_Ketinggian_air", pengambilanDataActivityViewModel.pengambilValue.value!![2].toInt())
+                intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir.toInt())
                 intent.putExtra("is_last", isLast)
                 startActivity(intent)
                 finish()
             }
         })
 
-        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt()).observe(this, {
+        pengambilanDataViewModel.pengambilanDataById.observe(this, {
             if (it.size < variasiKetinggianAir.toInt()) {
-                if (variasiKetinggianAir.toInt() - it.size == 1) {
+                if (variasiKetinggianAir.toInt() - it.size == 1 || variasiKetinggianAir.toInt() - it.size == 0) {
                     isLast = true
                 }
                 mBinding.tvTitle.text = String.format("Data Pengambilan Variasi Air Ke-%s", (it.size + 1).toString() )
