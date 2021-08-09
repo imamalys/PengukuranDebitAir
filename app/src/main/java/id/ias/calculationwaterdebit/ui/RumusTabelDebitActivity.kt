@@ -92,7 +92,7 @@ class RumusTabelDebitActivity : AppCompatActivity() {
 
     private fun setViewModel() {
         baseDataViewModel.baseDataUpdate.observe(this, {
-            if (it == 0) {
+            if (it != 0) {
                 val intent = Intent(this@RumusTabelDebitActivity, VariasiOutputActivity::class.java)
                 intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                 intent.putExtra("tipe_bangunan", detailBangunan)

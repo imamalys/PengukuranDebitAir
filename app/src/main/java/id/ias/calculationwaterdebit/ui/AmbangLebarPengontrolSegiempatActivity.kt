@@ -241,6 +241,8 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
             val q:String = if (cv[i] == "Bukan") "Bukan" else
                 String.format("%.3f", (cd[i].toFloat() * cv[i].toFloat() * ((2.toFloat() / 3.toFloat())) * (sqrt(((2.toFloat() / 3.toFloat()) * g.toFloat())) * bC.toFloat() * (h1.toFloat().pow(x = (1.5).toFloat())))))
 
+            pengambilanDataViewModel.update(alpsActivityViewModel.pengambilanData[i].id!!, q.toFloat())
+
             LegacyTableView.insertLegacyContent((i + 1).toString(), cd[i], cv[i], g, bC, h1, q)
         }
 

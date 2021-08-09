@@ -20,4 +20,7 @@ interface PengambilanDataDao {
 
     @Query("UPDATE pengambilan_data SET jumlah_rata_rata = :jumlahRataRata, q_pengukuran = :debitSaluran WHERE id = :id")
     suspend fun update(id: Int, jumlahRataRata: Float, debitSaluran: Float): Int
+
+    @Query("UPDATE pengambilan_data SET q_bangunan = :qBangunan WHERE id = :id")
+    suspend fun update(id: Int, qBangunan: Float): Int
 }

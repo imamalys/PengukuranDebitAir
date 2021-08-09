@@ -21,6 +21,10 @@ class PengambilanDataViewModel(private val repository: PengambilanDataRepository
     fun update(id: Int, jumlahRataRata: Float, debitSaluran: Float) = viewModelScope.launch {
         pengambilanDataUpdate.value = repository.update(id, jumlahRataRata, debitSaluran)
     }
+
+    fun update(id: Int, qBangunan: Float) = viewModelScope.launch {
+        pengambilanDataUpdate.value = repository.update(id, qBangunan)
+    }
 }
 
 class PengambilanDataViewModelFactory(private val repository: PengambilanDataRepository): ViewModelProvider.Factory {
