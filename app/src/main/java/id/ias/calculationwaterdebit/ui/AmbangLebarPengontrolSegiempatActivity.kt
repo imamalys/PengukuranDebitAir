@@ -1,17 +1,15 @@
 package id.ias.calculationwaterdebit.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.levitnudi.legacytableview.LegacyTableView
 import id.ias.calculationwaterdebit.Application
-import id.ias.calculationwaterdebit.database.repository.KoefiensiAmbangLebarRepository
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityAmbangLebarPengontrolSegiempatBinding
-import id.ias.calculationwaterdebit.exponent
 import id.ias.calculationwaterdebit.viewmodel.AlpsActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.AlpsActivityViewModelFactory
-import kotlinx.coroutines.flow.collect
 import kotlin.math.hypot
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -56,8 +54,20 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
         }
 
         setViewModel()
+        setAction()
 
         ambangLebarPengontrolSegiempatViewModel.getalpsDataById(idTipeBangunan.toInt())
+    }
+
+    private fun setAction() {
+        mBinding.btnNext.setOnClickListener {
+            val alps = Intent(this@AmbangLebarPengontrolSegiempatActivity, AnalisisActivity::class.java)
+            alps.putExtra("id_tipe_bangunan", idTipeBangunan)
+            alps.putExtra("tipe_bangunan", alpsActivityViewModel.detailBangunan)
+            alps.putExtra("id_base_data", idBaseData)
+            startActivity(alps)
+            finish()
+        }
     }
 
     private fun setVariable() {

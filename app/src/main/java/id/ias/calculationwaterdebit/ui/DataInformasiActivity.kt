@@ -68,7 +68,8 @@ class DataInformasiActivity : AppCompatActivity() {
             mBinding.etKabupaten.text.toString(),
             mBinding.etTanggal.text.toString(),
             mBinding.etNoPengukuran.text.toString(),
-            mBinding.etNamaPengukur.text.toString()
+            mBinding.etNamaPengukur.text.toString(),
+            null, null
         )
         baseDataViewModel.insert(baseData)
     }

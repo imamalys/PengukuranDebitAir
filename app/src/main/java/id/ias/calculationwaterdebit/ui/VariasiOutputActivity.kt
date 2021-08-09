@@ -146,7 +146,7 @@ class VariasiOutputActivity : AppCompatActivity() {
             jumlahRataRata += rataRata
             if (i + 1 == piasDatas.size) {
                 mBinding.etDebitSaluran.setText(String.format("%.3f", debitSaluran))
-                pengambilanDataViewModel.update(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!, jumlahRataRata)
+                pengambilanDataViewModel.update(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!, jumlahRataRata, debitSaluran)
             }
         }
 

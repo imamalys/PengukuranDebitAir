@@ -13,4 +13,10 @@ class BaseDataRepository(private val baseDataDao: BaseDataDao) {
     suspend fun insert(baseDataModel: BaseDataModel): Long {
         return baseDataDao.insert(baseDataModel)
     }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(id: Int, variablePertama: String, n: String): Int {
+        return baseDataDao.update(id, variablePertama, n)
+    }
 }

@@ -18,6 +18,6 @@ interface PengambilanDataDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(pengambilanDataModel: PengambilanDataModel): Long
 
-    @Query("UPDATE pengambilan_data SET jumlah_rata_rata = :jumlahRataRata WHERE id = :id")
-    suspend fun update(id: Int, jumlahRataRata: Float): Int
+    @Query("UPDATE pengambilan_data SET jumlah_rata_rata = :jumlahRataRata, q_pengukuran = :debitSaluran WHERE id = :id")
+    suspend fun update(id: Int, jumlahRataRata: Float, debitSaluran: Float): Int
 }

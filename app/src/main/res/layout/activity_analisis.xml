@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AnalisisActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/data_informasi_bottom_corner"
+        android:paddingBottom="10dp"
+        android:id="@+id/cl_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="m-KLAUDE"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="#000000"
+            android:padding="10dp" />
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:background="@color/white"
+            android:layout_marginRight="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/cl_top"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_analisis"
+                android:layout_marginTop="10dp"
+                android:textSize="22sp"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="Analisis" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analisis Bangunan"
+                android:id="@+id/tv_analisis_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_analisis"/>
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_pertama_table_1"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_analisis_1" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_pertama_table_2"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_pertama_table_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/analisis_pertama_result"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_pertama_table_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analisis Tabel"
+                android:id="@+id/tv_analisis_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_pertama_result"/>
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_kedua_table_1"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_analisis_2" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_kedua_table_2"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_kedua_table_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/analisis_kedua_result"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_kedua_table_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analisis Regresi"
+                android:id="@+id/tv_analisis_3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_kedua_result"/>
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_ketiga_regresi"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_analisis_3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/analisis_regresi_result"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_ketiga_regresi"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_ketiga_table_1"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_regresi_result" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_ketiga_table_2"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_ketiga_table_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/analisis_ketiga_result"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_ketiga_table_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/analisis_result"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_ketiga_result"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"/>
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_result_table_1"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_result" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/analisis_result_table_2"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_result_table_1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

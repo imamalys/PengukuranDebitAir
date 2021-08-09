@@ -18,8 +18,8 @@ class PengambilanDataViewModel(private val repository: PengambilanDataRepository
         idPengambilanData.value = repository.insert(pengambilanData)
     }
 
-    fun update(id: Int, jumlahRataRata: Float) = viewModelScope.launch {
-        pengambilanDataUpdate.value = repository.update(id, jumlahRataRata)
+    fun update(id: Int, jumlahRataRata: Float, debitSaluran: Float) = viewModelScope.launch {
+        pengambilanDataUpdate.value = repository.update(id, jumlahRataRata, debitSaluran)
     }
 }
 

@@ -247,7 +247,7 @@ class FormDataActivity : AppCompatActivity() {
                     setView(piasModel)
                 }
                 isLast -> {
-                    val intent = Intent(this@FormDataActivity, VariasiOutputActivity::class.java)
+                    val intent = Intent(this@FormDataActivity, RumusTabelDebitActivity::class.java)
                     intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                     intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
                     intent.putExtra("id_base_data", idBaseData)

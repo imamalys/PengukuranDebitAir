@@ -18,4 +18,8 @@ data class PengambilanDataModel(
     var variasaiKetinggianAir: Float,
     @ColumnInfo(name = "jumlah_rata_rata")
     var jumlahRataRata: Float?,
+    @ColumnInfo(name = "q_pengukuran")
+    var qPengukuran: Float?,
+    @ColumnInfo(name = "q_bangunan")
+    var qBangunan: Float?
 )

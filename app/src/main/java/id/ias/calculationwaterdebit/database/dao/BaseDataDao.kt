@@ -17,4 +17,7 @@ interface BaseDataDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(baseDataModel: BaseDataModel): Long
+
+    @Query("UPDATE base_data SET variable_pertama = :variablePertama, n = :n WHERE id = :id")
+    suspend fun update(id: Int, variablePertama: String, n: String): Int
 }

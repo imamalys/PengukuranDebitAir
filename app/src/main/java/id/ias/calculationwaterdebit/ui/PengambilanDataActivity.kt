@@ -62,8 +62,7 @@ class PengambilanDataActivity : AppCompatActivity() {
                     pengambilanDataActivityViewModel.pengambilValue.value!![0],
                     pengambilanDataActivityViewModel.pengambilValue.value!![1],
                     pengambilanDataActivityViewModel.pengambilValue.value!![2],
-                    variasiKetinggianAir.toFloat(),
-                    null
+                    variasiKetinggianAir.toFloat(), null, null, null
                 )
                 pengambilanDataViewModel.insert(pengambilanData)
             } else {
