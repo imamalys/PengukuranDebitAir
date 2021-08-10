@@ -2,13 +2,19 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.BaseDataModel
+import id.ias.calculationwaterdebit.database.model.PengambilanDataModel
 import id.ias.calculationwaterdebit.database.repository.BaseDataRepository
 import kotlinx.coroutines.launch
 
 class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel() {
     val allBaseDatas: LiveData<List<BaseDataModel>> = repository.allBaseDatas.asLiveData()
+    var baseDataById: MutableLiveData<BaseDataModel> = MutableLiveData()
     var insertId: MutableLiveData<Long> = MutableLiveData(0)
     var baseDataUpdate: MutableLiveData<Int> = MutableLiveData(0)
+
+    fun getBaseDataById(id: Int) = viewModelScope.launch {
+        baseDataById.value = repository.getBaseDataById(id)
+    }
 
     fun insert(baseData: BaseDataModel) = viewModelScope.launch {
         insertId.value = repository.insert(baseData)

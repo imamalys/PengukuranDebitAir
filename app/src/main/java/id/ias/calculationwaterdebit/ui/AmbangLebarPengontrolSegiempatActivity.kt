@@ -65,6 +65,7 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
             alps.putExtra("id_tipe_bangunan", idTipeBangunan)
             alps.putExtra("tipe_bangunan", alpsActivityViewModel.detailBangunan)
             alps.putExtra("id_base_data", idBaseData)
+            alps.putExtra("b", String.format("%.3f", alpsActivityViewModel.alpsData.lebarAmbang))
             startActivity(alps)
             finish()
         }

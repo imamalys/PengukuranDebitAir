@@ -13,7 +13,7 @@ interface BaseDataDao {
     fun getAllBaseData(): Flow<List<BaseDataModel>>
 
     @Query("SELECT * FROM base_data WHERE id = :id")
-    fun getBaseDataById(id: Int): Flow<BaseDataModel>
+    fun getBaseDataById(id: Int): BaseDataModel
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(baseDataModel: BaseDataModel): Long

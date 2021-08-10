@@ -86,4 +86,5 @@ dependencies {
     implementation "androidx.multidex:multidex:$rootProject.multidex_version"
     implementation 'com.github.levitnudi:LegacyTableView:1.4'
     implementation 'com.blankj:utilcodex:1.30.4'
+    implementation 'org.apache.commons:commons-math3:3.6.1'
 }
