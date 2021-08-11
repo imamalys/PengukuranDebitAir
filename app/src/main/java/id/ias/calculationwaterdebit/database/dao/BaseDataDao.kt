@@ -20,4 +20,10 @@ interface BaseDataDao {
 
     @Query("UPDATE base_data SET variable_pertama = :variablePertama, n = :n WHERE id = :id")
     suspend fun update(id: Int, variablePertama: String, n: String): Int
+
+    @Query("UPDATE base_data SET min_h2 = :minH2, max_h2 = :maxH2, min_debit_saluran = :minDebitSaluran, max_debit_saluran = :maxDebitSaluran WHERE id = :id")
+    suspend fun update(id: Int, minH2: String, maxH2: String, minDebitSaluran: String, maxDebitSaluran: String): Int
+
+    @Query("UPDATE base_data SET k = :k, c = :c, mape = :mape WHERE id = :id")
+    suspend fun updateAnalisis(id: Int, k: String, c: String, mape: String): Int
 }

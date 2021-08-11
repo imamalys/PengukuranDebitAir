@@ -23,6 +23,14 @@ class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel()
     fun update(id: Int, variablePertama: String, n: String) = viewModelScope.launch {
         baseDataUpdate.value = repository.update(id, variablePertama, n)
     }
+
+    fun update(id: Int, minH2: String, maxH2: String, minDebitSaluran: String, maxDebitSaluran: String) = viewModelScope.launch {
+        baseDataUpdate.value = repository.update(id, minH2, maxH2, minDebitSaluran, maxDebitSaluran)
+    }
+
+    fun updateAnalisis(id: Int, k: String, c: String, mape: String) = viewModelScope.launch {
+        baseDataUpdate.value = repository.updateAnalisis(id, k, c, mape)
+    }
 }
 
 class BaseDataViewModelFactory(private val repository: BaseDataRepository): ViewModelProvider.Factory {

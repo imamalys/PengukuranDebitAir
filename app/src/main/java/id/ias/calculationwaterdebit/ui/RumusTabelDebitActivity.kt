@@ -60,9 +60,9 @@ class RumusTabelDebitActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString() != "" && s.toString() != ".") {
-                    mBinding.tvVariablePertama.text = String.format("Q = %s x B x H1", s.toString())
+                    mBinding.tvRumus.text = String.format("Q = %s x B x H1", s.toString())
                 } else {
-                    mBinding.tvVariablePertama.text = "Q = (V) x B x H1"
+                    mBinding.tvRumus.text = "Q = (V) x B x H1"
                 }
             }
 
@@ -78,9 +78,9 @@ class RumusTabelDebitActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString() != "" && s.toString() != ".") {
-                    mBinding.tvN.text = s.toString()
+                    mBinding.tvNValue.text = s.toString()
                 } else {
-                    mBinding.tvN.text = "N"
+                    mBinding.tvNValue.text = "N"
                 }
             }
 

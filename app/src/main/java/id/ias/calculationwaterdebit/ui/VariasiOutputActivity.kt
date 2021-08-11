@@ -10,11 +10,12 @@ import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.model.PiasModel
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityVariasiOutputBinding
+import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModel
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModelFactory
 
 class VariasiOutputActivity : AppCompatActivity() {
-
+    val loading = LoadingDialogUtil()
     private lateinit var mBinding: ActivityVariasiOutputBinding
     private val variasiOutputViewModel: VariasiOutputViewModel by viewModels {
         VariasiOutputViewModelFactory()
@@ -23,12 +24,19 @@ class VariasiOutputActivity : AppCompatActivity() {
         PengambilanDataViewModelFactory((application as Application).pengambilanDataRepository)
     }
 
+    private val baseDataViewModel: BaseDataViewModel by viewModels {
+        BaseDataViewModelFactory((application as Application).baseDataRepository)
+    }
+
     private val piasDataViewModel: PiasDataViewModel by viewModels {
         PiasDataViewModelFactory((application as Application).piasRepository)
     }
     var idTipeBangunan: Long = 0
     var currentFormData: Int = 0
     var idBaseData: Long = 0
+    val h2MinAll: ArrayList<Float> = ArrayList()
+    val h2MaxAll: ArrayList<Float> = ArrayList()
+    val debitSaluranAll: ArrayList<Float> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,7 @@ class VariasiOutputActivity : AppCompatActivity() {
             }
         }
 
+        loading.show(this)
         setViewModel()
         setAction()
     }
@@ -64,17 +73,13 @@ class VariasiOutputActivity : AppCompatActivity() {
         }
 
         mBinding.btnNextCalc.setOnClickListener {
+            loading.show(this)
+            val minH2 = String.format("%.3f", h2MinAll.minOrNull())
+            val maxH2 = String.format("%.3f", h2MaxAll.maxOrNull())
+            val minDebitSaluran = String.format("%.3f", debitSaluranAll.minOrNull())
+            val maxDebitSaluran = String.format("%.3f", debitSaluranAll.maxOrNull())
 
-            when(variasiOutputViewModel.detailBangunan) {
-                "Ambang Lebar Pengontrol Segiempat" -> {
-                    val alps = Intent(this@VariasiOutputActivity, AmbangLebarPengontrolSegiempatActivity::class.java)
-                    alps.putExtra("id_tipe_bangunan", idTipeBangunan)
-                    alps.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
-                    alps.putExtra("id_base_data", idBaseData)
-                    startActivity(alps)
-                    finish()
-                }
-            }
+            baseDataViewModel.update(idBaseData.toInt(), minH2, maxH2, minDebitSaluran, maxDebitSaluran)
         }
     }
 
@@ -98,6 +103,7 @@ class VariasiOutputActivity : AppCompatActivity() {
         mBinding.etH1.setText(String.format("%.3f", variasiOutputViewModel.pengambilanDataById[currentFormData].h1))
         var debitSaluran = "0".toFloat()
         var jumlahRataRata = "0".toFloat()
+        val h2Put: ArrayList<Float> = ArrayList()
         for (i in piasDatas.indices) {
             val jarak = piasDatas[i].jarakAntarPias
             var previousRai: Float
@@ -148,6 +154,14 @@ class VariasiOutputActivity : AppCompatActivity() {
                 mBinding.etDebitSaluran.setText(String.format("%.3f", debitSaluran))
                 pengambilanDataViewModel.update(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!, jumlahRataRata, debitSaluran)
             }
+
+            h2Put.add(piasDatas[i].h2)
+
+            if (i + 1 == piasDatas.size) {
+                h2MinAll.add(h2Put.minOrNull()!!)
+                h2MaxAll.add(h2Put.maxOrNull()!!)
+                debitSaluranAll.add(debitSaluran)
+            }
         }
 
         mBinding.legacyTableView.setTitle(LegacyTableView.readLegacyTitle())
@@ -166,6 +180,8 @@ class VariasiOutputActivity : AppCompatActivity() {
 
         //remember to build your table as the last step
         mBinding.legacyTableView.build()
+
+        loading.dialog.dismiss()
     }
 
     private fun setViewModel() {
@@ -175,6 +191,22 @@ class VariasiOutputActivity : AppCompatActivity() {
             piasDataViewModel.getPiasDatas(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!).observe(this, { piasData ->
                 setOutput(piasData)
             })
+        })
+
+        baseDataViewModel.baseDataUpdate.observe(this, {
+            if (it != 0) {
+                loading.dialog.dismiss()
+                when(variasiOutputViewModel.detailBangunan) {
+                    "Ambang Lebar Pengontrol Segiempat" -> {
+                        val alps = Intent(this@VariasiOutputActivity, AmbangLebarPengontrolSegiempatActivity::class.java)
+                        alps.putExtra("id_tipe_bangunan", idTipeBangunan)
+                        alps.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                        alps.putExtra("id_base_data", idBaseData)
+                        startActivity(alps)
+                        finish()
+                    }
+                }
+            }
         })
     }
 }

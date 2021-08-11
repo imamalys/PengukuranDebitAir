@@ -22,5 +22,16 @@ data class BaseDataModel(
     var namaPengukur: String,
     @ColumnInfo(name = "variable_pertama")
     var variablePertama: String?,
-    var n: String?
+    var n: String?,
+    @ColumnInfo(name = "min_h2")
+    var minH2: String?,
+    @ColumnInfo(name = "max_h2")
+    var maxH2: String?,
+    @ColumnInfo(name = "min_debit_saluran")
+    var minDebitSaluran: String?,
+    @ColumnInfo(name = "max_debit_saluran")
+    var maxDebitSaluran: String?,
+    var k: String?,
+    var c: String?,
+    var mape: String?
     )

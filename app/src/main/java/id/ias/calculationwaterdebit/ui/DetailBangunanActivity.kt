@@ -12,11 +12,12 @@ import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempa
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
+import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanUkurViewModelFactory
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanViewModel
 
 class DetailBangunanActivity : AppCompatActivity() {
-
+    val loading = LoadingDialogUtil()
     lateinit var mBinding: ActivityDetailBangunanBinding
     private val detailBangunanViewModel: DetailBangunanViewModel by viewModels {
         DetailBangunanUkurViewModelFactory()
@@ -47,6 +48,7 @@ class DetailBangunanActivity : AppCompatActivity() {
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
             if (detailBangunanViewModel.checkHaveValue()) {
+                loading.show(this)
                 when (detailBangunanViewModel.detailBangunan.value!!) {
                     "Ambang Lebar Pengontrol Segiempat" -> {
                         val alpsData = AmbangLebarPengontrolSegiempatModel(
@@ -91,6 +93,7 @@ class DetailBangunanActivity : AppCompatActivity() {
 
         alpsViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
+                loading.dialog.dismiss()
                 val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
                 intent.putExtra("id_tipe_bangunan", it)
                 intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)

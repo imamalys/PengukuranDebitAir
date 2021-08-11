@@ -91,7 +91,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/analisis_pertama_table_2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="5dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                 android:text="Analisis Tabel"
                 android:id="@+id/tv_analisis_2"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/analisis_pertama_result"/>
 
@@ -124,7 +124,7 @@
                 android:id="@+id/analisis_kedua_result"
                 app:layout_constraintTop_toBottomOf="@+id/analisis_kedua_table_2"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"/>
 
             <TextView
@@ -133,7 +133,7 @@
                 android:text="Analisis Regresi"
                 android:id="@+id/tv_analisis_3"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/analisis_kedua_result"/>
 
@@ -176,7 +176,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/analisis_ketiga_table_2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="5dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -201,6 +201,19 @@
                 android:id="@+id/analisis_result_table_2"
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/analisis_result_table_1" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:backgroundTint="#3F51B5"
+                android:text="Next"
+                android:id="@+id/btn_next"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/analisis_result_table_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

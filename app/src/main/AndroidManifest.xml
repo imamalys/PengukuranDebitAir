@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.RumusTabelDebitActivity"></activity>
+        <activity android:name=".ui.ReportActivity"></activity>
+        <activity android:name=".ui.RumusTabelDebitActivity" />
         <activity android:name=".ui.AnalisisActivity" />
         <activity android:name=".ui.VariasiKetinggianAirActivity" />
         <activity android:name=".ui.AmbangLebarPengontrolSegiempatActivity" />

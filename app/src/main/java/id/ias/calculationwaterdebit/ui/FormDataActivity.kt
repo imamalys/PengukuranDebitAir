@@ -16,11 +16,12 @@ import id.ias.calculationwaterdebit.database.model.PiasModel
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityFormDataBinding
+import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModelFactory
 
 class FormDataActivity : AppCompatActivity() {
-
+    val loading = LoadingDialogUtil()
     lateinit var mBinding: ActivityFormDataBinding
     val formDataActivityViewModel: FormDataActivityViewModel by viewModels {
         FormDataActivityViewModelFactory()
@@ -63,6 +64,7 @@ class FormDataActivity : AppCompatActivity() {
     }
 
     fun setView(piasModel: List<PiasModel>) {
+        loading.dialog.dismiss()
         piasModel.let {
             if (piasModel.size < formDataActivityViewModel.jumlahPias) {
                 mBinding.tvPias.text = String.format("Pias ke %s", ((piasModel.size + 1).toString()))
@@ -209,7 +211,7 @@ class FormDataActivity : AppCompatActivity() {
                 ToastUtils.showLong("Kecepatan air data belum diisi")
             } else {
                 mBinding.btnNext.isEnabled = false
-
+                loading.show(this)
                 val piasModel = PiasModel(
                     null,
                     formDataActivityViewModel.idPengambilanData,
@@ -247,6 +249,7 @@ class FormDataActivity : AppCompatActivity() {
                     setView(piasModel)
                 }
                 isLast -> {
+                    loading.dialog.dismiss()
                     val intent = Intent(this@FormDataActivity, RumusTabelDebitActivity::class.java)
                     intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                     intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
@@ -255,6 +258,7 @@ class FormDataActivity : AppCompatActivity() {
                     finish()
                 }
                 else -> {
+                    loading.dialog.dismiss()
                     val intent = Intent(this@FormDataActivity, PengambilanDataActivity::class.java)
                     intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                     intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)

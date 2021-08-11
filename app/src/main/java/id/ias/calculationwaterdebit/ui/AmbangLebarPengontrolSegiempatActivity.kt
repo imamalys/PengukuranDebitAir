@@ -8,6 +8,7 @@ import com.levitnudi.legacytableview.LegacyTableView
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityAmbangLebarPengontrolSegiempatBinding
+import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.AlpsActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.AlpsActivityViewModelFactory
 import kotlin.math.hypot
@@ -15,7 +16,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
-
+    val loading = LoadingDialogUtil()
     private lateinit var mBinding: ActivityAmbangLebarPengontrolSegiempatBinding
     private val alpsActivityViewModel: AlpsActivityViewModel by viewModels {
         AlpsActivityViewModelFactory()
@@ -53,6 +54,7 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
             }
         }
 
+        loading.show(this)
         setViewModel()
         setAction()
 
@@ -265,6 +267,7 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
 
         //remember to build your table as the last step
         mBinding.alpsDebit.build()
+        loading.dialog.dismiss()
     }
 
     private fun setViewModel() {

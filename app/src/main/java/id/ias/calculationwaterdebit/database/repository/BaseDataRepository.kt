@@ -24,4 +24,16 @@ class BaseDataRepository(private val baseDataDao: BaseDataDao) {
     suspend fun update(id: Int, variablePertama: String, n: String): Int {
         return baseDataDao.update(id, variablePertama, n)
     }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(id: Int, minH2: String, maxH2: String, minDebitSaluran: String, maxDebitSaluran: String): Int {
+        return baseDataDao.update(id, minH2, maxH2, minDebitSaluran, maxDebitSaluran)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun updateAnalisis(id: Int, k: String, c: String, mape: String): Int {
+        return baseDataDao.updateAnalisis(id, k, c, mape)
+    }
 }
