@@ -1,5 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,7 +12,9 @@ import id.ias.calculationwaterdebit.database.model.BaseDataModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDataInformasiBinding
+import id.ias.calculationwaterdebit.util.DateUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import java.util.*
 
 class DataInformasiActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
@@ -18,6 +22,10 @@ class DataInformasiActivity : AppCompatActivity() {
     private val baseDataViewModel: BaseDataViewModel by viewModels {
         BaseDataViewModelFactory((application as Application).baseDataRepository)
     }
+    private lateinit var calendar: Calendar
+    private var year = 0
+    private  var month:Int = 0
+    private  var day:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +33,24 @@ class DataInformasiActivity : AppCompatActivity() {
         mBinding = ActivityDataInformasiBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
+        calendar = Calendar.getInstance()
+        year = calendar.get(Calendar.YEAR)
+        month = calendar.get(Calendar.MONTH)
+        day = calendar.get(Calendar.DAY_OF_MONTH)
+
         setAction()
         setViewModel()
     }
 
     private fun setAction() {
+        mBinding.etTanggal.setOnClickListener {
+            try {
+                onCreateDialog().show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         mBinding.btnNext.setOnClickListener {
             when("") {
                 mBinding.etNamaDaerah.text.toString() -> {
@@ -76,6 +97,18 @@ class DataInformasiActivity : AppCompatActivity() {
         )
         baseDataViewModel.insert(baseData)
     }
+
+    private fun onCreateDialog(): Dialog {
+        return DatePickerDialog(
+            this,
+            myDateListener, year, month, day
+        )
+    }
+
+    private val myDateListener: DatePickerDialog.OnDateSetListener =
+        DatePickerDialog.OnDateSetListener { arg0, arg1, arg2, arg3 ->
+            mBinding.etTanggal.setText(DateUtil.getDateSpecific(arg1, arg2, arg3))
+        }
 
     private fun setViewModel() {
         baseDataViewModel.insertId.observe(this, {

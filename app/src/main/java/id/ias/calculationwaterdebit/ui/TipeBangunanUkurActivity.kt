@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
@@ -70,7 +72,12 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                tipeBangunanUkurViewModel.tipeBangunan.value = list[position]
+                if (position != 0) {
+                    ToastUtils.showShort("Tipe Bangunan belumd dapat dipilih")
+                    mBinding.spTipeBangunan.setSelection(0)
+                } else {
+                    tipeBangunanUkurViewModel.tipeBangunan.value = list[position]
+                }
             }
         }
     }

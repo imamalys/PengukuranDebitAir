@@ -37,6 +37,7 @@ class VariasiOutputActivity : AppCompatActivity() {
     val h2MinAll: ArrayList<Float> = ArrayList()
     val h2MaxAll: ArrayList<Float> = ArrayList()
     val debitSaluranAll: ArrayList<Float> = ArrayList()
+    var isUdated = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -203,15 +204,18 @@ class VariasiOutputActivity : AppCompatActivity() {
 
         baseDataViewModel.baseDataUpdate.observe(this, {
             if (it != 0) {
-                loading.dialog.dismiss()
-                when(variasiOutputViewModel.detailBangunan) {
-                    "Ambang Lebar Pengontrol Segiempat" -> {
-                        val alps = Intent(this@VariasiOutputActivity, AmbangLebarPengontrolSegiempatActivity::class.java)
-                        alps.putExtra("id_tipe_bangunan", idTipeBangunan)
-                        alps.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
-                        alps.putExtra("id_base_data", idBaseData)
-                        startActivity(alps)
-                        finish()
+                if (isUdated) {
+                    isUdated = false
+                    loading.dialog.dismiss()
+                    when(variasiOutputViewModel.detailBangunan) {
+                        "Ambang Lebar Pengontrol Segiempat" -> {
+                            val alps = Intent(this@VariasiOutputActivity, AmbangLebarPengontrolSegiempatActivity::class.java)
+                            alps.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            alps.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            alps.putExtra("id_base_data", idBaseData)
+                            startActivity(alps)
+                            finish()
+                        }
                     }
                 }
             }

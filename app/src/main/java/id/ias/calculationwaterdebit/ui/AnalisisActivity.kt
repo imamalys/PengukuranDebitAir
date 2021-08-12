@@ -580,8 +580,8 @@ class AnalisisActivity : AppCompatActivity() {
             arrayItem.add(arrayOf(h1, qPengukuran, h1CarretnQPengukuran, h1N2))
         }
 
-        val k = String.format("%.2f", sumH1CarretnQPengukuran / sumH1N2)
-        val c = String.format("%.2f", k.toFloat() / b.toFloat())
+        kRegresi = String.format("%.2f", sumH1CarretnQPengukuran / sumH1N2)
+        val c = String.format("%.2f", kRegresi.toFloat() / b.toFloat())
 
         val qRegresiPengukuran: ArrayList<Float> = ArrayList()
         for (i in arrayItem.indices) {
@@ -615,7 +615,7 @@ class AnalisisActivity : AppCompatActivity() {
         mBinding.analisisKetigaRegresi.build()
 
         mBinding.analisisRegresiResult.text = "Jumlah (H1^n)*Q Pengukuran: $sumH1CarretnQPengukuran\n" +
-                "Jumlah H1^(n*2): $sumH1N2\nK: $k\nC: $c"
+                "Jumlah H1^(n*2): $sumH1N2\nK: $kRegresi\nC: $c"
 
         setAnalisisRegresiTable1(qRegresiPengukuran)
     }
