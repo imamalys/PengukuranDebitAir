@@ -108,8 +108,8 @@ class AnalisisActivity : AppCompatActivity() {
             val h1: String = String.format("%.3f", it[i].h1)
             val qPengukuran: String = String.format("%.3f", it[i].qPengukuran)
             val qPengukuran1000: String = String.format("%.3f", it[i].qPengukuran!! * 1000)
-            val qBangunan: String = String.format("%.3f", it[i].qBangunan)
-            val qBangunan1000: String = String.format("%.3f", (it[i].qBangunan!! * 1000))
+            val qBangunan: String = if (it[i].qBangunan == null) "0" else String.format("%.3f", it[i].qBangunan)
+            val qBangunan1000: String = if (it[i].qBangunan== null) "0" else String.format("%.3f", (it[i].qBangunan!! * 1000))
             val logQPengukuran: String = String.format("%.3f", log10(qPengukuran1000.toFloat()))
             val logQBangunan: String = String.format("%.3f", log10(qBangunan1000.toFloat()))
             val residual: String = String.format(
@@ -467,8 +467,8 @@ class AnalisisActivity : AppCompatActivity() {
             "H1 (m)",
             "Q Pengukuran (m3/s)",
             "Q Pengukuran (I/s",
-            "Q Bangunan (m3/s)",
-            " Q Bangunan (I/s)",
+            "Q Tabel (m3/s)",
+            " Q Tabel (I/s)",
             "APE", "E", "dE"
         )
 
@@ -757,8 +757,8 @@ class AnalisisActivity : AppCompatActivity() {
             "H1 (m)",
             "Q Pengukuran (m3/s)",
             "Q Pengukuran (I/s",
-            "Q Bangunan (m3/s)",
-            " Q Bangunan (I/s)",
+            "Q Regresi (m3/s)",
+            " Q Regresi (I/s)",
             "APE", "E", "dE"
         )
 
@@ -1098,9 +1098,7 @@ class AnalisisActivity : AppCompatActivity() {
         baseDataViewModel.baseDataUpdate.observe(this, {
             if (it != 0) {
                 loading.dialog.dismiss()
-                val alps = Intent(this@AnalisisActivity, ReportActivity::class.java)
-                alps.putExtra("id_tipe_bangunan", idTipeBangunan)
-                alps.putExtra("tipe_bangunan", detailBangunan)
+                val alps = Intent(this@AnalisisActivity, ReportDetailActivity::class.java)
                 alps.putExtra("id_base_data", idBaseData)
                 startActivity(alps)
                 finish()

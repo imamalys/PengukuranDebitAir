@@ -29,4 +29,7 @@ interface BaseDataDao {
 
     @Query("UPDATE base_data SET keterangan = :keterangan, nilai_keterangan = :nilaiKeterangan WHERE id = :id")
     suspend fun update(id: Int, keterangan: String, nilaiKeterangan: Int): Int
+
+    @Query("UPDATE base_data SET tipe_bangunan = :tipeBangunan WHERE id = :id")
+    suspend fun update(id: Int, tipeBangunan: String): Int
 }

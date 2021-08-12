@@ -35,6 +35,10 @@ class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel()
     fun update(id: Int, keterangan: String, nilaiKeterangan: Int) = viewModelScope.launch {
         baseDataUpdate.value = repository.update(id = id, keterangan = keterangan, nilaiKeterangan = nilaiKeterangan)
     }
+
+    fun update(id: Int, tipeBangunan: String) = viewModelScope.launch {
+        baseDataUpdate.value = repository.update(id = id, tipeBangunan = tipeBangunan)
+    }
 }
 
 class BaseDataViewModelFactory(private val repository: BaseDataRepository): ViewModelProvider.Factory {

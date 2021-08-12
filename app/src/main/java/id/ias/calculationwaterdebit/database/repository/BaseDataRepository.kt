@@ -42,4 +42,10 @@ class BaseDataRepository(private val baseDataDao: BaseDataDao) {
     suspend fun update(id: Int, keterangan: String, nilaiKeterangan: Int): Int {
         return baseDataDao.update(id = id, keterangan = keterangan, nilaiKeterangan = nilaiKeterangan)
     }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(id: Int, tipeBangunan: String): Int {
+        return baseDataDao.update(id = id, tipeBangunan = tipeBangunan)
+    }
 }

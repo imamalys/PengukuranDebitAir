@@ -20,6 +20,8 @@ data class BaseDataModel(
     var noPengukuran: String,
     @ColumnInfo(name = "nama_pengukur")
     var namaPengukur: String,
+    @ColumnInfo(name = "tipe_bangunan")
+    var tipeBangunan: String?,
     @ColumnInfo(name = "variable_pertama")
     var variablePertama: String?,
     var n: String?,

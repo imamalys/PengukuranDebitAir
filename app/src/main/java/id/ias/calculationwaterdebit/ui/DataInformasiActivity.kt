@@ -93,7 +93,7 @@ class DataInformasiActivity : AppCompatActivity() {
             mBinding.etNoPengukuran.text.toString(),
             mBinding.etNamaPengukur.text.toString(),
             null, null, null, null, null, null,
-            null, null, null, null, 0
+            null, null, null, null, null, 0
         )
         baseDataViewModel.insert(baseData)
     }

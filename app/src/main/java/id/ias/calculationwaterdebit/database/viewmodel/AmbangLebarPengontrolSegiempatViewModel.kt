@@ -17,10 +17,6 @@ class AmbangLebarPengontrolSegiempatViewModel(private val repository: AmbangLeba
     fun insert(alpsData: AmbangLebarPengontrolSegiempatModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(alpsData)
     }
-
-    fun update(idAlps: Int, data: FloatArray) = viewModelScope.launch {
-        repository.update(idAlps, data)
-    }
 }
 
 class AmbangLebarPengontrolSegiempatViewModelFactory(private val repository: AmbangLebarPengontrolSegiempatRepository): ViewModelProvider.Factory {

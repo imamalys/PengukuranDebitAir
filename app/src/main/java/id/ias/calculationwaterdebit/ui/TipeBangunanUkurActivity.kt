@@ -14,19 +14,23 @@ import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
+import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
+import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityTipeBangunanUkurBinding
+import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModel
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModelFactory
 
 class TipeBangunanUkurActivity : AppCompatActivity() {
-
+    val loading = LoadingDialogUtil()
     var idBaseData: Long = 0
     lateinit var mBinding: ActivityTipeBangunanUkurBinding
     private val tipeBangunanUkurViewModel: TipeBangunanUkurViewModel by viewModels {
         TipeBangunanUkurViewModelFactory()
     }
-    private val alpsViewModel: AmbangLebarPengontrolSegiempatViewModel by viewModels {
-        AmbangLebarPengontrolSegiempatViewModelFactory((application as Application).alpsRepository)
+
+    private val baseDataViewModel: BaseDataViewModel by viewModels {
+        BaseDataViewModelFactory((application as Application).baseDataRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +52,8 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
 
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
-            val intent = Intent(this@TipeBangunanUkurActivity, DetailBangunanActivity::class.java)
-            intent.putExtra("tipe_bangunan", tipeBangunanUkurViewModel.tipeBangunan.value)
-            intent.putExtra("id_base_data", idBaseData)
-            startActivity(intent)
-            finish()
+            loading.show(this)
+            baseDataViewModel.update(id = idBaseData.toInt(), tipeBangunan = tipeBangunanUkurViewModel.tipeBangunan.value!!)
         }
     }
 
@@ -72,7 +73,7 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0) {
+                if (position != 0 && position != 8) {
                     ToastUtils.showShort("Tipe Bangunan belumd dapat dipilih")
                     mBinding.spTipeBangunan.setSelection(0)
                 } else {
@@ -88,5 +89,16 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
             mBinding.ivRumus.setImageDrawable(theme.getDrawable(tipeBangunanUkurViewModel.getRumus(it)))
             mBinding.tvKeteranganIsi.text = tipeBangunanUkurViewModel.getKeterangan(it)
         }
+
+        baseDataViewModel.baseDataUpdate.observe(this, {
+            if (it != 0) {
+                loading.dialog.dismiss()
+                val intent = Intent(this@TipeBangunanUkurActivity, DetailBangunanActivity::class.java)
+                intent.putExtra("tipe_bangunan", tipeBangunanUkurViewModel.tipeBangunan.value)
+                intent.putExtra("id_base_data", idBaseData)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 }

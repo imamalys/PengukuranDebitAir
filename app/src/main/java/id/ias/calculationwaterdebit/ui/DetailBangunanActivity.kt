@@ -9,8 +9,11 @@ import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.adapter.DetailBangunanAdapter
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
+import id.ias.calculationwaterdebit.database.model.OrificeModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
+import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModel
+import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanUkurViewModelFactory
@@ -25,6 +28,11 @@ class DetailBangunanActivity : AppCompatActivity() {
     private val alpsViewModel: AmbangLebarPengontrolSegiempatViewModel by viewModels {
         AmbangLebarPengontrolSegiempatViewModelFactory((application as Application).alpsRepository)
     }
+
+    private val orificeViewModel: OrificeViewModel by viewModels {
+        OrificeViewModelFactory((application as Application).orificeRepository)
+    }
+
     var idTipeBangunan: Long = 0
     var idBaseData: Long = 0
 
@@ -63,6 +71,15 @@ class DetailBangunanActivity : AppCompatActivity() {
                                 detailBangunanViewModel.detailBangunanValue.value!![6])
                         alpsViewModel.insert(alpsData)
                     }
+                    "Orifice" -> {
+                        val orificeData = OrificeModel(
+                            null,
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                        )
+                        orificeViewModel.insert(orificeData)
+                    }
                 }
             } else {
                 ToastUtils.showLong("Data masih ada yang kosong, silahkan diisi terlebih dahulu")
@@ -92,6 +109,18 @@ class DetailBangunanActivity : AppCompatActivity() {
         }
 
         alpsViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                loading.dialog.dismiss()
+                val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
+                intent.putExtra("id_tipe_bangunan", it)
+                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+                intent.putExtra("id_base_data", idBaseData)
+                startActivity(intent)
+                finish()
+            }
+        })
+
+        orificeViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
                 loading.dialog.dismiss()
                 val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)

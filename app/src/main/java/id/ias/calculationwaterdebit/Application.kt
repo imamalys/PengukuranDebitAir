@@ -24,6 +24,7 @@ class Application: Application() {
     val database by lazy { BaseRoomDatabase.getDatabase(this, applicationScope) }
     val baseDataRepository by lazy { BaseDataRepository(database.baseDataDao()) }
     val alpsRepository by lazy { AmbangLebarPengontrolSegiempatRepository(database.alpsDao()) }
+    val orificeRepository by lazy { OrificeRepository(database.orificeDao()) }
     val pengambilanDataRepository by lazy { PengambilanDataRepository(database.pengambilanDataDao()) }
     val piasRepository by lazy { PiasDataRepository(database.piasDao()) }
     val koefisiensiAmbangLebarRepository by lazy { KoefiensiAmbangLebarRepository(database.koefisiensiDao()) }

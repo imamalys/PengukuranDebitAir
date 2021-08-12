@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 @Database(entities = [
     BaseDataModel::class,
     AmbangLebarPengontrolSegiempatModel::class,
+    OrificeModel::class,
     PengambilanDataModel::class,
     PiasModel::class,
     KoefisiensiAmbangLebarModel::class],
@@ -23,6 +24,7 @@ abstract class BaseRoomDatabase: RoomDatabase() {
 
     abstract fun baseDataDao(): BaseDataDao
     abstract fun alpsDao(): AmbangLebarPengontrolSegiempatDao
+    abstract fun orificeDao(): OrificeDao
     abstract fun pengambilanDataDao(): PengambilanDataDao
     abstract fun piasDao(): PiasDao
     abstract fun koefisiensiDao(): KoefisiensiAmbangLebarDao

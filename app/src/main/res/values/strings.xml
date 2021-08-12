@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CalculationWaterDebit</string>
+    <string name="app_name">IRCAL-BOP</string>
     <string-array name="bangunan_ukur">
         <item>Ambang Lebar Pengontrol Segiempat</item>
         <item>Ambang Lebar Pengontrol Trapesium</item>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="20dp"
+    android:id="@+id/cv_main"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/ll_main"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_nama_daerah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:text="Nama Daerah Irigasi"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_nama_daerah"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:focusable="false"
+            android:textSize="12sp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_text_border"
+            android:gravity="center_vertical"
+            android:hint="D.I Wadaslintang"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tv_wilayah_kewenangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Instansi Pengelolaan"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/et_wilayah_kewenangan"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:focusable="false"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_text_border"
+            android:gravity="center_vertical"
+            android:hint="BBWS Cimanuk Cisanggarung"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tv_tipe_bangunan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Tipe Bangunan"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_tipe_bangunan"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:focusable="false"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_text_border"
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            android:hint="Ambang Lebar PersegiEmpat"
+            android:padding="10dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

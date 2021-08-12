@@ -34,5 +34,10 @@ class MainMenuActivity : AppCompatActivity() {
             val intent = Intent(this@MainMenuActivity, DataInformasiActivity::class.java)
             startActivity(intent)
         }
+
+        mBinding.ivIcon2.setOnClickListener {
+            val intent = Intent(this@MainMenuActivity, ReportActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
