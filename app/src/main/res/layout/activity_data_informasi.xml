@@ -83,6 +83,7 @@
                 android:gravity="center_vertical"
                 android:hint="D.I Wadaslintang"
                 android:padding="10dp"
+                android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_nama_daerah" />
 
             <TextView
@@ -91,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp"
-                android:text="Instansi Pengelolaan"
+                android:text="Instansi Pengelola"
                 android:textColor="@color/black"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_nama_daerah" />
@@ -105,7 +106,8 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/edit_text_border"
                 android:gravity="center_vertical"
-                android:hint="BBWS Cimanuk Cisanggarung"
+                android:textSize="12sp"
+                android:hint="BBWS/BWS/Dinas PU SDA Provinsi/Kabupaten?KOta"
                 android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_wilayah_kewenangan" />
 
@@ -130,6 +132,7 @@
                 android:background="@drawable/edit_text_border"
                 android:gravity="center_vertical"
                 android:hint="Jawa Tengah"
+                android:textSize="12sp"
                 android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_provinsi" />
 
@@ -154,6 +157,7 @@
                 android:background="@drawable/edit_text_border"
                 android:gravity="center_vertical"
                 android:hint="Kebumen"
+                android:textSize="12sp"
                 android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_kabupaten" />
 
@@ -179,6 +183,7 @@
                 android:background="@drawable/edit_text_border"
                 android:gravity="center_vertical"
                 android:hint="Tanggal"
+                android:textSize="12sp"
                 android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_tanggal" />
 
@@ -202,6 +207,7 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/edit_text_border"
                 android:gravity="center_vertical"
+                android:textSize="12sp"
                 android:hint="(Nomenklatur Bangun Ukur)"
                 android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_no_pengukuran" />
@@ -228,7 +234,9 @@
                 android:gravity="center_vertical"
                 android:hint="(Nama)"
                 android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_nama_pengukur" />
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_nama_pengukur"
+                tools:layout_editor_absoluteX="-12dp" />
 
             <Button
                 android:layout_width="200dp"

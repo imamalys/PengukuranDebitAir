@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import id.ias.calculationwaterdebit.Application
+import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityMainMenuBinding
@@ -24,9 +26,10 @@ class MainMenuActivity : AppCompatActivity() {
 
         setAction()
 
-        ambangLebarPengontrolSegiempatViewModel.allAlpsDatas.observe(this, {
-
-        })
+        Glide.with(this)
+                .load(R.drawable.logo_app)
+                .circleCrop()
+                .into(mBinding.ivTopLeft)
     }
 
     private fun setAction() {

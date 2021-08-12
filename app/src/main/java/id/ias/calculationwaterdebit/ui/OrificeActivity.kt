@@ -11,6 +11,7 @@ import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModelFactory
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityOrificeBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.OrificeActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.OrificeActivityViewModelFactory
@@ -19,6 +20,7 @@ import kotlin.math.sqrt
 
 class OrificeActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
+    val back = BackDialogUtil()
     private lateinit var mBinding: ActivityOrificeBinding
 
     private val pengambilanDataViewModel: PengambilanDataViewModel by viewModels {
@@ -156,6 +158,16 @@ class OrificeActivity : AppCompatActivity() {
             if (it.id != null) {
                 orificeActivityViewModel.orificeData = it
                 setVariable()
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
+                }
             }
         })
     }

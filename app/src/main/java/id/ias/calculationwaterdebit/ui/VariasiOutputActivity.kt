@@ -10,12 +10,14 @@ import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.model.PiasModel
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityVariasiOutputBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModel
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModelFactory
 
 class VariasiOutputActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
+    val back = BackDialogUtil()
     private lateinit var mBinding: ActivityVariasiOutputBinding
     private val variasiOutputViewModel: VariasiOutputViewModel by viewModels {
         VariasiOutputViewModelFactory()
@@ -225,6 +227,16 @@ class VariasiOutputActivity : AppCompatActivity() {
                             finish()
                         }
                     }
+                }
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
                 }
             }
         })

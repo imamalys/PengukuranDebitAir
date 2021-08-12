@@ -13,7 +13,7 @@ class DetailBangunanViewModel: ViewModel() {
     fun getImage(item: String): Int {
         when(item) {
             "Ambang Lebar Pengontrol Segiempat" -> {
-                return R.drawable.ambang_lebar_segiempat_image
+                return R.drawable.ambang_lebar_segiempat_image_detail
             }
             "Ambang Lebar Pengontrol Trapesium" -> {
                 return R.drawable.ambang_lebar_trapesium_image
@@ -37,7 +37,7 @@ class DetailBangunanViewModel: ViewModel() {
                 return R.drawable.cut_throated_flume_image
             }
             "Orifice" -> {
-                return R.drawable.orifice_image
+                return R.drawable.orifice_image_detail
             }
             "Romijn" -> {
                 return R.drawable.romijn_image

@@ -11,9 +11,10 @@ import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityRumusTabelDebitBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 
 class RumusTabelDebitActivity : AppCompatActivity() {
-
+    val back = BackDialogUtil()
     private lateinit var mBinding: ActivityRumusTabelDebitBinding
 
     private val baseDataViewModel: BaseDataViewModel by viewModels {
@@ -99,6 +100,16 @@ class RumusTabelDebitActivity : AppCompatActivity() {
                 intent.putExtra("tipe_bangunan", detailBangunan)
                 startActivity(intent)
                 finish()
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
+                }
             }
         })
     }

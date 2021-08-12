@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -17,11 +18,13 @@ import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegi
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityTipeBangunanUkurBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModel
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModelFactory
 
 class TipeBangunanUkurActivity : AppCompatActivity() {
+    val back = BackDialogUtil()
     val loading = LoadingDialogUtil()
     var idBaseData: Long = 0
     lateinit var mBinding: ActivityTipeBangunanUkurBinding
@@ -98,6 +101,16 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 intent.putExtra("id_base_data", idBaseData)
                 startActivity(intent)
                 finish()
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
+                }
             }
         })
     }

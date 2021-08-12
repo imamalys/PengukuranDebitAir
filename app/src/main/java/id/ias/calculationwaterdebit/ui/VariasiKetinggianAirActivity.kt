@@ -6,11 +6,12 @@ import android.text.InputFilter
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.databinding.ActivityVariasiKetinggianAirBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.MinMaxFilter
 
 
 class VariasiKetinggianAirActivity : AppCompatActivity() {
-
+    val back = BackDialogUtil()
     private lateinit var mBinding: ActivityVariasiKetinggianAirBinding
     var tipeBangunan: String = ""
     var idTipeBangunan: Long = 0
@@ -55,5 +56,15 @@ class VariasiKetinggianAirActivity : AppCompatActivity() {
                 ToastUtils.showLong("Anda belum mengisi variasi ketinggian air")
             }
         }
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
+                }
+            }
+        })
     }
 }

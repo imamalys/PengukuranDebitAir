@@ -15,12 +15,14 @@ import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegi
 import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanUkurViewModelFactory
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanViewModel
 
 class DetailBangunanActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
+    val back = BackDialogUtil()
     lateinit var mBinding: ActivityDetailBangunanBinding
     private val detailBangunanViewModel: DetailBangunanViewModel by viewModels {
         DetailBangunanUkurViewModelFactory()
@@ -129,6 +131,16 @@ class DetailBangunanActivity : AppCompatActivity() {
                 intent.putExtra("id_base_data", idBaseData)
                 startActivity(intent)
                 finish()
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
+                }
             }
         })
     }

@@ -11,9 +11,11 @@ import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityCheckKondisiBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 
 class CheckKondisiActivity : AppCompatActivity() {
+    val back = BackDialogUtil()
     val loading = LoadingDialogUtil()
     private lateinit var mBinding: ActivityCheckKondisiBinding
 
@@ -120,6 +122,16 @@ class CheckKondisiActivity : AppCompatActivity() {
                 intent.putExtra("id_base_data", idBaseData)
                 startActivity(intent)
                 finish()
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
+                }
             }
         })
     }

@@ -26,18 +26,18 @@ class FormDataActivityViewModel: ViewModel() {
             when(metodePengambilan.value) {
                 "Dua Titik" -> {
                     if (i == 1 || i == 3) {
-                        if (metodePengambilan.value!![i].toInt().toString() == "0" || metodePengambilan.value!![i].toString() == "") {
+                        if (metodePengambilan.value!![i].toInt().toString() == "0.0" || metodePengambilan.value!![i].toString() == "") {
                             return false
                         }
                     }
                 }
                 "Tiga Titik" -> {
-                    if (metodePengambilan.value!![i].toInt().toString() == "0" || metodePengambilan.value!![i].toString() == "") {
+                    if (metodePengambilan.value!![i].toInt().toString() == "0.0" || metodePengambilan.value!![i].toString() == "") {
                         return false
                     }
                 } else -> {
                     if (i == 2) {
-                        if (metodePengambilan.value!![i].toInt().toString() == "0" || metodePengambilan.value!![i].toString() == "") {
+                        if (metodePengambilan.value!![i].toInt().toString() == "0.0" || metodePengambilan.value!![i].toString() == "") {
                             return false
                         }
                     }

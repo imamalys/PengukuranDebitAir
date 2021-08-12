@@ -15,6 +15,7 @@ import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegi
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityPengambilanDataBinding
+import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.util.MinMaxFilter
 import id.ias.calculationwaterdebit.viewmodel.PengambilanDataActivityViewModel
@@ -23,6 +24,7 @@ import kotlin.math.sign
 
 class PengambilanDataActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
+    val back = BackDialogUtil()
     lateinit var mBinding: ActivityPengambilanDataBinding
     val pengambilanDataActivityViewModel: PengambilanDataActivityViewModel by viewModels {
         PengambilanDataActivityViewModelFactory()
@@ -159,6 +161,16 @@ class PengambilanDataActivity : AppCompatActivity() {
                     isLast = true
                 }
                 mBinding.tvTitle.text = String.format("Data Pengambilan Variasi Air Ke-%s", (it.size + 1).toString() )
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        back.show(this, object: BackDialogUtil.DialogListener {
+            override fun onYes(action: Boolean) {
+                if (action) {
+                    finish()
+                }
             }
         })
     }
