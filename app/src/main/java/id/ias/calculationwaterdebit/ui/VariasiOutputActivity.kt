@@ -216,6 +216,14 @@ class VariasiOutputActivity : AppCompatActivity() {
                             startActivity(alps)
                             finish()
                         }
+                        "Orifice" -> {
+                            val orifice = Intent(this@VariasiOutputActivity, OrificeActivity::class.java)
+                            orifice.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            orifice.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            orifice.putExtra("id_base_data", idBaseData)
+                            startActivity(orifice)
+                            finish()
+                        }
                     }
                 }
             }

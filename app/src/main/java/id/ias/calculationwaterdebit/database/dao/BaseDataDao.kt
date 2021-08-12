@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BaseDataDao {
-    @Query("SELECT * FROM base_data")
+    @Query("SELECT * FROM base_data ORDER BY id DESC")
     fun getAllBaseData(): Flow<List<BaseDataModel>>
 
     @Query("SELECT * FROM base_data WHERE id = :id")
