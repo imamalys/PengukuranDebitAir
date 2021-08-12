@@ -17,16 +17,16 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="20dp"
             android:id="@+id/iv_top_left"
+            android:src="@drawable/logo_app"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <ImageView
             android:layout_width="140dp"
             android:layout_height="60dp"
-            android:background="@color/white"
+            android:src="@drawable/pupr_logo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="5dp" />
@@ -37,7 +37,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/iv_top_left"
             app:layout_constraintRight_toRightOf="@id/iv_top_left"
             app:layout_constraintTop_toBottomOf="@id/iv_top_left"
-            android:text="M-KLAUDE"
+            android:text="IRCAL-BOP"
             android:textSize="20sp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,6 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.anychart.AnyChart
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.charts.Cartesian
+import com.anychart.core.cartesian.series.Line
+import com.anychart.data.Mapping
+import com.anychart.data.Set
+import com.anychart.enums.Anchor
+import com.anychart.enums.MarkerType
+import com.anychart.enums.TooltipPositionMode
+import com.anychart.graphics.vector.Stroke
 import com.levitnudi.legacytableview.LegacyTableView
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.model.BaseDataModel
@@ -17,6 +28,7 @@ import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import kotlin.math.abs
 import kotlin.math.log10
 import kotlin.math.pow
+
 
 class AnalisisActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
@@ -43,6 +55,7 @@ class AnalisisActivity : AppCompatActivity() {
     var cUse: String = ""
     var mapeTerkecil: String = ""
     private lateinit var baseData: BaseDataModel
+    var grafikData: ArrayList<Array<String>> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,20 +86,20 @@ class AnalisisActivity : AppCompatActivity() {
 
     private fun setAnalisisBangunanTable1(it: List<PengambilanDataModel>) {
         LegacyTableView.insertLegacyTitle(
-                "Variasi air Ke-",
-                "H1 (m)",
-                "Q Pengukuran (m3/s)",
-                "Q Pengukuran (I/s",
-                "Q Bangunan (m3/s)",
-                " Q Bangunan (I/s)",
-                "Log Q. Pengukuran",
-                "Log Q. Bangunan",
-                "Residual",
-                "%Rresidual",
-                "Median E",
-                "Abs(%Residual)",
-                "MAD",
-                "Zmod"
+            "Variasi air Ke-",
+            "H1 (m)",
+            "Q Pengukuran (m3/s)",
+            "Q Pengukuran (I/s",
+            "Q Bangunan (m3/s)",
+            " Q Bangunan (I/s)",
+            "Log Q. Pengukuran",
+            "Log Q. Bangunan",
+            "Residual",
+            "%Rresidual",
+            "Median E",
+            "Abs(%Residual)",
+            "MAD",
+            "Zmod"
         )
 
         val arrayItem: ArrayList<Array<String>> = ArrayList()
@@ -99,25 +112,35 @@ class AnalisisActivity : AppCompatActivity() {
             val qBangunan1000: String = String.format("%.3f", (it[i].qBangunan!! * 1000))
             val logQPengukuran: String = String.format("%.3f", log10(qPengukuran1000.toFloat()))
             val logQBangunan: String = String.format("%.3f", log10(qBangunan1000.toFloat()))
-            val residual: String = String.format("%.3f", logQPengukuran.toFloat() - logQBangunan.toFloat())
-            val percentageResidual: String = String.format("%.4f", residual.toFloat() / logQPengukuran.toFloat())
+            val residual: String = String.format(
+                "%.3f",
+                logQPengukuran.toFloat() - logQBangunan.toFloat()
+            )
+            val percentageResidual: String = String.format(
+                "%.4f",
+                residual.toFloat() / logQPengukuran.toFloat()
+            )
 
             arrayItem.add(
-                    arrayOf(
-                            h1, qPengukuran, qPengukuran1000, qBangunan, qBangunan1000, logQPengukuran,
-                            logQBangunan, residual
-                    )
+                arrayOf(
+                    h1, qPengukuran, qPengukuran1000, qBangunan, qBangunan1000, logQPengukuran,
+                    logQBangunan, residual
+                )
             )
 
             arrayPercentageResidual.add(percentageResidual)
         }
 
         val median: String = if (arrayPercentageResidual.size %2 == 0)
-            String.format("%.4f",
-                    arrayPercentageResidual[arrayPercentageResidual.size/2].toFloat() +
-                            arrayPercentageResidual[arrayPercentageResidual.size/2 - 1].toFloat() / 2)
-        else String.format("%.4f",
-                arrayPercentageResidual[arrayPercentageResidual.size/2].toFloat())
+            String.format(
+                "%.4f",
+                arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat() +
+                        arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1].toFloat() / 2
+            )
+        else String.format(
+            "%.4f",
+            arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat()
+        )
 
         val arrayAbs: ArrayList<String> = ArrayList()
         for (i in arrayPercentageResidual.indices) {
@@ -126,22 +149,42 @@ class AnalisisActivity : AppCompatActivity() {
         }
 
         val mad: String = if (arrayAbs.size %2 == 0)
-            String.format("%.6f",
-                    arrayAbs[arrayAbs.size/2].toFloat() + arrayAbs[arrayAbs.size/2 - 1].toFloat() / 2)
-        else String.format("%.6f",
-                arrayAbs[arrayAbs.size/2].toFloat())
+            String.format(
+                "%.6f",
+                arrayAbs[arrayAbs.size / 2].toFloat() + arrayAbs[arrayAbs.size / 2 - 1].toFloat() / 2
+            )
+        else String.format(
+            "%.6f",
+            arrayAbs[arrayAbs.size / 2].toFloat()
+        )
 
         val arrayZmod: ArrayList<String> = ArrayList()
 
         for (i in arrayAbs.indices) {
-            val zmod = String.format("%.3f", 0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat())
+            val zmod = String.format(
+                "%.3f",
+                0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
+            )
             arrayZmod.add(zmod)
         }
 
         for (i in it.indices) {
-            LegacyTableView.insertLegacyContent((i + 1).toString(), arrayItem[i][0], arrayItem[i][1], arrayItem[i][2], arrayItem[i][3],
-                    arrayItem[i][4], arrayItem[i][5], arrayItem[i][6], arrayItem[i][7], arrayPercentageResidual[i], median, arrayAbs[i],
-                    mad, arrayZmod[i])
+            LegacyTableView.insertLegacyContent(
+                (i + 1).toString(),
+                arrayItem[i][0],
+                arrayItem[i][1],
+                arrayItem[i][2],
+                arrayItem[i][3],
+                arrayItem[i][4],
+                arrayItem[i][5],
+                arrayItem[i][6],
+                arrayItem[i][7],
+                arrayPercentageResidual[i],
+                median,
+                arrayAbs[i],
+                mad,
+                arrayZmod[i]
+            )
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()
@@ -166,15 +209,18 @@ class AnalisisActivity : AppCompatActivity() {
         setAnalisisBangunanTable2(arrayItem, arrayZmod)
     }
 
-    private fun setAnalisisBangunanTable2(arrayItem: ArrayList<Array<String>>, arrayZmod: ArrayList<String>) {
+    private fun setAnalisisBangunanTable2(
+        arrayItem: ArrayList<Array<String>>,
+        arrayZmod: ArrayList<String>
+    ) {
         LegacyTableView.insertLegacyTitle(
-                "Variasi air Ke-",
-                "H1 (m)",
-                "Q Pengukuran (m3/s)",
-                "Q Pengukuran (I/s",
-                "Q Bangunan (m3/s)",
-                " Q Bangunan (I/s)",
-                "APE", "E", "dE"
+            "Variasi air Ke-",
+            "H1 (m)",
+            "Q Pengukuran (m3/s)",
+            "Q Pengukuran (I/s",
+            "Q Bangunan (m3/s)",
+            " Q Bangunan (I/s)",
+            "APE", "E", "dE"
         )
 
         val newArrayItem: ArrayList<Array<String>> = ArrayList()
@@ -191,11 +237,24 @@ class AnalisisActivity : AppCompatActivity() {
                     String.format("%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                         "0" else arrayItem[i][3]
             val qBangunan1000: String = if (qBangunan == "0") "0" else arrayItem[i][3]
-            val ape: String = if (qBangunan == "0") "0.00" else String.format("%.2f",
-                    abs(qPengukuran1000.toFloat() - qBangunan1000.toFloat()) / qBangunan1000.toFloat() * 100)
-            val eValue: String = if (qBangunan == "0") "0.00" else String.format("%.2f",
-                    (qPengukuran.toFloat() - qBangunan.toFloat()) / qBangunan.toFloat() * 100)
-            newArrayItem.add(arrayOf(h1, qPengukuran, qPengukuran1000, qBangunan, qBangunan1000, ape))
+            val ape: String = if (qBangunan == "0") "0.00" else String.format(
+                "%.2f",
+                abs(qPengukuran1000.toFloat() - qBangunan1000.toFloat()) / qBangunan1000.toFloat() * 100
+            )
+            val eValue: String = if (qBangunan == "0") "0.00" else String.format(
+                "%.2f",
+                (qPengukuran.toFloat() - qBangunan.toFloat()) / qBangunan.toFloat() * 100
+            )
+            newArrayItem.add(
+                arrayOf(
+                    h1,
+                    qPengukuran,
+                    qPengukuran1000,
+                    qBangunan,
+                    qBangunan1000,
+                    ape
+                )
+            )
             apeSum += ape.toFloat()
             eSum += eValue.toFloat()
             e.add(eValue)
@@ -208,14 +267,25 @@ class AnalisisActivity : AppCompatActivity() {
 
         val dE: ArrayList<String> = ArrayList()
         for (i in newArrayItem.indices) {
-            val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format("%.2f",
-                    (newArrayItem[i][3].toFloat() - eSum).pow(2))
+            val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
+                "%.2f",
+                (newArrayItem[i][3].toFloat() - eSum).pow(2)
+            )
             dE.add(deValue)
         }
 
         for (i in newArrayItem.indices) {
-            LegacyTableView.insertLegacyContent((i + 1).toString(), newArrayItem[i][0], newArrayItem[i][1],
-                    newArrayItem[i][2], newArrayItem[i][3], newArrayItem[i][4], newArrayItem[i][5], e[i], dE[i])
+            LegacyTableView.insertLegacyContent(
+                (i + 1).toString(),
+                newArrayItem[i][0],
+                newArrayItem[i][1],
+                newArrayItem[i][2],
+                newArrayItem[i][3],
+                newArrayItem[i][4],
+                newArrayItem[i][5],
+                e[i],
+                dE[i]
+            )
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()
@@ -249,20 +319,20 @@ class AnalisisActivity : AppCompatActivity() {
             baseData = it
 
             LegacyTableView.insertLegacyTitle(
-                    "Variasi air Ke-",
-                    "H1 (m)",
-                    "Q Pengukuran (m3/s)",
-                    "Q Pengukuran (I/s",
-                    "Q Tabel (m3/s)",
-                    " Q Tabel (I/s)",
-                    "Log Q. Pengukuran",
-                    "Log Q. Tabel",
-                    "Residual",
-                    "%Rresidual",
-                    "Median E",
-                    "Abs(%Residual)",
-                    "MAD",
-                    "Zmod"
+                "Variasi air Ke-",
+                "H1 (m)",
+                "Q Pengukuran (m3/s)",
+                "Q Pengukuran (I/s",
+                "Q Tabel (m3/s)",
+                " Q Tabel (I/s)",
+                "Log Q. Pengukuran",
+                "Log Q. Tabel",
+                "Residual",
+                "%Rresidual",
+                "Median E",
+                "Abs(%Residual)",
+                "MAD",
+                "Zmod"
             )
 
             val arrayItem: ArrayList<Array<String>> = ArrayList()
@@ -270,55 +340,99 @@ class AnalisisActivity : AppCompatActivity() {
             for (i in pengambilanDataList.indices) {
                 val h1: String = String.format("%.3f", pengambilanDataList[i].h1)
                 val qPengukuran: String = String.format("%.3f", pengambilanDataList[i].qPengukuran)
-                val qPengukuran1000: String = String.format("%.3f", pengambilanDataList[i].qPengukuran!! * 1000)
-                val qTabel: String = String.format("%.3f", (baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(baseData.n!!.toFloat()))
-                val qTabel1000: String = String.format("%.3f", (
-                        baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(baseData.n!!.toFloat()) * 1000)
+                val qPengukuran1000: String = String.format(
+                    "%.3f",
+                    pengambilanDataList[i].qPengukuran!! * 1000
+                )
+                val qTabel: String = String.format(
+                    "%.3f", (baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(
+                        baseData.n!!.toFloat()
+                    )
+                )
+                val qTabel1000: String = String.format(
+                    "%.3f", (
+                            baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(
+                        baseData.n!!.toFloat()
+                    ) * 1000
+                )
                 val logQPengukuran: String = String.format("%.3f", log10(qPengukuran1000.toFloat()))
                 val logQBangunan: String = String.format("%.3f", log10(qTabel1000.toFloat()))
-                val residual: String = String.format("%.3f", logQPengukuran.toFloat() - logQBangunan.toFloat())
-                val percentageResidual: String = String.format("%.4f", residual.toFloat() / logQPengukuran.toFloat())
+                val residual: String = String.format(
+                    "%.3f",
+                    logQPengukuran.toFloat() - logQBangunan.toFloat()
+                )
+                val percentageResidual: String = String.format(
+                    "%.4f",
+                    residual.toFloat() / logQPengukuran.toFloat()
+                )
 
                 arrayItem.add(
-                        arrayOf(
-                                h1, qPengukuran, qPengukuran1000, qTabel, qTabel1000, logQPengukuran,
-                                logQBangunan, residual
-                        )
+                    arrayOf(
+                        h1, qPengukuran, qPengukuran1000, qTabel, qTabel1000, logQPengukuran,
+                        logQBangunan, residual
+                    )
                 )
 
                 arrayPercentageResidual.add(percentageResidual)
             }
 
-            val median: String = if (arrayPercentageResidual.size %2 == 0)
-                String.format("%.4f",
-                        arrayPercentageResidual[arrayPercentageResidual.size/2].toFloat() +
-                                arrayPercentageResidual[arrayPercentageResidual.size/2 - 1].toFloat() / 2)
-            else String.format("%.4f",
-                    arrayPercentageResidual[arrayPercentageResidual.size/2].toFloat())
+            val median: String = if (arrayPercentageResidual.size % 2 == 0)
+                String.format(
+                    "%.4f",
+                    arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat() +
+                            arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1].toFloat() / 2
+                )
+            else String.format(
+                "%.4f",
+                arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat()
+            )
 
             val arrayAbs: ArrayList<String> = ArrayList()
             for (i in arrayPercentageResidual.indices) {
-                val abs = String.format("%.6f", arrayPercentageResidual[i].toFloat() - median.toFloat())
+                val abs = String.format(
+                    "%.6f",
+                    arrayPercentageResidual[i].toFloat() - median.toFloat()
+                )
                 arrayAbs.add(abs)
             }
 
-            val mad: String = if (arrayAbs.size %2 == 0)
-                String.format("%.6f",
-                        arrayAbs[arrayAbs.size/2].toFloat() + arrayAbs[arrayAbs.size/2 - 1].toFloat() / 2)
-            else String.format("%.6f",
-                    arrayAbs[arrayAbs.size/2].toFloat())
+            val mad: String = if (arrayAbs.size % 2 == 0)
+                String.format(
+                    "%.6f",
+                    arrayAbs[arrayAbs.size / 2].toFloat() + arrayAbs[arrayAbs.size / 2 - 1].toFloat() / 2
+                )
+            else String.format(
+                "%.6f",
+                arrayAbs[arrayAbs.size / 2].toFloat()
+            )
 
             val arrayZmod: ArrayList<String> = ArrayList()
 
             for (i in arrayAbs.indices) {
-                val zmod = String.format("%.3f", 0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat())
+                val zmod = String.format(
+                    "%.3f",
+                    0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
+                )
                 arrayZmod.add(zmod)
             }
 
             for (i in pengambilanDataList.indices) {
-                LegacyTableView.insertLegacyContent((i + 1).toString(), arrayItem[i][0], arrayItem[i][1], arrayItem[i][2], arrayItem[i][3],
-                        arrayItem[i][4], arrayItem[i][5], arrayItem[i][6], arrayItem[i][7], arrayPercentageResidual[i], median, arrayAbs[i],
-                        mad, arrayZmod[i])
+                LegacyTableView.insertLegacyContent(
+                    (i + 1).toString(),
+                    arrayItem[i][0],
+                    arrayItem[i][1],
+                    arrayItem[i][2],
+                    arrayItem[i][3],
+                    arrayItem[i][4],
+                    arrayItem[i][5],
+                    arrayItem[i][6],
+                    arrayItem[i][7],
+                    arrayPercentageResidual[i],
+                    median,
+                    arrayAbs[i],
+                    mad,
+                    arrayZmod[i]
+                )
             }
 
             val readTitle = LegacyTableView.readLegacyTitle()
@@ -344,15 +458,18 @@ class AnalisisActivity : AppCompatActivity() {
         })
     }
 
-    private fun setAnalisisTableKe2(arrayItem: ArrayList<Array<String>>, arrayZmod: ArrayList<String>) {
+    private fun setAnalisisTableKe2(
+        arrayItem: ArrayList<Array<String>>,
+        arrayZmod: ArrayList<String>
+    ) {
         LegacyTableView.insertLegacyTitle(
-                "Variasi air Ke-",
-                "H1 (m)",
-                "Q Pengukuran (m3/s)",
-                "Q Pengukuran (I/s",
-                "Q Bangunan (m3/s)",
-                " Q Bangunan (I/s)",
-                "APE", "E", "dE"
+            "Variasi air Ke-",
+            "H1 (m)",
+            "Q Pengukuran (m3/s)",
+            "Q Pengukuran (I/s",
+            "Q Bangunan (m3/s)",
+            " Q Bangunan (I/s)",
+            "APE", "E", "dE"
         )
 
         val newArrayItem: ArrayList<Array<String>> = ArrayList()
@@ -369,10 +486,14 @@ class AnalisisActivity : AppCompatActivity() {
                     String.format("%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                 "0" else arrayItem[i][3]
             val qTabel1000: String = if (qTabel == "0") "0" else arrayItem[i][3]
-            val ape: String = if (qTabel == "0") "0.00" else String.format("%.2f",
-                    abs(qPengukuran1000.toFloat() - qTabel1000.toFloat()) / qTabel1000.toFloat() * 100)
-            val eValue: String = if (qTabel == "0") "0.00" else String.format("%.2f",
-                    (qPengukuran.toFloat() - qTabel.toFloat()) / qTabel.toFloat() * 100)
+            val ape: String = if (qTabel == "0") "0.00" else String.format(
+                "%.2f",
+                abs(qPengukuran1000.toFloat() - qTabel1000.toFloat()) / qTabel1000.toFloat() * 100
+            )
+            val eValue: String = if (qTabel == "0") "0.00" else String.format(
+                "%.2f",
+                (qPengukuran.toFloat() - qTabel.toFloat()) / qTabel.toFloat() * 100
+            )
             newArrayItem.add(arrayOf(h1, qPengukuran, qPengukuran1000, qTabel, qTabel1000, ape))
             apeSum += ape.toFloat()
             eSum += eValue.toFloat()
@@ -386,14 +507,25 @@ class AnalisisActivity : AppCompatActivity() {
 
         val dE: ArrayList<String> = ArrayList()
         for (i in newArrayItem.indices) {
-            val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format("%.2f",
-                    (newArrayItem[i][3].toFloat() - eSum).pow(2))
+            val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
+                "%.2f",
+                (newArrayItem[i][3].toFloat() - eSum).pow(2)
+            )
             dE.add(deValue)
         }
 
         for (i in newArrayItem.indices) {
-            LegacyTableView.insertLegacyContent((i + 1).toString(), newArrayItem[i][0], newArrayItem[i][1],
-                    newArrayItem[i][2], newArrayItem[i][3], newArrayItem[i][4], newArrayItem[i][5], e[i], dE[i])
+            LegacyTableView.insertLegacyContent(
+                (i + 1).toString(),
+                newArrayItem[i][0],
+                newArrayItem[i][1],
+                newArrayItem[i][2],
+                newArrayItem[i][3],
+                newArrayItem[i][4],
+                newArrayItem[i][5],
+                e[i],
+                dE[i]
+            )
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()
@@ -423,12 +555,12 @@ class AnalisisActivity : AppCompatActivity() {
 
     private fun setAnalisisRegresi() {
         LegacyTableView.insertLegacyTitle(
-                "Variasi air Ke-",
-                "H1 (m)",
-                "Q Pengukuran (m3/s)",
-                "(H1^n)*Q Pengukuran",
-                "H1^(n*2)",
-                "Q Regresi Pengukuran"
+            "Variasi air Ke-",
+            "H1 (m)",
+            "Q Pengukuran (m3/s)",
+            "(H1^n)*Q Pengukuran",
+            "H1^(n*2)",
+            "Q Regresi Pengukuran"
         )
 
         var sumH1CarretnQPengukuran:Float = (0.0).toFloat()
@@ -438,8 +570,10 @@ class AnalisisActivity : AppCompatActivity() {
         for (i in pengambilanDataList.indices) {
             val h1: String = String.format("%.3f", pengambilanDataList[i].h1)
             val qPengukuran: String = String.format("%.3f", pengambilanDataList[i].qPengukuran)
-            val h1CarretnQPengukuran = String.format("%.3f",
-                    h1.toFloat().pow(baseData.n!!.toFloat()) * qPengukuran.toFloat())
+            val h1CarretnQPengukuran = String.format(
+                "%.3f",
+                h1.toFloat().pow(baseData.n!!.toFloat()) * qPengukuran.toFloat()
+            )
             val h1N2 = String.format("%.3f", h1.toFloat().pow(baseData.n!!.toFloat() * 2))
             sumH1CarretnQPengukuran += h1CarretnQPengukuran.toFloat()
             sumH1N2 += h1N2.toFloat()
@@ -455,8 +589,10 @@ class AnalisisActivity : AppCompatActivity() {
                     arrayItem[i][0].toFloat().pow(baseData.n!!.toFloat())
             qRegresiPengukuran.add(qRegresiPengukuranValue)
 
-            LegacyTableView.insertLegacyContent((i + 1).toString(), arrayItem[i][0], arrayItem[i][1],
-                    arrayItem[i][2], arrayItem[i][3], String.format("%.3f", qRegresiPengukuranValue))
+            LegacyTableView.insertLegacyContent(
+                (i + 1).toString(), arrayItem[i][0], arrayItem[i][1],
+                arrayItem[i][2], arrayItem[i][3], String.format("%.3f", qRegresiPengukuranValue)
+            )
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()
@@ -486,20 +622,20 @@ class AnalisisActivity : AppCompatActivity() {
 
     private fun setAnalisisRegresiTable1(qRegresiPengukuran: ArrayList<Float> = ArrayList()) {
         LegacyTableView.insertLegacyTitle(
-                "Variasi air Ke-",
-                "H1 (m)",
-                "Q Pengukuran (m3/s)",
-                "Q Pengukuran (I/s",
-                "Q Regresi (m3/s)",
-                " Q Regresi (I/s)",
-                "Log Q. Pengukuran",
-                "Log Q. Regresi",
-                "Residual",
-                "%Rresidual",
-                "Median E",
-                "Abs(%Residual)",
-                "MAD",
-                "Zmod"
+            "Variasi air Ke-",
+            "H1 (m)",
+            "Q Pengukuran (m3/s)",
+            "Q Pengukuran (I/s",
+            "Q Regresi (m3/s)",
+            " Q Regresi (I/s)",
+            "Log Q. Pengukuran",
+            "Log Q. Regresi",
+            "Residual",
+            "%Rresidual",
+            "Median E",
+            "Abs(%Residual)",
+            "MAD",
+            "Zmod"
         )
 
         val arrayItem: ArrayList<Array<String>> = ArrayList()
@@ -507,30 +643,43 @@ class AnalisisActivity : AppCompatActivity() {
         for (i in pengambilanDataList.indices) {
             val h1: String = String.format("%.3f", pengambilanDataList[i].h1)
             val qPengukuran: String = String.format("%.3f", pengambilanDataList[i].qPengukuran)
-            val qPengukuran1000: String = String.format("%.3f", pengambilanDataList[i].qPengukuran!! * 1000)
+            val qPengukuran1000: String = String.format(
+                "%.3f",
+                pengambilanDataList[i].qPengukuran!! * 1000
+            )
             val qRegresi: String = String.format("%.3f", qRegresiPengukuran[i])
             val qRegresi1000: String = String.format("%.3f", (qRegresiPengukuran[i] * 1000))
             val logQPengukuran: String = String.format("%.3f", log10(qPengukuran1000.toFloat()))
             val logQBangunan: String = String.format("%.3f", log10(qRegresi1000.toFloat()))
-            val residual: String = String.format("%.3f", logQPengukuran.toFloat() - logQBangunan.toFloat())
-            val percentageResidual: String = String.format("%.4f", residual.toFloat() / logQPengukuran.toFloat())
+            val residual: String = String.format(
+                "%.3f",
+                logQPengukuran.toFloat() - logQBangunan.toFloat()
+            )
+            val percentageResidual: String = String.format(
+                "%.4f",
+                residual.toFloat() / logQPengukuran.toFloat()
+            )
 
             arrayItem.add(
-                    arrayOf(
-                            h1, qPengukuran, qPengukuran1000, qRegresi, qRegresi1000, logQPengukuran,
-                            logQBangunan, residual
-                    )
+                arrayOf(
+                    h1, qPengukuran, qPengukuran1000, qRegresi, qRegresi1000, logQPengukuran,
+                    logQBangunan, residual
+                )
             )
 
             arrayPercentageResidual.add(percentageResidual)
         }
 
         val median: String = if (arrayPercentageResidual.size %2 == 0)
-            String.format("%.4f",
-                    arrayPercentageResidual[arrayPercentageResidual.size/2].toFloat() +
-                            arrayPercentageResidual[arrayPercentageResidual.size/2 - 1].toFloat() / 2)
-        else String.format("%.4f",
-                arrayPercentageResidual[arrayPercentageResidual.size/2].toFloat())
+            String.format(
+                "%.4f",
+                arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat() +
+                        arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1].toFloat() / 2
+            )
+        else String.format(
+            "%.4f",
+            arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat()
+        )
 
         val arrayAbs: ArrayList<String> = ArrayList()
         for (i in arrayPercentageResidual.indices) {
@@ -539,22 +688,42 @@ class AnalisisActivity : AppCompatActivity() {
         }
 
         val mad: String = if (arrayAbs.size %2 == 0)
-            String.format("%.6f",
-                    arrayAbs[arrayAbs.size/2].toFloat() + arrayAbs[arrayAbs.size/2 - 1].toFloat() / 2)
-        else String.format("%.6f",
-                arrayAbs[arrayAbs.size/2].toFloat())
+            String.format(
+                "%.6f",
+                arrayAbs[arrayAbs.size / 2].toFloat() + arrayAbs[arrayAbs.size / 2 - 1].toFloat() / 2
+            )
+        else String.format(
+            "%.6f",
+            arrayAbs[arrayAbs.size / 2].toFloat()
+        )
 
         val arrayZmod: ArrayList<String> = ArrayList()
 
         for (i in arrayAbs.indices) {
-            val zmod = String.format("%.3f", 0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat())
+            val zmod = String.format(
+                "%.3f",
+                0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
+            )
             arrayZmod.add(zmod)
         }
 
         for (i in pengambilanDataList.indices) {
-            LegacyTableView.insertLegacyContent((i + 1).toString(), arrayItem[i][0], arrayItem[i][1], arrayItem[i][2], arrayItem[i][3],
-                    arrayItem[i][4], arrayItem[i][5], arrayItem[i][6], arrayItem[i][7], arrayPercentageResidual[i], median, arrayAbs[i],
-                    mad, arrayZmod[i])
+            LegacyTableView.insertLegacyContent(
+                (i + 1).toString(),
+                arrayItem[i][0],
+                arrayItem[i][1],
+                arrayItem[i][2],
+                arrayItem[i][3],
+                arrayItem[i][4],
+                arrayItem[i][5],
+                arrayItem[i][6],
+                arrayItem[i][7],
+                arrayPercentageResidual[i],
+                median,
+                arrayAbs[i],
+                mad,
+                arrayZmod[i]
+            )
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()
@@ -579,15 +748,18 @@ class AnalisisActivity : AppCompatActivity() {
         setAnalisisRegresiTable2(arrayItem, arrayZmod)
     }
 
-    private fun setAnalisisRegresiTable2(arrayItem: ArrayList<Array<String>>, arrayZmod: ArrayList<String>) {
+    private fun setAnalisisRegresiTable2(
+        arrayItem: ArrayList<Array<String>>,
+        arrayZmod: ArrayList<String>
+    ) {
         LegacyTableView.insertLegacyTitle(
-                "Variasi air Ke-",
-                "H1 (m)",
-                "Q Pengukuran (m3/s)",
-                "Q Pengukuran (I/s",
-                "Q Bangunan (m3/s)",
-                " Q Bangunan (I/s)",
-                "APE", "E", "dE"
+            "Variasi air Ke-",
+            "H1 (m)",
+            "Q Pengukuran (m3/s)",
+            "Q Pengukuran (I/s",
+            "Q Bangunan (m3/s)",
+            " Q Bangunan (I/s)",
+            "APE", "E", "dE"
         )
 
         val newArrayItem: ArrayList<Array<String>> = ArrayList()
@@ -604,10 +776,14 @@ class AnalisisActivity : AppCompatActivity() {
                     String.format("%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                 "0" else arrayItem[i][3]
             val qRegresi1000: String = if (qRegresi == "0") "0" else arrayItem[i][3]
-            val ape: String = if (qRegresi == "0") "0.00" else String.format("%.2f",
-                    abs(qPengukuran1000.toFloat() - qRegresi1000.toFloat()) / qRegresi1000.toFloat() * 100)
-            val eValue: String = if (qRegresi == "0") "0.00" else String.format("%.2f",
-                    (qPengukuran.toFloat() - qRegresi.toFloat()) / qRegresi.toFloat() * 100)
+            val ape: String = if (qRegresi == "0") "0.00" else String.format(
+                "%.2f",
+                abs(qPengukuran1000.toFloat() - qRegresi1000.toFloat()) / qRegresi1000.toFloat() * 100
+            )
+            val eValue: String = if (qRegresi == "0") "0.00" else String.format(
+                "%.2f",
+                (qPengukuran.toFloat() - qRegresi.toFloat()) / qRegresi.toFloat() * 100
+            )
             newArrayItem.add(arrayOf(h1, qPengukuran, qPengukuran1000, qRegresi, qRegresi1000, ape))
             apeSum += ape.toFloat()
             eSum += eValue.toFloat()
@@ -621,14 +797,25 @@ class AnalisisActivity : AppCompatActivity() {
 
         val dE: ArrayList<String> = ArrayList()
         for (i in newArrayItem.indices) {
-            val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format("%.2f",
-                    (newArrayItem[i][3].toFloat() - eSum).pow(2))
+            val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
+                "%.2f",
+                (newArrayItem[i][3].toFloat() - eSum).pow(2)
+            )
             dE.add(deValue)
         }
 
         for (i in newArrayItem.indices) {
-            LegacyTableView.insertLegacyContent((i + 1).toString(), newArrayItem[i][0], newArrayItem[i][1],
-                    newArrayItem[i][2], newArrayItem[i][3], newArrayItem[i][4], newArrayItem[i][5], e[i], dE[i])
+            LegacyTableView.insertLegacyContent(
+                (i + 1).toString(),
+                newArrayItem[i][0],
+                newArrayItem[i][1],
+                newArrayItem[i][2],
+                newArrayItem[i][3],
+                newArrayItem[i][4],
+                newArrayItem[i][5],
+                e[i],
+                dE[i]
+            )
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()
@@ -670,12 +857,21 @@ class AnalisisActivity : AppCompatActivity() {
     }
 
     private fun setAnalisisResultTabel1() {
-        LegacyTableView.insertLegacyTitle("H1(m)", "Q(m3/s)", "H1(m)", "Q(m3/s)", "H1(m)", "Q(m3/s)", "H1(m)", "Q(m3/s)")
+        LegacyTableView.insertLegacyTitle(
+            "H1(m)",
+            "Q(m3/s)",
+            "H1(m)",
+            "Q(m3/s)",
+            "H1(m)",
+            "Q(m3/s)",
+            "H1(m)",
+            "Q(m3/s)"
+        )
 
-        var first = "1.01"
-        var second = "1.25"
-        var third = "1.50"
-        var fourth = "1.75"
+        var first = "0.00"
+        var second = "0.25"
+        var third = "0.50"
+        var fourth = "0.75"
 
         val arrayFirst: ArrayList<Array<String>> = ArrayList()
         val arraySecond: ArrayList<Array<String>> = ArrayList()
@@ -687,18 +883,46 @@ class AnalisisActivity : AppCompatActivity() {
             third = String.format("%.2f", third.toFloat() + 0.01.toFloat())
             fourth = String.format("%.2f", fourth.toFloat() + 0.01.toFloat())
 
-            val qFirst: String = String.format("%.3f", kUse.toFloat() * first.toFloat().pow(baseData.n!!.toFloat()))
-            val qSecond: String = String.format("%.3f", kUse.toFloat() * second.toFloat().pow(baseData.n!!.toFloat()))
-            val qThird: String = String.format("%.3f", kUse.toFloat() * third.toFloat().pow(baseData.n!!.toFloat()))
-            val qFourth: String = String.format("%.3f", kUse.toFloat() * fourth.toFloat().pow(baseData.n!!.toFloat()))
+            val qFirst: String = String.format(
+                "%.3f",
+                kUse.toFloat() * first.toFloat().pow(baseData.n!!.toFloat())
+            )
+            val qSecond: String = String.format(
+                "%.3f", kUse.toFloat() * second.toFloat().pow(
+                    baseData.n!!.toFloat()
+                )
+            )
+            val qThird: String = String.format(
+                "%.3f",
+                kUse.toFloat() * third.toFloat().pow(baseData.n!!.toFloat())
+            )
+            val qFourth: String = String.format(
+                "%.3f", kUse.toFloat() * fourth.toFloat().pow(
+                    baseData.n!!.toFloat()
+                )
+            )
 
             arrayFirst.add(arrayOf(first, qFirst))
             arraySecond.add(arrayOf(second, qSecond))
             arrayThird.add(arrayOf(third, qThird))
             arrayFourth.add(arrayOf(fourth, qFourth))
 
-            LegacyTableView.insertLegacyContent(first, qFirst, second, qSecond, third, qThird, fourth, qFourth)
+            LegacyTableView.insertLegacyContent(
+                first,
+                qFirst,
+                second,
+                qSecond,
+                third,
+                qThird,
+                fourth,
+                qFourth
+            )
         }
+
+        grafikData.addAll(arrayFirst)
+        grafikData.addAll(arraySecond)
+        grafikData.addAll(arrayThird)
+        grafikData.addAll(arrayFourth)
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
@@ -723,9 +947,18 @@ class AnalisisActivity : AppCompatActivity() {
     }
 
     private fun setAnalisisResultTabel2() {
-        LegacyTableView.insertLegacyTitle("H1(m)", "Q(m3/s)", "H1(m)", "Q(m3/s)", "H1(m)", "Q(m3/s)", "H1(m)", "Q(m3/s)")
+        LegacyTableView.insertLegacyTitle(
+            "H1(m)",
+            "Q(m3/s)",
+            "H1(m)",
+            "Q(m3/s)",
+            "H1(m)",
+            "Q(m3/s)",
+            "H1(m)",
+            "Q(m3/s)"
+        )
 
-        var first = "1.01"
+        var first = "1.00"
         var second = "1.25"
         var third = "1.50"
         var fourth = "1.75"
@@ -741,18 +974,46 @@ class AnalisisActivity : AppCompatActivity() {
             third = String.format("%.2f", third.toFloat() + 0.01.toFloat())
             fourth = String.format("%.2f", fourth.toFloat() + 0.01.toFloat())
 
-            val qFirst: String = String.format("%.3f", kUse.toFloat() * first.toFloat().pow(baseData.n!!.toFloat()))
-            val qSecond: String = String.format("%.3f", kUse.toFloat() * second.toFloat().pow(baseData.n!!.toFloat()))
-            val qThird: String = String.format("%.3f", kUse.toFloat() * third.toFloat().pow(baseData.n!!.toFloat()))
-            val qFourth: String = String.format("%.3f", kUse.toFloat() * fourth.toFloat().pow(baseData.n!!.toFloat()))
+            val qFirst: String = String.format(
+                "%.3f",
+                kUse.toFloat() * first.toFloat().pow(baseData.n!!.toFloat())
+            )
+            val qSecond: String = String.format(
+                "%.3f", kUse.toFloat() * second.toFloat().pow(
+                    baseData.n!!.toFloat()
+                )
+            )
+            val qThird: String = String.format(
+                "%.3f",
+                kUse.toFloat() * third.toFloat().pow(baseData.n!!.toFloat())
+            )
+            val qFourth: String = String.format(
+                "%.3f", kUse.toFloat() * fourth.toFloat().pow(
+                    baseData.n!!.toFloat()
+                )
+            )
 
             arrayFirst.add(arrayOf(first, qFirst))
             arraySecond.add(arrayOf(second, qSecond))
             arrayThird.add(arrayOf(third, qThird))
             arrayFourth.add(arrayOf(fourth, qFourth))
 
-            LegacyTableView.insertLegacyContent(first, qFirst, second, qSecond, third, qThird, fourth, qFourth)
+            LegacyTableView.insertLegacyContent(
+                first,
+                qFirst,
+                second,
+                qSecond,
+                third,
+                qThird,
+                fourth,
+                qFourth
+            )
         }
+
+        grafikData.addAll(arrayFirst)
+        grafikData.addAll(arraySecond)
+        grafikData.addAll(arrayThird)
+        grafikData.addAll(arrayFourth)
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
@@ -774,6 +1035,57 @@ class AnalisisActivity : AppCompatActivity() {
         mBinding.analisisResultTable2.build()
 
         loading.dialog.dismiss()
+
+        setGrafik()
+    }
+
+    private fun setGrafik() {
+        val cartesian: Cartesian = AnyChart.line()
+
+        cartesian.animation(true)
+
+        cartesian.padding(10.0, 20.0, 5.0, 20.0)
+
+        cartesian.crosshair().enabled(true)
+        cartesian.crosshair()
+            .yLabel(true) // TODO ystroke
+            .yStroke(null as Stroke?, null, null, null as String?, null as String?)
+            .xLabel(true)
+            .xStroke(null as Stroke?, null, null, null as String?, null as String?)
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+
+        cartesian.title("Lengkung Debit Bangunan Ukur")
+
+        cartesian.yAxis(0).title("(m)")
+        cartesian.xAxis(0).title("(m3/s)")
+        cartesian.xAxis(0).labels().padding(5.0, 5.0, 5.0, 5.0)
+
+        val seriesData: ArrayList<DataEntry> = ArrayList()
+        for (i in grafikData.indices) {
+            seriesData.add(ValueDataEntry(grafikData[i][1], grafikData[i][0].toFloat()))
+        }
+
+        val set: Set = Set.instantiate()
+        set.data(seriesData)
+        val series1Mapping: Mapping = set.mapAs("{ x: 'x', value: 'value' }")
+
+        val series1: Line = cartesian.line(series1Mapping)
+        series1.name("")
+        series1.hovered().markers().enabled(true)
+        series1.hovered().markers()
+            .type(MarkerType.CIRCLE)
+            .size(4.0)
+        series1.tooltip()
+            .position("right")
+            .anchor(Anchor.LEFT_CENTER)
+            .offsetX(5.0)
+            .offsetY(5.0)
+        cartesian.legend().enabled(true)
+        cartesian.legend().fontSize(13.0)
+        cartesian.legend().padding(0.0, 0.0, 10.0, 0.0)
+
+        mBinding.chart.setChart(cartesian)
     }
 
     private fun setViewModel() {

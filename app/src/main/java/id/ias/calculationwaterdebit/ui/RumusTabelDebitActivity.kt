@@ -48,8 +48,8 @@ class RumusTabelDebitActivity : AppCompatActivity() {
                 && mBinding.etN.text.toString() == "" && mBinding.etN.text.toString() == ",") {
                 ToastUtils.showLong("Data masih belum terisi")
             } else {
-                baseDataViewModel.update(idBaseData.toInt(),
-                    mBinding.etVariablePertama.text.toString(), mBinding.etN.text.toString())
+                baseDataViewModel.update(id = idBaseData.toInt(),
+                    variablePertama = mBinding.etVariablePertama.text.toString(), n = mBinding.etN.text.toString())
             }
         }
 
@@ -94,9 +94,9 @@ class RumusTabelDebitActivity : AppCompatActivity() {
         baseDataViewModel.baseDataUpdate.observe(this, {
             if (it != 0) {
                 val intent = Intent(this@RumusTabelDebitActivity, VariasiOutputActivity::class.java)
+                intent.putExtra("id_base_data", idBaseData)
                 intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                 intent.putExtra("tipe_bangunan", detailBangunan)
-                intent.putExtra("id_base_data", idBaseData)
                 startActivity(intent)
                 finish()
             }

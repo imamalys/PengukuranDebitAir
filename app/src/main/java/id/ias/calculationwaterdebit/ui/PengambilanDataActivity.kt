@@ -3,6 +3,7 @@ package id.ias.calculationwaterdebit.ui
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityPengambilanDataBinding
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import id.ias.calculationwaterdebit.util.MinMaxFilter
 import id.ias.calculationwaterdebit.viewmodel.PengambilanDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.PengambilanDataActivityViewModelFactory
 import kotlin.math.sign
@@ -108,6 +110,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
         })
 
+        mBinding.etJmlhSaluranBasah.filters = arrayOf<InputFilter>(MinMaxFilter("1", "100"))
         mBinding.etJmlhSaluranBasah.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 

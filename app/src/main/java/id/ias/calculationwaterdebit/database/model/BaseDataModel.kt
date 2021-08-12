@@ -33,5 +33,8 @@ data class BaseDataModel(
     var maxDebitSaluran: String?,
     var k: String?,
     var c: String?,
-    var mape: String?
+    var mape: String?,
+    var keterangan: String?,
+    @ColumnInfo(name = "nilai_keterangan")
+    var nilaiKeterangan: Int,
     )

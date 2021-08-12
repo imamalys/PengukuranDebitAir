@@ -12,10 +12,8 @@ class FormDataActivityViewModel: ViewModel() {
     var kecepatanAirs: ArrayList<KecepatanAirModel> = ArrayList()
     var detailBangunan: String = ""
     var idPengambilanData: Int = 0
-    var idFormData: Int = 0
     var jumlahPias: Int = 0
     var variasiKetinggianAir: Int = 0
-    var currentFormDataSize: Int = 0
     var currentPiasSize: Int = 0
 
     var h1: String = "0"

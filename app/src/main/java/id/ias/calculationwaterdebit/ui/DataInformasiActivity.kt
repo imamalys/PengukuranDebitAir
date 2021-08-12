@@ -72,7 +72,7 @@ class DataInformasiActivity : AppCompatActivity() {
             mBinding.etNoPengukuran.text.toString(),
             mBinding.etNamaPengukur.text.toString(),
             null, null, null, null, null, null,
-            null, null, null
+            null, null, null, null, 0
         )
         baseDataViewModel.insert(baseData)
     }
@@ -81,7 +81,7 @@ class DataInformasiActivity : AppCompatActivity() {
         baseDataViewModel.insertId.observe(this, {
             if (it.toInt() != 0) {
                 loading.dialog.dismiss()
-                val intent = Intent(this@DataInformasiActivity, TipeBangunanUkurActivity::class.java)
+                val intent = Intent(this@DataInformasiActivity, CheckKondisiActivity::class.java)
                 intent.putExtra("id_base_data", it)
                 startActivity(intent)
                 finish()

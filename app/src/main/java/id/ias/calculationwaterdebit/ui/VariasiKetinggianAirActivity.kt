@@ -1,10 +1,13 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputFilter
+import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.databinding.ActivityVariasiKetinggianAirBinding
+import id.ias.calculationwaterdebit.util.MinMaxFilter
+
 
 class VariasiKetinggianAirActivity : AppCompatActivity() {
 
@@ -31,13 +34,21 @@ class VariasiKetinggianAirActivity : AppCompatActivity() {
     }
 
     private fun setAction() {
+        mBinding.etVariasiKetinggianAir.filters = arrayOf<InputFilter>(MinMaxFilter("1", "30"))
+
         mBinding.btnNext.setOnClickListener {
             if (mBinding.etVariasiKetinggianAir.text.toString() != "") {
-                val intent = Intent(this@VariasiKetinggianAirActivity, PengambilanDataActivity::class.java)
+                val intent = Intent(
+                    this@VariasiKetinggianAirActivity,
+                    PengambilanDataActivity::class.java
+                )
                 intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                 intent.putExtra("tipe_bangunan", tipeBangunan)
                 intent.putExtra("id_base_data", idBaseData)
-                intent.putExtra("variasi_ketinggian_air", mBinding.etVariasiKetinggianAir.text.toString())
+                intent.putExtra(
+                    "variasi_ketinggian_air",
+                    mBinding.etVariasiKetinggianAir.text.toString()
+                )
                 startActivity(intent)
                 finish()
             } else {

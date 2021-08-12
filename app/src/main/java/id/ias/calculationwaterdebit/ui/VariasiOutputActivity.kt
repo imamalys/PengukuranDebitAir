@@ -55,6 +55,8 @@ class VariasiOutputActivity : AppCompatActivity() {
         loading.show(this)
         setViewModel()
         setAction()
+
+        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt())
     }
 
     private fun setAction() {
@@ -62,13 +64,13 @@ class VariasiOutputActivity : AppCompatActivity() {
             if (currentFormData < variasiOutputViewModel.pengambilanDataById.size) {
                 currentFormData += 1
             }
-            setViewModel()
+            getPias()
         }
 
         mBinding.btnPrevious.setOnClickListener {
             if (currentFormData != 0) {
                 currentFormData -= 1
-                setViewModel()
+                getPias()
             }
         }
 
@@ -184,13 +186,19 @@ class VariasiOutputActivity : AppCompatActivity() {
         loading.dialog.dismiss()
     }
 
+    private fun getPias() {
+        mBinding.tvVariasiKetinggianAir.text = "Variasi ketinggian air Ke-${currentFormData + 1}"
+        piasDataViewModel.getPiasDataById(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!)
+    }
+
     private fun setViewModel() {
-        pengambilanDataViewModel.getPengambilanDataById(idBaseData.toInt())
+        piasDataViewModel.piasDatas.observe(this, {
+            setOutput(it)
+        })
+
         pengambilanDataViewModel.pengambilanDataById.observe(this, {
             variasiOutputViewModel.pengambilanDataById = it
-            piasDataViewModel.getPiasDatas(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!).observe(this, { piasData ->
-                setOutput(piasData)
-            })
+            getPias()
         })
 
         baseDataViewModel.baseDataUpdate.observe(this, {
