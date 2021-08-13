@@ -20,12 +20,14 @@ import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityTipeBangunanUkurBinding
 import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import id.ias.calculationwaterdebit.util.PictureDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModel
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModelFactory
 
 class TipeBangunanUkurActivity : AppCompatActivity() {
     val back = BackDialogUtil()
     val loading = LoadingDialogUtil()
+    var picture = PictureDialogUtil()
     var idBaseData: Long = 0
     lateinit var mBinding: ActivityTipeBangunanUkurBinding
     private val tipeBangunanUkurViewModel: TipeBangunanUkurViewModel by viewModels {
@@ -57,6 +59,10 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
         mBinding.btnNext.setOnClickListener {
             loading.show(this)
             baseDataViewModel.update(id = idBaseData.toInt(), tipeBangunan = tipeBangunanUkurViewModel.tipeBangunan.value!!)
+        }
+
+        mBinding.ivImageBangunan.setOnClickListener {
+            picture.show(this, tipeBangunanUkurViewModel.getImage(tipeBangunanUkurViewModel.tipeBangunan.value!!))
         }
     }
 

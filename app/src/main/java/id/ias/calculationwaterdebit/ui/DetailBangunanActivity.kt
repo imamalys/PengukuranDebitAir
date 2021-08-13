@@ -17,10 +17,12 @@ import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
 import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import id.ias.calculationwaterdebit.util.PictureDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanUkurViewModelFactory
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanViewModel
 
 class DetailBangunanActivity : AppCompatActivity() {
+    var picture = PictureDialogUtil()
     val loading = LoadingDialogUtil()
     val back = BackDialogUtil()
     lateinit var mBinding: ActivityDetailBangunanBinding
@@ -87,6 +89,10 @@ class DetailBangunanActivity : AppCompatActivity() {
                 ToastUtils.showLong("Data masih ada yang kosong, silahkan diisi terlebih dahulu")
             }
         }
+
+        mBinding.ivImageBangunan.setOnClickListener {
+            picture.show(this, detailBangunanViewModel.getImage(detailBangunanViewModel.detailBangunan.value!!))
+        }
     }
 
     private fun setViewModel() {
@@ -95,8 +101,7 @@ class DetailBangunanActivity : AppCompatActivity() {
             mBinding.tvTipeBangunan.text = it
             mBinding.rvDetailBangunan.layoutManager = LinearLayoutManager(this)
             val adapter = DetailBangunanAdapter(
-                this,
-                detailBangunanViewModel.getDetailBangunan(it),
+                this, detailBangunanViewModel.getDetailBangunan(it),
                 object: DetailBangunanAdapter.Listener {
                     override fun onChanged(value: String, position: Int) {
                         if (value != "" && value != ".") {
