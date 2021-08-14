@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.OrificeActivity"></activity>
+        <activity android:name=".ui.ParshallFlumeActivity"></activity>
+        <activity android:name=".ui.OrificeActivity" />
         <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.CheckKondisiActivity" />
         <activity android:name=".ui.ReportDetailActivity" />

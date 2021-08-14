@@ -61,7 +61,6 @@ class FormDataActivity : AppCompatActivity() {
         mBinding.etHb.setText(formDataActivityViewModel.hb)
 
         setAction()
-        setSpinner()
         setViewModel()
     }
 
@@ -76,8 +75,6 @@ class FormDataActivity : AppCompatActivity() {
         }
 
         mBinding.btnNext.isEnabled = true
-
-        setSpinner()
     }
 
     fun setAction() {
@@ -98,6 +95,7 @@ class FormDataActivity : AppCompatActivity() {
                     count: Int
             ) {
                 formDataActivityViewModel.h2 = if (s.toString() != ""  && s.toString() != ".") s.toString() else "0"
+                setSpinner()
                 setKecepatanAir()
             }
 
@@ -214,17 +212,20 @@ class FormDataActivity : AppCompatActivity() {
             } else {
                 mBinding.btnNext.isEnabled = false
                 loading.show(this)
+                var d8 =  mBinding.d8.text.toString()
+                d8 = d8.replace(",", ".")
+                var d6 =  mBinding.d6.text.toString()
+                d6 = d6.replace(",", ".")
+                var d2 =  mBinding.d2.text.toString()
+                d2 = d2.replace(",", ".")
                 val piasModel = PiasModel(
                     null,
                     formDataActivityViewModel.idPengambilanData,
                     formDataActivityViewModel.h2.toFloat(),
                     formDataActivityViewModel.jarakPias.toFloat(),
-                    formDataActivityViewModel.kecepatanAirValues.value!![0],
-                    mBinding.d8.text.toString().toFloat(),
-                    formDataActivityViewModel.kecepatanAirValues.value!![1],
-                    mBinding.d6.text.toString().toFloat(),
-                    formDataActivityViewModel.kecepatanAirValues.value!![2],
-                    mBinding.d2.text.toString().toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![0], d8.toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![1], d6.toFloat(),
+                    formDataActivityViewModel.kecepatanAirValues.value!![2], d2.toFloat(),
                     formDataActivityViewModel.metodePengambilan.value!!
                 )
                 piasViewModel.insert(piasModel)
@@ -327,6 +328,15 @@ class FormDataActivity : AppCompatActivity() {
         mBinding.d2.text = String.format("%.2f", formDataActivityViewModel.h2.toFloat() * 0.8)
         mBinding.d6.text = String.format("%.2f", formDataActivityViewModel.h2.toFloat() * 0.4)
         mBinding.d8.text = String.format("%.2f", formDataActivityViewModel.h2.toFloat() * 0.2)
+        var d8 =  mBinding.d8.text.toString()
+        d8 = d8.replace(",", ".")
+        var d6 =  mBinding.d6.text.toString()
+        d6 = d6.replace(",", ".")
+        var d2 =  mBinding.d2.text.toString()
+        d2 = d2.replace(",", ".")
+        mBinding.d2.text = d2
+        mBinding.d6.text = d6
+        mBinding.d8.text = d8
     }
 
     private fun setViewModel() {

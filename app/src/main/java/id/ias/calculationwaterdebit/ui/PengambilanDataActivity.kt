@@ -145,7 +145,7 @@ class PengambilanDataActivity : AppCompatActivity() {
                 intent.putExtra("tipe_bangunan", pengambilanDataActivityViewModel.detailBangunan.value)
                 intent.putExtra("id_pengambilan_data", it.toInt())
                 intent.putExtra("id_base_data", idBaseData)
-                intent.putExtra("jumlah_pias", mBinding.etJumlahPias.text.toString().toInt())
+                intent.putExtra("jumlah_pias", mBinding.etJmlhSaluranBasah.text.toString().toInt())
                 intent.putExtra("h1", pengambilanDataActivityViewModel.pengambilValue.value!![0])
                 intent.putExtra("hb", pengambilanDataActivityViewModel.pengambilValue.value!![1])
                 intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir.toInt())

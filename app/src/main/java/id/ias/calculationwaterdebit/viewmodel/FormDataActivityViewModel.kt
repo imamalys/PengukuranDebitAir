@@ -22,22 +22,22 @@ class FormDataActivityViewModel: ViewModel() {
     var jarakPias: String = "0"
 
     fun checkHaveValue(): Boolean {
-        for (i in 1..kecepatanAirValues.value!!.size) {
+        for (i in kecepatanAirValues.value!!.indices) {
             when(metodePengambilan.value) {
                 "Dua Titik" -> {
-                    if (i == 1 || i == 3) {
-                        if (metodePengambilan.value!![i].toInt().toString() == "0.0" || metodePengambilan.value!![i].toString() == "") {
+                    if (i == 0 || i == 2) {
+                        if (kecepatanAirValues.value!![i].toString() == "0.0" || kecepatanAirValues.value!![i].toString() == "") {
                             return false
                         }
                     }
                 }
                 "Tiga Titik" -> {
-                    if (metodePengambilan.value!![i].toInt().toString() == "0.0" || metodePengambilan.value!![i].toString() == "") {
+                    if (kecepatanAirValues.value!![i].toString() == "0.0" || kecepatanAirValues.value!![i].toString() == "") {
                         return false
                     }
                 } else -> {
-                    if (i == 2) {
-                        if (metodePengambilan.value!![i].toInt().toString() == "0.0" || metodePengambilan.value!![i].toString() == "") {
+                    if (i == 1) {
+                        if (kecepatanAirValues.value!![i].toString() == "0.0" || kecepatanAirValues.value!![i].toString() == "") {
                             return false
                         }
                     }
@@ -49,7 +49,7 @@ class FormDataActivityViewModel: ViewModel() {
     }
 
     fun metodePengambilanSpinner(): Int {
-        if (h1.toFloat() >= 0.75) {
+        if (h2.toFloat() >= 0.75) {
             return R.array.metode_pengambilan_3
         } else {
             return R.array.metode_pengambilan_1

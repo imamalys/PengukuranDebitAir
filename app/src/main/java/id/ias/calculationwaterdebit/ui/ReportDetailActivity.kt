@@ -25,6 +25,8 @@ import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityReportBinding
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.pow
 
 
@@ -57,7 +59,7 @@ class ReportDetailActivity : AppCompatActivity() {
     private fun setView() {
         mBinding.tvTitle.text = "Hasil Kalibrasi Bangunan Ukur Debit\nDi Daerah Irigasi ${baseData.namaDaerahIrigasi}"
         mBinding.tvNamaBangunanValue.text = "Daerah Irigasi ${baseData.namaDaerahIrigasi}"
-        mBinding.tvTanggalKalibrasi.text = baseData.tanggal
+        mBinding.tvTanggalKalibrasi.text = "Tanggal: ${baseData.tanggal}"
         mBinding.tvDetail.text = "a) Acuan Kalibrasi: Pengukuran Debit menggunakan Current Meter\n" +
                 "b) Rentang Tinggi di Ambang/Pengontrol: ${baseData.minH2} - ${baseData.maxH2} meter\n" +
                 "c) Rentang Debit Kalibrasi: ${baseData.minDebitSaluran} - ${baseData.maxDebitSaluran} m3/s\n" +
@@ -97,28 +99,28 @@ class ReportDetailActivity : AppCompatActivity() {
         val arrayThird: ArrayList<Array<String>> = ArrayList()
         val arrayFourth: ArrayList<Array<String>> = ArrayList()
         for (i in 1..25) {
-            first = String.format("%.2f", first.toFloat() + 0.01.toFloat())
-            second = String.format("%.2f", second.toFloat() + 0.01.toFloat())
-            third = String.format("%.2f", third.toFloat() + 0.01.toFloat())
-            fourth = String.format("%.2f", fourth.toFloat() + 0.01.toFloat())
+            first = String.format(Locale.ENGLISH,"%.2f", first.toFloat() + 0.01.toFloat())
+            second = String.format(Locale.ENGLISH,"%.2f", second.toFloat() + 0.01.toFloat())
+            third = String.format(Locale.ENGLISH,"%.2f", third.toFloat() + 0.01.toFloat())
+            fourth = String.format(Locale.ENGLISH,"%.2f", fourth.toFloat() + 0.01.toFloat())
 
             val qFirst: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * first.toFloat().pow(
+                Locale.ENGLISH,  "%.3f", baseData.k!!.toFloat() * first.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qSecond: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * second.toFloat().pow(
+                Locale.ENGLISH,   "%.3f", baseData.k!!.toFloat() * second.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qThird: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * third.toFloat().pow(
+                Locale.ENGLISH,  "%.3f", baseData.k!!.toFloat() * third.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qFourth: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * fourth.toFloat().pow(
+                Locale.ENGLISH, "%.3f", baseData.k!!.toFloat() * fourth.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
@@ -190,28 +192,28 @@ class ReportDetailActivity : AppCompatActivity() {
         val arrayThird: ArrayList<Array<String>> = ArrayList()
         val arrayFourth: ArrayList<Array<String>> = ArrayList()
         for (i in 1..25) {
-            first = String.format("%.2f", first.toFloat() + 0.01.toFloat())
-            second = String.format("%.2f", second.toFloat() + 0.01.toFloat())
-            third = String.format("%.2f", third.toFloat() + 0.01.toFloat())
-            fourth = String.format("%.2f", fourth.toFloat() + 0.01.toFloat())
+            first = String.format(Locale.ENGLISH,"%.2f", first.toFloat() + 0.01.toFloat())
+            second = String.format(Locale.ENGLISH,"%.2f", second.toFloat() + 0.01.toFloat())
+            third = String.format(Locale.ENGLISH,"%.2f", third.toFloat() + 0.01.toFloat())
+            fourth = String.format(Locale.ENGLISH,"%.2f", fourth.toFloat() + 0.01.toFloat())
 
             val qFirst: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * first.toFloat().pow(
+                Locale.ENGLISH, "%.3f", baseData.k!!.toFloat() * first.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qSecond: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * second.toFloat().pow(
+                Locale.ENGLISH,  "%.3f", baseData.k!!.toFloat() * second.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qThird: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * third.toFloat().pow(
+                Locale.ENGLISH, "%.3f", baseData.k!!.toFloat() * third.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qFourth: String = String.format(
-                "%.3f", baseData.k!!.toFloat() * fourth.toFloat().pow(
+                Locale.ENGLISH,  "%.3f", baseData.k!!.toFloat() * fourth.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )

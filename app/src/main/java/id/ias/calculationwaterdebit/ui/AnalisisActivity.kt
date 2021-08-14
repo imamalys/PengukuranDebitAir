@@ -25,6 +25,8 @@ import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityAnalisisBinding
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.log10
 import kotlin.math.pow
@@ -80,6 +82,9 @@ class AnalisisActivity : AppCompatActivity() {
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
             loading.show(this)
+            kUse = kUse.replace(",", ".")
+            cUse = cUse.replace(",", ".")
+            mapeTerkecil = mapeTerkecil.replace(",", ".")
             baseDataViewModel.updateAnalisis(idBaseData.toInt(), kUse, cUse, mapeTerkecil)
         }
     }
@@ -105,19 +110,19 @@ class AnalisisActivity : AppCompatActivity() {
         val arrayItem: ArrayList<Array<String>> = ArrayList()
         val arrayPercentageResidual: ArrayList<String> = ArrayList()
         for (i in it.indices) {
-            val h1: String = String.format("%.3f", it[i].h1)
-            val qPengukuran: String = String.format("%.3f", it[i].qPengukuran)
-            val qPengukuran1000: String = String.format("%.3f", it[i].qPengukuran!! * 1000)
-            val qBangunan: String = if (it[i].qBangunan == null) "0" else String.format("%.3f", it[i].qBangunan)
-            val qBangunan1000: String = if (it[i].qBangunan== null) "0" else String.format("%.3f", (it[i].qBangunan!! * 1000))
-            val logQPengukuran: String = String.format("%.3f", log10(qPengukuran1000.toFloat()))
-            val logQBangunan: String = String.format("%.3f", log10(qBangunan1000.toFloat()))
+            val h1: String = String.format(Locale.ENGLISH,"%.3f", it[i].h1)
+            val qPengukuran: String = String.format(Locale.ENGLISH,"%.3f", it[i].qPengukuran)
+            val qPengukuran1000: String = String.format(Locale.ENGLISH,"%.3f", it[i].qPengukuran!! * 1000)
+            val qBangunan: String = if (it[i].qBangunan == null) "0" else String.format(Locale.ENGLISH,"%.3f", it[i].qBangunan)
+            val qBangunan1000: String = if (it[i].qBangunan== null) "0" else String.format(Locale.ENGLISH,"%.3f", (it[i].qBangunan!! * 1000))
+            val logQPengukuran: String = String.format(Locale.ENGLISH,"%.3f", log10(qPengukuran1000.toFloat()))
+            val logQBangunan: String = String.format(Locale.ENGLISH,"%.3f", log10(qBangunan1000.toFloat()))
             val residual: String = String.format(
-                "%.3f",
+                Locale.ENGLISH,"%.3f",
                 logQPengukuran.toFloat() - logQBangunan.toFloat()
             )
             val percentageResidual: String = String.format(
-                "%.4f",
+                Locale.ENGLISH,"%.4f",
                 residual.toFloat() / logQPengukuran.toFloat()
             )
 
@@ -133,28 +138,28 @@ class AnalisisActivity : AppCompatActivity() {
 
         val median: String = if (arrayPercentageResidual.size %2 == 0)
             String.format(
-                "%.4f",
+                Locale.ENGLISH,"%.4f",
                 arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat() +
                         arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1].toFloat() / 2
             )
         else String.format(
-            "%.4f",
+            Locale.ENGLISH,"%.4f",
             arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat()
         )
 
         val arrayAbs: ArrayList<String> = ArrayList()
         for (i in arrayPercentageResidual.indices) {
-            val abs = String.format("%.6f", arrayPercentageResidual[i].toFloat() - median.toFloat())
+            val abs = String.format(Locale.ENGLISH,"%.6f", arrayPercentageResidual[i].toFloat() - median.toFloat())
             arrayAbs.add(abs)
         }
 
         val mad: String = if (arrayAbs.size %2 == 0)
             String.format(
-                "%.6f",
+                Locale.ENGLISH,"%.6f",
                 arrayAbs[arrayAbs.size / 2].toFloat() + arrayAbs[arrayAbs.size / 2 - 1].toFloat() / 2
             )
         else String.format(
-            "%.6f",
+            Locale.ENGLISH,"%.6f",
             arrayAbs[arrayAbs.size / 2].toFloat()
         )
 
@@ -162,7 +167,7 @@ class AnalisisActivity : AppCompatActivity() {
 
         for (i in arrayAbs.indices) {
             val zmod = String.format(
-                "%.3f",
+                Locale.ENGLISH,"%.3f",
                 0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
             )
             arrayZmod.add(zmod)
@@ -233,16 +238,16 @@ class AnalisisActivity : AppCompatActivity() {
             val h1: String = arrayItem[i][0]
             val qPengukuran: String = arrayItem[i][1]
             val qPengukuran1000: String = arrayItem[i][2]
-            val qBangunan: String = if (String.format("%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
-                    String.format("%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
+            val qBangunan: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
+                    String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                         "0" else arrayItem[i][3]
             val qBangunan1000: String = if (qBangunan == "0") "0" else arrayItem[i][3]
             val ape: String = if (qBangunan == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH,"%.2f",
                 abs(qPengukuran1000.toFloat() - qBangunan1000.toFloat()) / qBangunan1000.toFloat() * 100
             )
             val eValue: String = if (qBangunan == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH,"%.2f",
                 (qPengukuran.toFloat() - qBangunan.toFloat()) / qBangunan.toFloat() * 100
             )
             newArrayItem.add(
@@ -268,7 +273,7 @@ class AnalisisActivity : AppCompatActivity() {
         val dE: ArrayList<String> = ArrayList()
         for (i in newArrayItem.indices) {
             val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH,"%.2f",
                 (newArrayItem[i][3].toFloat() - eSum).pow(2)
             )
             dE.add(deValue)
@@ -307,7 +312,7 @@ class AnalisisActivity : AppCompatActivity() {
         //remember to build your table as the last step
         mBinding.analisisPertamaTable2.build()
 
-        mapeBangunan = String.format("%.3f", (apeSumNotZero / apeSumNotZeroCount))
+        mapeBangunan = String.format(Locale.ENGLISH,"%.3f", (apeSumNotZero / apeSumNotZeroCount))
         mBinding.analisisPertamaResult.text = "Mape: $mapeBangunan%"
 
         setAnalisisTableKe1()
@@ -338,31 +343,31 @@ class AnalisisActivity : AppCompatActivity() {
             val arrayItem: ArrayList<Array<String>> = ArrayList()
             val arrayPercentageResidual: ArrayList<String> = ArrayList()
             for (i in pengambilanDataList.indices) {
-                val h1: String = String.format("%.3f", pengambilanDataList[i].h1)
-                val qPengukuran: String = String.format("%.3f", pengambilanDataList[i].qPengukuran)
+                val h1: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].h1)
+                val qPengukuran: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].qPengukuran)
                 val qPengukuran1000: String = String.format(
-                    "%.3f",
+                    Locale.ENGLISH,"%.3f",
                     pengambilanDataList[i].qPengukuran!! * 1000
                 )
                 val qTabel: String = String.format(
-                    "%.3f", (baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(
+                    Locale.ENGLISH, "%.3f", (baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(
                         baseData.n!!.toFloat()
                     )
                 )
                 val qTabel1000: String = String.format(
-                    "%.3f", (
+                    Locale.ENGLISH,"%.3f", (
                             baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(
                         baseData.n!!.toFloat()
                     ) * 1000
                 )
-                val logQPengukuran: String = String.format("%.3f", log10(qPengukuran1000.toFloat()))
-                val logQBangunan: String = String.format("%.3f", log10(qTabel1000.toFloat()))
+                val logQPengukuran: String = String.format(Locale.ENGLISH,"%.3f", log10(qPengukuran1000.toFloat()))
+                val logQBangunan: String = String.format(Locale.ENGLISH,"%.3f", log10(qTabel1000.toFloat()))
                 val residual: String = String.format(
-                    "%.3f",
+                    Locale.ENGLISH, "%.3f",
                     logQPengukuran.toFloat() - logQBangunan.toFloat()
                 )
                 val percentageResidual: String = String.format(
-                    "%.4f",
+                    Locale.ENGLISH, "%.4f",
                     residual.toFloat() / logQPengukuran.toFloat()
                 )
 
@@ -378,19 +383,19 @@ class AnalisisActivity : AppCompatActivity() {
 
             val median: String = if (arrayPercentageResidual.size % 2 == 0)
                 String.format(
-                    "%.4f",
+                    Locale.ENGLISH,"%.4f",
                     arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat() +
                             arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1].toFloat() / 2
                 )
             else String.format(
-                "%.4f",
+                Locale.ENGLISH,"%.4f",
                 arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat()
             )
 
             val arrayAbs: ArrayList<String> = ArrayList()
             for (i in arrayPercentageResidual.indices) {
                 val abs = String.format(
-                    "%.6f",
+                    Locale.ENGLISH, "%.6f",
                     arrayPercentageResidual[i].toFloat() - median.toFloat()
                 )
                 arrayAbs.add(abs)
@@ -398,11 +403,11 @@ class AnalisisActivity : AppCompatActivity() {
 
             val mad: String = if (arrayAbs.size % 2 == 0)
                 String.format(
-                    "%.6f",
+                    Locale.ENGLISH,  "%.6f",
                     arrayAbs[arrayAbs.size / 2].toFloat() + arrayAbs[arrayAbs.size / 2 - 1].toFloat() / 2
                 )
             else String.format(
-                "%.6f",
+                Locale.ENGLISH, "%.6f",
                 arrayAbs[arrayAbs.size / 2].toFloat()
             )
 
@@ -410,7 +415,7 @@ class AnalisisActivity : AppCompatActivity() {
 
             for (i in arrayAbs.indices) {
                 val zmod = String.format(
-                    "%.3f",
+                    Locale.ENGLISH,   "%.3f",
                     0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
                 )
                 arrayZmod.add(zmod)
@@ -482,16 +487,16 @@ class AnalisisActivity : AppCompatActivity() {
             val h1: String = arrayItem[i][0]
             val qPengukuran: String = arrayItem[i][1]
             val qPengukuran1000: String = arrayItem[i][2]
-            val qTabel: String = if (String.format("%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
-                    String.format("%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
+            val qTabel: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
+                    String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                 "0" else arrayItem[i][3]
             val qTabel1000: String = if (qTabel == "0") "0" else arrayItem[i][3]
             val ape: String = if (qTabel == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH, "%.2f",
                 abs(qPengukuran1000.toFloat() - qTabel1000.toFloat()) / qTabel1000.toFloat() * 100
             )
             val eValue: String = if (qTabel == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH, "%.2f",
                 (qPengukuran.toFloat() - qTabel.toFloat()) / qTabel.toFloat() * 100
             )
             newArrayItem.add(arrayOf(h1, qPengukuran, qPengukuran1000, qTabel, qTabel1000, ape))
@@ -508,7 +513,7 @@ class AnalisisActivity : AppCompatActivity() {
         val dE: ArrayList<String> = ArrayList()
         for (i in newArrayItem.indices) {
             val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH,  "%.2f",
                 (newArrayItem[i][3].toFloat() - eSum).pow(2)
             )
             dE.add(deValue)
@@ -547,7 +552,7 @@ class AnalisisActivity : AppCompatActivity() {
         //remember to build your table as the last step
         mBinding.analisisKeduaTable2.build()
 
-        mapeTabel = String.format("%.3f", (apeSumNotZero / apeSumNotZeroCount))
+        mapeTabel = String.format(Locale.ENGLISH,"%.3f", (apeSumNotZero / apeSumNotZeroCount))
         mBinding.analisisKeduaResult.text = "Mape: $mapeTabel%"
 
         setAnalisisRegresi()
@@ -568,20 +573,20 @@ class AnalisisActivity : AppCompatActivity() {
 
         val arrayItem: ArrayList<Array<String>> = ArrayList()
         for (i in pengambilanDataList.indices) {
-            val h1: String = String.format("%.3f", pengambilanDataList[i].h1)
-            val qPengukuran: String = String.format("%.3f", pengambilanDataList[i].qPengukuran)
+            val h1: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].h1)
+            val qPengukuran: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].qPengukuran)
             val h1CarretnQPengukuran = String.format(
-                "%.3f",
+                Locale.ENGLISH, "%.3f",
                 h1.toFloat().pow(baseData.n!!.toFloat()) * qPengukuran.toFloat()
             )
-            val h1N2 = String.format("%.3f", h1.toFloat().pow(baseData.n!!.toFloat() * 2))
+            val h1N2 = String.format(Locale.ENGLISH,"%.3f", h1.toFloat().pow(baseData.n!!.toFloat() * 2))
             sumH1CarretnQPengukuran += h1CarretnQPengukuran.toFloat()
             sumH1N2 += h1N2.toFloat()
             arrayItem.add(arrayOf(h1, qPengukuran, h1CarretnQPengukuran, h1N2))
         }
 
-        kRegresi = String.format("%.2f", sumH1CarretnQPengukuran / sumH1N2)
-        val c = String.format("%.2f", kRegresi.toFloat() / b.toFloat())
+        kRegresi = String.format(Locale.ENGLISH,"%.2f", sumH1CarretnQPengukuran / sumH1N2)
+        val c = String.format(Locale.ENGLISH,"%.2f", kRegresi.toFloat() / b.toFloat())
 
         val qRegresiPengukuran: ArrayList<Float> = ArrayList()
         for (i in arrayItem.indices) {
@@ -591,7 +596,7 @@ class AnalisisActivity : AppCompatActivity() {
 
             LegacyTableView.insertLegacyContent(
                 (i + 1).toString(), arrayItem[i][0], arrayItem[i][1],
-                arrayItem[i][2], arrayItem[i][3], String.format("%.3f", qRegresiPengukuranValue)
+                arrayItem[i][2], arrayItem[i][3], String.format(Locale.ENGLISH,"%.3f", qRegresiPengukuranValue)
             )
         }
 
@@ -641,22 +646,22 @@ class AnalisisActivity : AppCompatActivity() {
         val arrayItem: ArrayList<Array<String>> = ArrayList()
         val arrayPercentageResidual: ArrayList<String> = ArrayList()
         for (i in pengambilanDataList.indices) {
-            val h1: String = String.format("%.3f", pengambilanDataList[i].h1)
-            val qPengukuran: String = String.format("%.3f", pengambilanDataList[i].qPengukuran)
+            val h1: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].h1)
+            val qPengukuran: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].qPengukuran)
             val qPengukuran1000: String = String.format(
-                "%.3f",
+                Locale.ENGLISH,"%.3f",
                 pengambilanDataList[i].qPengukuran!! * 1000
             )
-            val qRegresi: String = String.format("%.3f", qRegresiPengukuran[i])
-            val qRegresi1000: String = String.format("%.3f", (qRegresiPengukuran[i] * 1000))
-            val logQPengukuran: String = String.format("%.3f", log10(qPengukuran1000.toFloat()))
-            val logQBangunan: String = String.format("%.3f", log10(qRegresi1000.toFloat()))
+            val qRegresi: String = String.format(Locale.ENGLISH,"%.3f", qRegresiPengukuran[i])
+            val qRegresi1000: String = String.format(Locale.ENGLISH,"%.3f", (qRegresiPengukuran[i] * 1000))
+            val logQPengukuran: String = String.format(Locale.ENGLISH,"%.3f", log10(qPengukuran1000.toFloat()))
+            val logQBangunan: String = String.format(Locale.ENGLISH,"%.3f", log10(qRegresi1000.toFloat()))
             val residual: String = String.format(
-                "%.3f",
+                Locale.ENGLISH,   "%.3f",
                 logQPengukuran.toFloat() - logQBangunan.toFloat()
             )
             val percentageResidual: String = String.format(
-                "%.4f",
+                Locale.ENGLISH,  "%.4f",
                 residual.toFloat() / logQPengukuran.toFloat()
             )
 
@@ -672,28 +677,28 @@ class AnalisisActivity : AppCompatActivity() {
 
         val median: String = if (arrayPercentageResidual.size %2 == 0)
             String.format(
-                "%.4f",
+                Locale.ENGLISH,  "%.4f",
                 arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat() +
                         arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1].toFloat() / 2
             )
         else String.format(
-            "%.4f",
+            Locale.ENGLISH, "%.4f",
             arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat()
         )
 
         val arrayAbs: ArrayList<String> = ArrayList()
         for (i in arrayPercentageResidual.indices) {
-            val abs = String.format("%.6f", arrayPercentageResidual[i].toFloat() - median.toFloat())
+            val abs = String.format(Locale.ENGLISH,"%.6f", arrayPercentageResidual[i].toFloat() - median.toFloat())
             arrayAbs.add(abs)
         }
 
         val mad: String = if (arrayAbs.size %2 == 0)
             String.format(
-                "%.6f",
+                Locale.ENGLISH,  "%.6f",
                 arrayAbs[arrayAbs.size / 2].toFloat() + arrayAbs[arrayAbs.size / 2 - 1].toFloat() / 2
             )
         else String.format(
-            "%.6f",
+            Locale.ENGLISH,  "%.6f",
             arrayAbs[arrayAbs.size / 2].toFloat()
         )
 
@@ -701,7 +706,7 @@ class AnalisisActivity : AppCompatActivity() {
 
         for (i in arrayAbs.indices) {
             val zmod = String.format(
-                "%.3f",
+                Locale.ENGLISH,  "%.3f",
                 0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
             )
             arrayZmod.add(zmod)
@@ -772,16 +777,16 @@ class AnalisisActivity : AppCompatActivity() {
             val h1: String = arrayItem[i][0]
             val qPengukuran: String = arrayItem[i][1]
             val qPengukuran1000: String = arrayItem[i][2]
-            val qRegresi: String = if (String.format("%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
-                    String.format("%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
+            val qRegresi: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
+                    String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                 "0" else arrayItem[i][3]
             val qRegresi1000: String = if (qRegresi == "0") "0" else arrayItem[i][3]
             val ape: String = if (qRegresi == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH,"%.2f",
                 abs(qPengukuran1000.toFloat() - qRegresi1000.toFloat()) / qRegresi1000.toFloat() * 100
             )
             val eValue: String = if (qRegresi == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH, "%.2f",
                 (qPengukuran.toFloat() - qRegresi.toFloat()) / qRegresi.toFloat() * 100
             )
             newArrayItem.add(arrayOf(h1, qPengukuran, qPengukuran1000, qRegresi, qRegresi1000, ape))
@@ -798,7 +803,7 @@ class AnalisisActivity : AppCompatActivity() {
         val dE: ArrayList<String> = ArrayList()
         for (i in newArrayItem.indices) {
             val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
-                "%.2f",
+                Locale.ENGLISH, "%.2f",
                 (newArrayItem[i][3].toFloat() - eSum).pow(2)
             )
             dE.add(deValue)
@@ -837,7 +842,7 @@ class AnalisisActivity : AppCompatActivity() {
         //remember to build your table as the last step
         mBinding.analisisKetigaTable2.build()
 
-        mapeRegresi = String.format("%.3f", (apeSumNotZero / apeSumNotZeroCount))
+        mapeRegresi = String.format(Locale.ENGLISH,"%.3f", (apeSumNotZero / apeSumNotZeroCount))
         mBinding.analisisKetigaResult.text = "Mape: $mapeRegresi%"
 
         setAnalisaResult()
@@ -848,7 +853,7 @@ class AnalisisActivity : AppCompatActivity() {
                 (mapeBangunan.toFloat() < mapeRegresi.toFloat()) mapeBangunan else mapeRegresi else if
                         (mapeTabel.toFloat() < mapeRegresi.toFloat()) mapeTabel else mapeRegresi
         kUse = if (mapeTerkecil == mapeRegresi) kRegresi else baseData.variablePertama!!
-        cUse = String.format("%.3f", kUse.toFloat() / b.toFloat())
+        cUse = String.format(Locale.ENGLISH,"%.3f", kUse.toFloat() / b.toFloat())
         val n: String = baseData.n!!
 
         mBinding.analisisResult.text = "Yang digunakan\nMAPA TERKECIL: $mapeTerkecil%\nK: $kUse\nC: $cUse\nN: $n"
@@ -878,26 +883,26 @@ class AnalisisActivity : AppCompatActivity() {
         val arrayThird: ArrayList<Array<String>> = ArrayList()
         val arrayFourth: ArrayList<Array<String>> = ArrayList()
         for (i in 1..25) {
-            first = String.format("%.2f", first.toFloat() + 0.01.toFloat())
-            second = String.format("%.2f", second.toFloat() + 0.01.toFloat())
-            third = String.format("%.2f", third.toFloat() + 0.01.toFloat())
-            fourth = String.format("%.2f", fourth.toFloat() + 0.01.toFloat())
+            first = String.format(Locale.ENGLISH,"%.2f", first.toFloat() + 0.01.toFloat())
+            second = String.format(Locale.ENGLISH,"%.2f", second.toFloat() + 0.01.toFloat())
+            third = String.format(Locale.ENGLISH,"%.2f", third.toFloat() + 0.01.toFloat())
+            fourth = String.format(Locale.ENGLISH,"%.2f", fourth.toFloat() + 0.01.toFloat())
 
             val qFirst: String = String.format(
-                "%.3f",
+                Locale.ENGLISH,  "%.3f",
                 kUse.toFloat() * first.toFloat().pow(baseData.n!!.toFloat())
             )
             val qSecond: String = String.format(
-                "%.3f", kUse.toFloat() * second.toFloat().pow(
+                Locale.ENGLISH, "%.3f", kUse.toFloat() * second.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qThird: String = String.format(
-                "%.3f",
+                Locale.ENGLISH,  "%.3f",
                 kUse.toFloat() * third.toFloat().pow(baseData.n!!.toFloat())
             )
             val qFourth: String = String.format(
-                "%.3f", kUse.toFloat() * fourth.toFloat().pow(
+                Locale.ENGLISH,   "%.3f", kUse.toFloat() * fourth.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
@@ -969,26 +974,26 @@ class AnalisisActivity : AppCompatActivity() {
         val arrayThird: ArrayList<Array<String>> = ArrayList()
         val arrayFourth: ArrayList<Array<String>> = ArrayList()
         for (i in 1..25) {
-            first = String.format("%.2f", first.toFloat() + 0.01.toFloat())
-            second = String.format("%.2f", second.toFloat() + 0.01.toFloat())
-            third = String.format("%.2f", third.toFloat() + 0.01.toFloat())
-            fourth = String.format("%.2f", fourth.toFloat() + 0.01.toFloat())
+            first = String.format(Locale.ENGLISH,"%.2f", first.toFloat() + 0.01.toFloat())
+            second = String.format(Locale.ENGLISH,"%.2f", second.toFloat() + 0.01.toFloat())
+            third = String.format(Locale.ENGLISH,"%.2f", third.toFloat() + 0.01.toFloat())
+            fourth = String.format(Locale.ENGLISH,"%.2f", fourth.toFloat() + 0.01.toFloat())
 
             val qFirst: String = String.format(
-                "%.3f",
+                Locale.ENGLISH,  "%.3f",
                 kUse.toFloat() * first.toFloat().pow(baseData.n!!.toFloat())
             )
             val qSecond: String = String.format(
-                "%.3f", kUse.toFloat() * second.toFloat().pow(
+                Locale.ENGLISH,  "%.3f", kUse.toFloat() * second.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )
             val qThird: String = String.format(
-                "%.3f",
+                Locale.ENGLISH, "%.3f",
                 kUse.toFloat() * third.toFloat().pow(baseData.n!!.toFloat())
             )
             val qFourth: String = String.format(
-                "%.3f", kUse.toFloat() * fourth.toFloat().pow(
+                Locale.ENGLISH, "%.3f", kUse.toFloat() * fourth.toFloat().pow(
                     baseData.n!!.toFloat()
                 )
             )

@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "119809428406",
+    "firebase_url": "https://myapplication2-548f3.firebaseio.com",
+    "project_id": "myapplication2-548f3",
+    "storage_bucket": "myapplication2-548f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119809428406:android:470653c81d29f05d",
+        "android_client_info": {
+          "package_name": "com.example.windows.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119809428406-ggqgnbcc17js8gsol62sa00coeh0vhc8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.windows.myapplication",
+            "certificate_hash": "a0ceb86c216a962bf6f523394cecc11ae760ed51"
+          }
+        },
+        {
+          "client_id": "119809428406-ruv5t8ho69gj3srfp8r48gdvlsleoqq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBl-XPAgyTrB4QGWVDgomuMW2f2FtZe4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119809428406-ruv5t8ho69gj3srfp8r48gdvlsleoqq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119809428406:android:53179e10b377daf34a8f17",
+        "android_client_info": {
+          "package_name": "id.ias.calculationwaterdebit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119809428406-6cd6gn5l54snm929at08j61n8iaaca4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.ias.calculationwaterdebit",
+            "certificate_hash": "41e09d24a669c36417c46891c7fc3d05f1852d9c"
+          }
+        },
+        {
+          "client_id": "119809428406-ruv5t8ho69gj3srfp8r48gdvlsleoqq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBl-XPAgyTrB4QGWVDgomuMW2f2FtZe4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119809428406-ruv5t8ho69gj3srfp8r48gdvlsleoqq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

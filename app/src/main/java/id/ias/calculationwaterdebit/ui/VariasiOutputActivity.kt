@@ -14,6 +14,8 @@ import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModel
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModelFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 class VariasiOutputActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
@@ -79,11 +81,10 @@ class VariasiOutputActivity : AppCompatActivity() {
 
         mBinding.btnNextCalc.setOnClickListener {
             loading.show(this)
-            val minH2 = String.format("%.3f", h2MinAll.minOrNull())
-            val maxH2 = String.format("%.3f", h2MaxAll.maxOrNull())
-            val minDebitSaluran = String.format("%.3f", debitSaluranAll.minOrNull())
-            val maxDebitSaluran = String.format("%.3f", debitSaluranAll.maxOrNull())
-
+            var minH2 = String.format(Locale.ENGLISH,"%.3f", h2MinAll.minOrNull())
+            var maxH2 = String.format(Locale.ENGLISH,"%.3f", h2MaxAll.maxOrNull())
+            var minDebitSaluran = String.format(Locale.ENGLISH,"%.3f", debitSaluranAll.minOrNull())
+            var maxDebitSaluran = String.format(Locale.ENGLISH,"%.3f", debitSaluranAll.maxOrNull())
             baseDataViewModel.update(idBaseData.toInt(), minH2, maxH2, minDebitSaluran, maxDebitSaluran)
         }
     }
@@ -105,7 +106,7 @@ class VariasiOutputActivity : AppCompatActivity() {
             "Luas Basah (m2)", "Debit (m3)")
 
         LegacyTableView.insertLegacyContent("0", "0", "Tepi", " ", "-", "-", "-", "0", "0", "0", "0")
-        mBinding.etH1.setText(String.format("%.3f", variasiOutputViewModel.pengambilanDataById[currentFormData].h1))
+        mBinding.etH1.setText(String.format(Locale.ENGLISH,"%.3f", variasiOutputViewModel.pengambilanDataById[currentFormData].h1))
         var debitSaluran = "0".toFloat()
         var jumlahRataRata = "0".toFloat()
         val h2Put: ArrayList<Float> = ArrayList()
@@ -147,16 +148,16 @@ class VariasiOutputActivity : AppCompatActivity() {
                 "0".toFloat()
             }
             val debit = luasBasah * rataRata
-            LegacyTableView.insertLegacyContent(String.format("%.3f", jarak), String.format("%.3f", piasDatas[i].h2),
-                (i + 1).toString(), piasDatas[i].metodePengmbilan, String.format("%.3f", piasDatas[i].d8),
-                String.format("%.3f", piasDatas[i].d6), String.format("%.3f", piasDatas[i].d2),
-                String.format("%.3f", currentRai),  String.format("%.3f", rataRata),
-                String.format("%.3f", luasBasah), String.format("%.3f", debit))
+            LegacyTableView.insertLegacyContent(String.format(Locale.ENGLISH,"%.3f", jarak), String.format(Locale.ENGLISH,"%.3f", piasDatas[i].h2),
+                (i + 1).toString(), piasDatas[i].metodePengmbilan, String.format(Locale.ENGLISH,"%.3f", piasDatas[i].d8),
+                String.format(Locale.ENGLISH,"%.3f", piasDatas[i].d6), String.format(Locale.ENGLISH,"%.3f", piasDatas[i].d2),
+                String.format(Locale.ENGLISH,"%.3f", currentRai),  String.format(Locale.ENGLISH,"%.3f", rataRata),
+                String.format(Locale.ENGLISH,"%.3f", luasBasah), String.format(Locale.ENGLISH,"%.3f", debit))
 
             debitSaluran += debit
             jumlahRataRata += rataRata
             if (i + 1 == piasDatas.size) {
-                mBinding.etDebitSaluran.setText(String.format("%.3f", debitSaluran))
+                mBinding.etDebitSaluran.setText(String.format(Locale.ENGLISH,"%.3f", debitSaluran))
                 pengambilanDataViewModel.update(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!, jumlahRataRata, debitSaluran)
             }
 
@@ -216,6 +217,14 @@ class VariasiOutputActivity : AppCompatActivity() {
                             alps.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
                             alps.putExtra("id_base_data", idBaseData)
                             startActivity(alps)
+                            finish()
+                        }
+                        "Parshall Flume" -> {
+                            val parshallFlume = Intent(this@VariasiOutputActivity, ParshallFlumeActivity::class.java)
+                            parshallFlume.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            parshallFlume.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            parshallFlume.putExtra("id_base_data", idBaseData)
+                            startActivity(parshallFlume)
                             finish()
                         }
                         "Orifice" -> {

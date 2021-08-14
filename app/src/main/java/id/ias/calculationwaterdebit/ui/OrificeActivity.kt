@@ -15,6 +15,7 @@ import id.ias.calculationwaterdebit.util.BackDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.OrificeActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.OrificeActivityViewModelFactory
+import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -67,7 +68,7 @@ class OrificeActivity : AppCompatActivity() {
             alps.putExtra("id_tipe_bangunan", idTipeBangunan)
             alps.putExtra("tipe_bangunan", detailBangunan)
             alps.putExtra("id_base_data", idBaseData)
-            alps.putExtra("b", String.format("%.3f", orificeActivityViewModel.orificeData.lebarLubang))
+            alps.putExtra("b", String.format(Locale.ENGLISH,"%.3f", orificeActivityViewModel.orificeData.lebarLubang))
             startActivity(alps)
             finish()
         }
@@ -78,8 +79,8 @@ class OrificeActivity : AppCompatActivity() {
             //set table title labels
             LegacyTableView.insertLegacyTitle("Bc", "W")
             LegacyTableView.insertLegacyContent(
-                String.format("%.3f", orificeActivityViewModel.orificeData.lebarLubang),
-                String.format("%.3f", orificeActivityViewModel.orificeData.tinggiLubang))
+                String.format(Locale.ENGLISH,"%.3f", orificeActivityViewModel.orificeData.lebarLubang),
+                String.format(Locale.ENGLISH,"%.3f", orificeActivityViewModel.orificeData.tinggiLubang))
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
@@ -112,19 +113,20 @@ class OrificeActivity : AppCompatActivity() {
                 LegacyTableView.insertLegacyTitle("Banyaknya variasi air Ke-","C", "Bc", "W", "A", "g",
                     "Hb", "H1", "z", "Q")
 
-                val c: String = String.format("%.2f", (0.7).toFloat())
-                val bc: String = String.format("%.3f", orificeActivityViewModel.orificeData.lebarLubang)
-                val w: String = String.format("%.3f", orificeActivityViewModel.orificeData.tinggiLubang)
-                val a: String = String.format("%.2f", (35.60).toFloat())
-                val g: String = String.format("%.1f", (9.8).toFloat())
+                val c: String = String.format(Locale.ENGLISH,"%.2f", (0.7).toFloat())
+                val bc: String = String.format(Locale.ENGLISH,"%.3f", orificeActivityViewModel.orificeData.lebarLubang)
+                val w: String = String.format(Locale.ENGLISH,"%.3f", orificeActivityViewModel.orificeData.tinggiLubang)
+                val a: String = String.format(Locale.ENGLISH,"%.2f", (35.60).toFloat())
+                val g: String = String.format(Locale.ENGLISH,"%.1f", (9.8).toFloat())
 
                 for (i in it.indices) {
-                    val hb: String = String.format("%.2f", it[i].hb)
-                    val h1: String = String.format("%.2f", it[i].h1)
-                    val z: String = String.format("%.2f", hb.toFloat() - h1.toFloat())
-                    val q:String = String.format("%.3f",
+                    val hb: String = String.format(Locale.ENGLISH,"%.2f", it[i].hb)
+                    val h1: String = String.format(Locale.ENGLISH,"%.2f", it[i].h1)
+                    val z: String = String.format(Locale.ENGLISH,"%.2f", hb.toFloat() - h1.toFloat())
+                    var q:String = String.format(Locale.ENGLISH,"%.3f",
                         c.toFloat() * a.toFloat() * sqrt((2 * g.toFloat() * z.toFloat())))
 
+                    q = q.replace(",", ".")
                     pengambilanDataViewModel.update(it[i].id!!, q.toFloat())
 
                     LegacyTableView.insertLegacyContent((i + 1).toString(), c, bc, w, a, g, hb, h1, z, q)

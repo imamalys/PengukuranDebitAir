@@ -83,7 +83,7 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 id: Long
             ) {
                 if (position != 0 && position != 8) {
-                    ToastUtils.showShort("Tipe Bangunan belumd dapat dipilih")
+                    ToastUtils.showShort("Tipe Bangunan belum dapat dipilih")
                     mBinding.spTipeBangunan.setSelection(0)
                 } else {
                     tipeBangunanUkurViewModel.tipeBangunan.value = list[position]
