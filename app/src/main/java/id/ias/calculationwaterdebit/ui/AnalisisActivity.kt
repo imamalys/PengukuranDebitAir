@@ -96,7 +96,7 @@ class AnalisisActivity : AppCompatActivity() {
             "Q Pengukuran (m3/s)",
             "Q Pengukuran (I/s",
             "Q Bangunan (m3/s)",
-            " Q Bangunan (I/s)",
+            "Q Bangunan (I/s)",
             "Log Q. Pengukuran",
             "Log Q. Bangunan",
             "Residual",
@@ -224,7 +224,7 @@ class AnalisisActivity : AppCompatActivity() {
             "Q Pengukuran (m3/s)",
             "Q Pengukuran (I/s",
             "Q Bangunan (m3/s)",
-            " Q Bangunan (I/s)",
+            "Q Bangunan (I/s)",
             "APE", "E", "dE"
         )
 
@@ -241,7 +241,7 @@ class AnalisisActivity : AppCompatActivity() {
             val qBangunan: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
                     String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                         "0" else arrayItem[i][3]
-            val qBangunan1000: String = if (qBangunan == "0") "0" else arrayItem[i][3]
+            val qBangunan1000: String = if (qBangunan == "0") "0" else arrayItem[i][4]
             val ape: String = if (qBangunan == "0") "0.00" else String.format(
                 Locale.ENGLISH,"%.2f",
                 abs(qPengukuran1000.toFloat() - qBangunan1000.toFloat()) / qBangunan1000.toFloat() * 100
@@ -329,7 +329,7 @@ class AnalisisActivity : AppCompatActivity() {
                 "Q Pengukuran (m3/s)",
                 "Q Pengukuran (I/s",
                 "Q Tabel (m3/s)",
-                " Q Tabel (I/s)",
+                "Q Tabel (I/s)",
                 "Log Q. Pengukuran",
                 "Log Q. Tabel",
                 "Residual",
@@ -490,7 +490,7 @@ class AnalisisActivity : AppCompatActivity() {
             val qTabel: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
                     String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                 "0" else arrayItem[i][3]
-            val qTabel1000: String = if (qTabel == "0") "0" else arrayItem[i][3]
+            val qTabel1000: String = if (qTabel == "0") "0" else arrayItem[i][4]
             val ape: String = if (qTabel == "0") "0.00" else String.format(
                 Locale.ENGLISH, "%.2f",
                 abs(qPengukuran1000.toFloat() - qTabel1000.toFloat()) / qTabel1000.toFloat() * 100
@@ -780,7 +780,7 @@ class AnalisisActivity : AppCompatActivity() {
             val qRegresi: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
                     String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
                 "0" else arrayItem[i][3]
-            val qRegresi1000: String = if (qRegresi == "0") "0" else arrayItem[i][3]
+            val qRegresi1000: String = if (qRegresi == "0") "0" else arrayItem[i][4]
             val ape: String = if (qRegresi == "0") "0.00" else String.format(
                 Locale.ENGLISH,"%.2f",
                 abs(qPengukuran1000.toFloat() - qRegresi1000.toFloat()) / qRegresi1000.toFloat() * 100

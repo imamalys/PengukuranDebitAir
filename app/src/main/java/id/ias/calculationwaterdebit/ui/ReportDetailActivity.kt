@@ -71,8 +71,8 @@ class ReportDetailActivity : AppCompatActivity() {
         mBinding.tvTabelDebit.text = "Tabel Debit Bangunan Ukur di Daerah Irigasi ${baseData.namaDaerahIrigasi}"
         mBinding.tvKeterangan.text = baseData.keterangan
         mBinding.tvNilaiResult.text = if (baseData.nilaiKeterangan >= 5)
-            "SIBIMA Tidak Merekomendasikan Melakukan Kalibrasi Berdasarkan Keterangan Di Atas" else
-                "SIBIMA Merekomendasikan Melakukan Kalibrasi Berdasarkan Keterangan Di Atas"
+            "IRCAL-BOP Tidak Merekomendasikan Melakukan Kalibrasi Berdasarkan Keterangan Di Atas" else
+                "IRCAL-BOP Merekomendasikan Melakukan Kalibrasi Berdasarkan Keterangan Di Atas"
 
         setAnalisisResultTabel1()
     }

@@ -243,13 +243,10 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
         val bC: String = String.format(Locale.ENGLISH, "%.1f", alpsActivityViewModel.alpsData.lebarAmbang)
         for (i in cd.indices) {
             val h1: String = String.format(Locale.ENGLISH, "%.2f", alpsActivityViewModel.pengambilanData[i].h1)
-            var q:String = if (cv[i] == "Bukan") "Bukan" else
-                String.format(Locale.ENGLISH, "%.3f", (cd[i].toFloat() * cv[i].toFloat() * ((2.toFloat() / 3.toFloat())) * (sqrt(((2.toFloat() / 3.toFloat()) * g.toFloat())) * bC.toFloat() * (h1.toFloat().pow(x = (1.5).toFloat())))))
+            val q:Float = (cd[i].toFloat() * cv[i].toFloat() * ((2.toFloat() / 3.toFloat())) * (sqrt(((2.toFloat() / 3.toFloat()) * g.toFloat())) * bC.toFloat() * (h1.toFloat().pow(x = (1.5).toFloat()))))
+            pengambilanDataViewModel.update(alpsActivityViewModel.pengambilanData[i].id!!, q)
 
-            q = q.replace(",", ".")
-            pengambilanDataViewModel.update(alpsActivityViewModel.pengambilanData[i].id!!, q.toFloat())
-
-            LegacyTableView.insertLegacyContent((i + 1).toString(), cd[i], cv[i], g, bC, h1, q)
+            LegacyTableView.insertLegacyContent((i + 1).toString(), cd[i], cv[i], g, bC, h1, String.format(Locale.ENGLISH, "%.3f", q))
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()

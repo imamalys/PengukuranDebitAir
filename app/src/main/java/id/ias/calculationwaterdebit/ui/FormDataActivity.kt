@@ -207,17 +207,12 @@ class FormDataActivity : AppCompatActivity() {
             } else if(mBinding.etJarakPias.text.toString() == "") {
                 ToastUtils.showLong("Jarak Antar Pias belum diisi")
             }
-            else if(!formDataActivityViewModel.checkHaveValue()) {
-                ToastUtils.showLong("Kecepatan air data belum diisi")
-            } else {
+            else {
                 mBinding.btnNext.isEnabled = false
                 loading.show(this)
-                var d8 =  mBinding.d8.text.toString()
-                d8 = d8.replace(",", ".")
-                var d6 =  mBinding.d6.text.toString()
-                d6 = d6.replace(",", ".")
-                var d2 =  mBinding.d2.text.toString()
-                d2 = d2.replace(",", ".")
+                val d8 =  mBinding.d8.text.toString()
+                val d6 =  mBinding.d6.text.toString()
+                val d2 =  mBinding.d2.text.toString()
                 val piasModel = PiasModel(
                     null,
                     formDataActivityViewModel.idPengambilanData,
