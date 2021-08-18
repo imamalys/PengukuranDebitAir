@@ -10,7 +10,7 @@ import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.model.PiasModel
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityVariasiOutputBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModel
 import id.ias.calculationwaterdebit.viewmodel.VariasiOutputViewModelFactory
@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 
 class VariasiOutputActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     private lateinit var mBinding: ActivityVariasiOutputBinding
     private val variasiOutputViewModel: VariasiOutputViewModel by viewModels {
         VariasiOutputViewModelFactory()
@@ -38,8 +38,6 @@ class VariasiOutputActivity : AppCompatActivity() {
     var idTipeBangunan: Long = 0
     var currentFormData: Int = 0
     var idBaseData: Long = 0
-    val h2MinAll: ArrayList<Float> = ArrayList()
-    val h2MaxAll: ArrayList<Float> = ArrayList()
     val debitSaluranAll: ArrayList<Float> = ArrayList()
     var isUdated = true
 
@@ -81,11 +79,15 @@ class VariasiOutputActivity : AppCompatActivity() {
 
         mBinding.btnNextCalc.setOnClickListener {
             loading.show(this)
-            var minH2 = String.format(Locale.ENGLISH,"%.3f", h2MinAll.minOrNull())
-            var maxH2 = String.format(Locale.ENGLISH,"%.3f", h2MaxAll.maxOrNull())
+            val h1All: ArrayList<Float> = ArrayList()
+            for (i in variasiOutputViewModel.pengambilanDataById.indices) {
+                h1All.add(variasiOutputViewModel.pengambilanDataById[i].h1)
+            }
+            var minH1 = String.format(Locale.ENGLISH,"%.3f", h1All.minOrNull())
+            var maxH1 = String.format(Locale.ENGLISH,"%.3f", h1All.maxOrNull())
             var minDebitSaluran = String.format(Locale.ENGLISH,"%.3f", debitSaluranAll.minOrNull())
             var maxDebitSaluran = String.format(Locale.ENGLISH,"%.3f", debitSaluranAll.maxOrNull())
-            baseDataViewModel.update(idBaseData.toInt(), minH2, maxH2, minDebitSaluran, maxDebitSaluran)
+            baseDataViewModel.update(idBaseData.toInt(), minH1, maxH1, minDebitSaluran, maxDebitSaluran)
         }
     }
 
@@ -161,11 +163,7 @@ class VariasiOutputActivity : AppCompatActivity() {
                 pengambilanDataViewModel.update(variasiOutputViewModel.pengambilanDataById[currentFormData].id!!, jumlahRataRata, debitSaluran)
             }
 
-            h2Put.add(piasDatas[i].h2)
-
             if (i + 1 == piasDatas.size) {
-                h2MinAll.add(h2Put.minOrNull()!!)
-                h2MaxAll.add(h2Put.maxOrNull()!!)
                 debitSaluranAll.add(debitSaluran)
             }
         }
@@ -242,7 +240,7 @@ class VariasiOutputActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

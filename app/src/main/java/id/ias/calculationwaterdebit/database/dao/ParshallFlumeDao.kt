@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ParshallFlumeDao {
-    @Query("SELECT * FROM orifice")
+    @Query("SELECT * FROM parshall_flume")
     fun getAllParshallFlume(): Flow<List<ParshallFlumeModel>>
 
-    @Query("SELECT * FROM orifice WHERE id = :id")
+    @Query("SELECT * FROM parshall_flume WHERE id = :id")
     suspend fun getParshallFlumeById(id: Int): ParshallFlumeModel
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

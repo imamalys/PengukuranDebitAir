@@ -5,21 +5,28 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
-import id.ias.calculationwaterdebit.R
-import id.ias.calculationwaterdebit.databinding.BackDialogBinding
+import id.ias.calculationwaterdebit.databinding.MessageDialogBinding
 
-class BackDialogUtil {
+class MessageDialogUtil {
 
     lateinit var dialog: CustomDialog
-    lateinit var binding: BackDialogBinding
+    lateinit var binding: MessageDialogBinding
 
-    fun show(context: Context, dialogListener: DialogListener): Dialog {
+    fun show(context: Context, dialogListener: DialogListener) {
+        show(context, "Apakah anda yakin ingin membatalkan?",
+        "Ya", "Tidak", dialogListener)
+    }
+
+    fun show(context: Context, title: String = "Apakah anda yakin ingin membatalkan?",
+             yes: String = "Ya", no: String = "Tidak", dialogListener: DialogListener): Dialog {
         val inflater = (context as Activity).layoutInflater
-        binding = BackDialogBinding.inflate(inflater)
+        binding = MessageDialogBinding.inflate(inflater)
         dialog = CustomDialog(context)
         dialog.setContentView(binding.root)
 
+        binding.tvTitle.text = title
+        binding.tvYa.text = yes
+        binding.tvTidak.text = no
         binding.tvYa.setOnClickListener {
             dialog.dismiss()
             dialogListener.onYes(true)
@@ -27,6 +34,7 @@ class BackDialogUtil {
 
         binding.tvTidak.setOnClickListener {
             dialog.dismiss()
+            dialogListener.onYes(false)
         }
         dialog.show()
         return dialog

@@ -38,12 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="vertical"
+        android:background="@drawable/background_app"
         app:layout_constraintTop_toBottomOf="@+id/cl_top"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:background="#9AFFFFFF">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -107,7 +109,7 @@
                 android:id="@+id/btn_next"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/rv_detail_bangunan"
+                app:layout_constraintTop_toBottomOf="@id/rv_detail_bangunan"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

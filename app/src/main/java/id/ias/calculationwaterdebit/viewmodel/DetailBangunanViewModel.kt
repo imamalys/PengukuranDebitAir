@@ -76,6 +76,7 @@ class DetailBangunanViewModel: ViewModel() {
             }
             "Parshall Flume" -> {
                 detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Tenggorokan"))
+                detailBangunans.add(DetailBangunanModel("hb", "0", ""))
             }
             "Orifice" -> {
                 detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Lubang"))

@@ -11,10 +11,10 @@ import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityRumusTabelDebitBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 
 class RumusTabelDebitActivity : AppCompatActivity() {
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     private lateinit var mBinding: ActivityRumusTabelDebitBinding
 
     private val baseDataViewModel: BaseDataViewModel by viewModels {
@@ -105,7 +105,7 @@ class RumusTabelDebitActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

@@ -6,12 +6,12 @@ import android.text.InputFilter
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.databinding.ActivityVariasiKetinggianAirBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.MinMaxFilter
 
 
 class VariasiKetinggianAirActivity : AppCompatActivity() {
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     private lateinit var mBinding: ActivityVariasiKetinggianAirBinding
     var tipeBangunan: String = ""
     var idTipeBangunan: Long = 0
@@ -59,7 +59,7 @@ class VariasiKetinggianAirActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

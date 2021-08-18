@@ -16,14 +16,14 @@ import id.ias.calculationwaterdebit.database.model.PiasModel
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityFormDataBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModelFactory
 
 class FormDataActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     lateinit var mBinding: ActivityFormDataBinding
     val formDataActivityViewModel: FormDataActivityViewModel by viewModels {
         FormDataActivityViewModelFactory()
@@ -348,7 +348,7 @@ class FormDataActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

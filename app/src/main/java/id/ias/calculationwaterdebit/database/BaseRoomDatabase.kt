@@ -16,18 +16,22 @@ import kotlinx.coroutines.launch
     BaseDataModel::class,
     AmbangLebarPengontrolSegiempatModel::class,
     OrificeModel::class,
+    ParshallFlumeModel::class,
     PengambilanDataModel::class,
     PiasModel::class,
-    KoefisiensiAmbangLebarModel::class],
+    KoefisiensiAmbangLebarModel::class,
+    KoefisiensiAliranSempurnaModel::class],
     version = 1)
 abstract class BaseRoomDatabase: RoomDatabase() {
 
     abstract fun baseDataDao(): BaseDataDao
     abstract fun alpsDao(): AmbangLebarPengontrolSegiempatDao
     abstract fun orificeDao(): OrificeDao
+    abstract fun parshallFlumeDao(): ParshallFlumeDao
     abstract fun pengambilanDataDao(): PengambilanDataDao
     abstract fun piasDao(): PiasDao
     abstract fun koefisiensiDao(): KoefisiensiAmbangLebarDao
+    abstract fun koefisiensiAliranSempurnaDao(): KoefisiensiAliranSempurnaDao
 
     companion object {
         @Volatile

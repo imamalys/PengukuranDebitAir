@@ -10,7 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.ParshallFlumeActivity"></activity>
+        <activity android:name=".ui.AmbangLebarPengontrolTrapesiumtivity"></activity>
+        <activity android:name=".ui.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.ParshallFlumeActivity" />
         <activity android:name=".ui.OrificeActivity" />
         <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.CheckKondisiActivity" />
@@ -43,13 +51,7 @@
         <activity
             android:name=".ui.MainMenuActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

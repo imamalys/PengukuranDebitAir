@@ -12,14 +12,14 @@ import id.ias.calculationwaterdebit.database.model.BaseDataModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityDataInformasiBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.DateUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import java.util.*
 
 class DataInformasiActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     lateinit var mBinding: ActivityDataInformasiBinding
     private val baseDataViewModel: BaseDataViewModel by viewModels {
         BaseDataViewModelFactory((application as Application).baseDataRepository)
@@ -125,7 +125,7 @@ class DataInformasiActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

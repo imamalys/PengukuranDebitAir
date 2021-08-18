@@ -3,7 +3,6 @@ package id.ias.calculationwaterdebit.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
@@ -11,12 +10,13 @@ import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityCheckKondisiBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 
 class CheckKondisiActivity : AppCompatActivity() {
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     val loading = LoadingDialogUtil()
+
     private lateinit var mBinding: ActivityCheckKondisiBinding
 
     private val baseDataViewModel: BaseDataViewModel by viewModels {
@@ -109,7 +109,21 @@ class CheckKondisiActivity : AppCompatActivity() {
 
                 val result = "Keterangan:\n1.$pertama\n2.$kedua\n3.$ketiga\n4.$keempat\n5.$kelima"
                 val nilai = nilaiPertama + nilaiKedua + nilaiKetiga + nilaiKeempat + nilaiKelima
-                baseDataViewModel.update(id = idBaseData.toInt(), keterangan =  result, nilaiKeterangan =  nilai)
+
+                if (nilai >= 5) {
+                    back.show(this, "Kondisi Kurang Baik\nTidak dianjurkan melakukan kalibrasi",
+                        "Lanjutkan", "Tidak", object: MessageDialogUtil.DialogListener {
+                        override fun onYes(action: Boolean) {
+                            if (action) {
+                                baseDataViewModel.update(id = idBaseData.toInt(), keterangan =  result, nilaiKeterangan =  nilai)
+                            } else {
+                                finish()
+                            }
+                        }
+                    })
+                } else {
+                    baseDataViewModel.update(id = idBaseData.toInt(), keterangan =  result, nilaiKeterangan =  nilai)
+                }
             }
         }
     }
@@ -127,7 +141,7 @@ class CheckKondisiActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

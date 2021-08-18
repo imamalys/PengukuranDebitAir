@@ -11,5 +11,6 @@ data class ParshallFlumeModel(
     @ColumnInfo(name = "id_base_data")
     var idBaseData: Int,
     @ColumnInfo(name = "lebar_tenggorokan")
-    var lebarTenggorokan: Float
+    var lebarTenggorokan: Float,
+    var hb: Float
 )

@@ -10,21 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.model.PengambilanDataModel
-import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
-import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PengambilanDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityPengambilanDataBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.util.MinMaxFilter
 import id.ias.calculationwaterdebit.viewmodel.PengambilanDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.PengambilanDataActivityViewModelFactory
-import kotlin.math.sign
 
 class PengambilanDataActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     lateinit var mBinding: ActivityPengambilanDataBinding
     val pengambilanDataActivityViewModel: PengambilanDataActivityViewModel by viewModels {
         PengambilanDataActivityViewModelFactory()
@@ -166,7 +163,7 @@ class PengambilanDataActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

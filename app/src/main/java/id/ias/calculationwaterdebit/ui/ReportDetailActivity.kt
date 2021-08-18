@@ -58,10 +58,13 @@ class ReportDetailActivity : AppCompatActivity() {
 
     private fun setView() {
         mBinding.tvTitle.text = "Hasil Kalibrasi Bangunan Ukur Debit\nDi Daerah Irigasi ${baseData.namaDaerahIrigasi}"
-        mBinding.tvNamaBangunanValue.text = "Daerah Irigasi ${baseData.namaDaerahIrigasi}"
-        mBinding.tvTanggalKalibrasi.text = "Tanggal: ${baseData.tanggal}"
+        mBinding.tvNamaBangunanValue.text = "Nama Irigasi ${baseData.namaDaerahIrigasi}"
+        mBinding.tvTanggalKalibrasi.text = "Tanggal Kalibrasi: ${baseData.tanggal}"
+        mBinding.tvInstansiKalibrasi.text = "Instansi Pengelola: ${baseData.wilayahKewenangan}"
+        mBinding.tvLokasiKalibrasi.text = "Lokasi: ${baseData.kabupaten}, ${baseData.provinsi}"
+        mBinding.tvManufakturKalibrasi.text = "Nomor Nomenklatur: ${baseData.noPengukuran}"
         mBinding.tvDetail.text = "a) Acuan Kalibrasi: Pengukuran Debit menggunakan Current Meter\n" +
-                "b) Rentang Tinggi di Ambang/Pengontrol: ${baseData.minH2} - ${baseData.maxH2} meter\n" +
+                "b) Rentang Tinggi di Ambang/Pengontrol: ${baseData.minH1} - ${baseData.maxH1} meter\n" +
                 "c) Rentang Debit Kalibrasi: ${baseData.minDebitSaluran} - ${baseData.maxDebitSaluran} m3/s\n" +
                 "d) Deviasi/MAPE: ${baseData.mape}%"
         mBinding.tvDetailRumus1.text = ": ${baseData.k} x H1"

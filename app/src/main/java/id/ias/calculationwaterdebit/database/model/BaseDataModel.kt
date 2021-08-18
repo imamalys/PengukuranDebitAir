@@ -25,10 +25,10 @@ data class BaseDataModel(
     @ColumnInfo(name = "variable_pertama")
     var variablePertama: String?,
     var n: String?,
-    @ColumnInfo(name = "min_h2")
-    var minH2: String?,
-    @ColumnInfo(name = "max_h2")
-    var maxH2: String?,
+    @ColumnInfo(name = "min_h1")
+    var minH1: String?,
+    @ColumnInfo(name = "max_h1")
+    var maxH1: String?,
     @ColumnInfo(name = "min_debit_saluran")
     var minDebitSaluran: String?,
     @ColumnInfo(name = "max_debit_saluran")

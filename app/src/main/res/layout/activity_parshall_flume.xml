@@ -6,4 +6,118 @@
     android:layout_height="match_parent"
     tools:context=".ui.ParshallFlumeActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/data_informasi_bottom_corner"
+        android:paddingBottom="10dp"
+        android:id="@+id/cl_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="IRCAL-BOP"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="#000000"
+            android:padding="10dp" />
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pupr_logo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/background_app"
+        app:layout_constraintTop_toBottomOf="@+id/cl_top"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#9AFFFFFF"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_parshall_flume"
+                android:layout_marginTop="10dp"
+                android:textSize="22sp"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="Parshall Flume" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parshall_flume_table"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_parshall_flume" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/parshall_flume_table"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/tv_q"
+                android:text="Rumus Debit ="
+                android:textSize="14sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toRightOf="@+id/tv_q"
+                app:layout_constraintTop_toTopOf="@+id/tv_q"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_q"
+                android:id="@+id/tv_rumus"
+                android:text="Berdasarkan Tabel"
+                android:textSize="14sp"
+                android:textColor="@color/black" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parshall_flume_table_2"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rumus" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parshall_flume_debit"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/parshall_flume_table_2" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:backgroundTint="#3F51B5"
+                android:text="Next"
+                android:id="@+id/btn_next"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/parshall_flume_debit"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

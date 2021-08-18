@@ -193,7 +193,7 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
             var koefisiensi = koefisiensiAmbangLebarViewModel.getKoefiensiAmbangLebarById(nilai.toFloat())
 
             cvValue = if (koefisiensi == null) {
-                "Bukan"
+                "0.0"
             } else {
                 when(bentukA) {
                     "Bentuk Peralihan Persegiempat" -> {

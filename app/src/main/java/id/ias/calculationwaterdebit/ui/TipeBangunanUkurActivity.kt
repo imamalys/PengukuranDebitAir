@@ -1,31 +1,26 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.R
-import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
-import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
-import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityTipeBangunanUkurBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.util.PictureDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModel
 import id.ias.calculationwaterdebit.viewmodel.TipeBangunanUkurViewModelFactory
 
 class TipeBangunanUkurActivity : AppCompatActivity() {
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     val loading = LoadingDialogUtil()
     var picture = PictureDialogUtil()
     var idBaseData: Long = 0
@@ -82,7 +77,7 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0 && position != 8) {
+                if (position != 0 && position != 5 && position != 8) {
                     ToastUtils.showShort("Tipe Bangunan belum dapat dipilih")
                     mBinding.spTipeBangunan.setSelection(0)
                 } else {
@@ -112,7 +107,7 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

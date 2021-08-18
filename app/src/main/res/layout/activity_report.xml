@@ -81,11 +81,28 @@
                 app:layout_constraintLeft_toRightOf="@+id/tv_nama_bangunan"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/tv_nama_bangunan_value" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Instansi Pengelola:"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nama_bangunan_value"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_instansi_kalibrasi" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lokasi:"
+                app:layout_constraintTop_toBottomOf="@+id/tv_instansi_kalibrasi"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_lokasi_kalibrasi" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tanggal Kalibrasi:"
-                app:layout_constraintTop_toBottomOf="@+id/tv_nama_bangunan"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lokasi_kalibrasi"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/tv_tanggal_kalibrasi" />
 
@@ -106,10 +123,18 @@
                 android:text="a)acuan" />
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manufaktur:"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_manufaktur_kalibrasi" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rumus Debit Kalibrasi"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_manufaktur_kalibrasi"
                 android:id="@+id/tv_rumus_debit"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="10dp"/>

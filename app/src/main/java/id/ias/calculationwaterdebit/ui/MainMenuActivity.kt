@@ -2,21 +2,37 @@ package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.R
+import id.ias.calculationwaterdebit.adapter.BannerTipeBangunanAdapter
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
+import id.ias.calculationwaterdebit.database.viewmodel.KoefisiensiAliranSempurnaViewModel
+import id.ias.calculationwaterdebit.database.viewmodel.KoefisiensiAliranSempurnaViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityMainMenuBinding
+import id.ias.calculationwaterdebit.helper.CirclePagerIndicatorDecoration
+import id.ias.calculationwaterdebit.util.DBInjectorUtil
+import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 
-class MainMenuActivity : AppCompatActivity() {
-
+class MainMenuActivity : AppCompatActivity(), DBInjectorUtil.Companion.InsertSuccess {
+    val loading = LoadingDialogUtil()
     lateinit var mBinding: ActivityMainMenuBinding
-    private val ambangLebarPengontrolSegiempatViewModel: AmbangLebarPengontrolSegiempatViewModel by viewModels {
-        AmbangLebarPengontrolSegiempatViewModelFactory((application as Application).alpsRepository)
+
+    private val koefisiensiAliranSempurnaViewModel: KoefisiensiAliranSempurnaViewModel by viewModels {
+        KoefisiensiAliranSempurnaViewModelFactory((application as Application).koefisiensiAliranSempurnaRepository)
     }
+
+    private lateinit var SCROLLING_RUNNABLE: Runnable
+    private lateinit var mHandler: Handler
+    var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +46,50 @@ class MainMenuActivity : AppCompatActivity() {
                 .load(R.drawable.logo_app)
                 .circleCrop()
                 .into(mBinding.ivTopLeft)
+
+        mHandler = Handler(Looper.getMainLooper())
+        val promotionBannerAdapter = BannerTipeBangunanAdapter(this)
+        SCROLLING_RUNNABLE = object : Runnable {
+            override fun run() {
+                if (count != promotionBannerAdapter.getItemCount() - 1) {
+                    count++
+                }
+                //                mBinding.listBanner.smoothScrollBy(pixelsToMove, 0);
+                mBinding.rvTipeBangunan.smoothScrollToPosition(count)
+                mHandler.postDelayed(this, 5000)
+            }
+        }
+
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        mBinding.rvTipeBangunan.layoutManager = layoutManager
+        mBinding.rvTipeBangunan.adapter = promotionBannerAdapter
+        mBinding.rvTipeBangunan.addItemDecoration(CirclePagerIndicatorDecoration(this))
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(mBinding.rvTipeBangunan)
+        mBinding.rvTipeBangunan.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val lastItem: Int = layoutManager.findLastCompletelyVisibleItemPosition()
+                if (lastItem == layoutManager.getItemCount() - 1) {
+                    mHandler.removeCallbacks(SCROLLING_RUNNABLE)
+                    val postHandler = Handler()
+                    postHandler.postDelayed({
+                        count = 0
+                        mBinding.rvTipeBangunan.smoothScrollToPosition(0)
+                        mHandler.postDelayed(SCROLLING_RUNNABLE, 5000)
+                    }, 5000)
+                }
+            }
+        })
+
+        mHandler.postDelayed(SCROLLING_RUNNABLE, 200)
+
+        setViewModel()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mHandler.removeCallbacks(SCROLLING_RUNNABLE)
     }
 
     private fun setAction() {
@@ -42,5 +102,46 @@ class MainMenuActivity : AppCompatActivity() {
             val intent = Intent(this@MainMenuActivity, ReportActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun setViewModel() {
+        val koefisiensiAliranSempurna = koefisiensiAliranSempurnaViewModel.getKoefisiensiAliranSempurnaById()
+        if (koefisiensiAliranSempurna == null) {
+            loading.show(this)
+            injectAliranSempurna(count)
+        }
+    }
+
+    private fun injectAliranSempurna(count: Int) {
+        when (count) {
+            1 -> {
+                DBInjectorUtil.insertKoefisiensiAliranSempurna2(koefisiensiAliranSempurnaViewModel, object: DBInjectorUtil.Companion.InsertSuccess{
+                    override fun aliranSempurna(count: Int) {
+                        injectAliranSempurna(count)
+                    }
+                })
+            }
+            2 -> {
+                DBInjectorUtil.insertKoefisiensiAliranSempurna3(koefisiensiAliranSempurnaViewModel, object: DBInjectorUtil.Companion.InsertSuccess{
+                    override fun aliranSempurna(count: Int) {
+                        injectAliranSempurna(count)
+                    }
+                })
+            }
+            3 -> {
+                loading.dialog.dismiss()
+            }
+            else -> {
+                DBInjectorUtil.insertKoefisiensiAliranSempurna(koefisiensiAliranSempurnaViewModel, object: DBInjectorUtil.Companion.InsertSuccess{
+                    override fun aliranSempurna(count: Int) {
+                        injectAliranSempurna(count)
+                    }
+                })
+            }
+        }
+    }
+
+    override fun aliranSempurna(count: Int) {
+        TODO("Not yet implemented")
     }
 }

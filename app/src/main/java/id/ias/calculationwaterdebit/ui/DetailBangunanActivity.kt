@@ -10,12 +10,10 @@ import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.adapter.DetailBangunanAdapter
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
 import id.ias.calculationwaterdebit.database.model.OrificeModel
-import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModel
-import id.ias.calculationwaterdebit.database.viewmodel.AmbangLebarPengontrolSegiempatViewModelFactory
-import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModel
-import id.ias.calculationwaterdebit.database.viewmodel.OrificeViewModelFactory
+import id.ias.calculationwaterdebit.database.model.ParshallFlumeModel
+import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
-import id.ias.calculationwaterdebit.util.BackDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import id.ias.calculationwaterdebit.util.PictureDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanUkurViewModelFactory
@@ -24,7 +22,7 @@ import id.ias.calculationwaterdebit.viewmodel.DetailBangunanViewModel
 class DetailBangunanActivity : AppCompatActivity() {
     var picture = PictureDialogUtil()
     val loading = LoadingDialogUtil()
-    val back = BackDialogUtil()
+    val back = MessageDialogUtil()
     lateinit var mBinding: ActivityDetailBangunanBinding
     private val detailBangunanViewModel: DetailBangunanViewModel by viewModels {
         DetailBangunanUkurViewModelFactory()
@@ -33,6 +31,9 @@ class DetailBangunanActivity : AppCompatActivity() {
         AmbangLebarPengontrolSegiempatViewModelFactory((application as Application).alpsRepository)
     }
 
+    private val parshallFluViewModel: ParshallFlumeViewModel by viewModels {
+        ParshallFlumeViewModelFactory((application as Application).parshallFlumeRepository)
+    }
     private val orificeViewModel: OrificeViewModel by viewModels {
         OrificeViewModelFactory((application as Application).orificeRepository)
     }
@@ -74,6 +75,15 @@ class DetailBangunanActivity : AppCompatActivity() {
                                 detailBangunanViewModel.detailBangunanValue.value!![5],
                                 detailBangunanViewModel.detailBangunanValue.value!![6])
                         alpsViewModel.insert(alpsData)
+                    }
+                    "Parshall Flume" -> {
+                        val parshallData = ParshallFlumeModel(
+                            null,
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                        )
+                        parshallFluViewModel.insert(parshallData)
                     }
                     "Orifice" -> {
                         val orificeData = OrificeModel(
@@ -138,10 +148,22 @@ class DetailBangunanActivity : AppCompatActivity() {
                 finish()
             }
         })
+
+        parshallFluViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                loading.dialog.dismiss()
+                val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
+                intent.putExtra("id_tipe_bangunan", it)
+                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+                intent.putExtra("id_base_data", idBaseData)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
     override fun onBackPressed() {
-        back.show(this, object: BackDialogUtil.DialogListener {
+        back.show(this, object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

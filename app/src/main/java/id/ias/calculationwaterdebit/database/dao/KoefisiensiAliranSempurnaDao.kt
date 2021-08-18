@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import id.ias.calculationwaterdebit.database.model.KoefisiensiAliranSempurnaModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface KoefisiensiAliranSempurnaDao {
