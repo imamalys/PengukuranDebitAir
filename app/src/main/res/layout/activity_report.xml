@@ -62,23 +62,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/cl_top" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nama Bangunan:"
-                android:layout_marginTop="20dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_nama_bangunan" />
-
-            <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                app:layout_constraintLeft_toRightOf="@+id/tv_nama_bangunan"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/tv_nama_bangunan_value" />
 

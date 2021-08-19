@@ -124,8 +124,6 @@ class OrificeActivity : AppCompatActivity() {
                     val z: String = String.format(Locale.ENGLISH,"%.2f", hb.toFloat() - h1.toFloat())
                     var q:String = String.format(Locale.ENGLISH,"%.3f",
                         c.toFloat() * a.toFloat() * sqrt((2 * g.toFloat() * z.toFloat())))
-
-                    q = q.replace(",", ".")
                     pengambilanDataViewModel.update(it[i].id!!, q.toFloat())
 
                     LegacyTableView.insertLegacyContent((i + 1).toString(), c, bc, w, a, g, hb, h1, z, q)
