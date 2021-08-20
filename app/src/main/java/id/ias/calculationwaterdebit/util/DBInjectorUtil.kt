@@ -7,6 +7,7 @@ import id.ias.calculationwaterdebit.database.viewmodel.KoefisiensiAliranSempurna
 class DBInjectorUtil(listener: InsertSuccess) {
     companion object {
         fun insertKoefisiensiAliranSempurna(dao: KoefisiensiAliranSempurnaViewModel, listener: InsertSuccess) {
+            dao.deleteAll()
             var koefisiensi = KoefisiensiAliranSempurnaModel((0.150).toFloat(), (0.338).toFloat(), (1.49).toFloat(), (0).toFloat())
             dao.insert(koefisiensi)
             koefisiensi = KoefisiensiAliranSempurnaModel((0.152).toFloat(), (0.338).toFloat(), (1.49).toFloat(), (0.6).toFloat())

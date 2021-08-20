@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.adapter.DetailBangunanAdapter
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
+import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolTrapesiumModel
 import id.ias.calculationwaterdebit.database.model.OrificeModel
 import id.ias.calculationwaterdebit.database.model.ParshallFlumeModel
 import id.ias.calculationwaterdebit.database.viewmodel.*
@@ -29,6 +30,10 @@ class DetailBangunanActivity : AppCompatActivity() {
     }
     private val alpsViewModel: AmbangLebarPengontrolSegiempatViewModel by viewModels {
         AmbangLebarPengontrolSegiempatViewModelFactory((application as Application).alpsRepository)
+    }
+
+    private val alptViewModel: AmbangLebarPengontrolTrapesiumViewModel by viewModels {
+        AmbangLebarPengontrolTrapesiumViewModelFactory((application as Application).alptRepository)
     }
 
     private val parshallFluViewModel: ParshallFlumeViewModel by viewModels {
@@ -76,12 +81,25 @@ class DetailBangunanActivity : AppCompatActivity() {
                                 detailBangunanViewModel.detailBangunanValue.value!![6])
                         alpsViewModel.insert(alpsData)
                     }
+                    "Ambang Lebar Pengontrol Trapesium" -> {
+                        val alptData = AmbangLebarPengontrolTrapesiumModel(
+                                null,
+                                idBaseData.toInt(),
+                                detailBangunanViewModel.detailBangunanValue.value!![0],
+                                detailBangunanViewModel.detailBangunanValue.value!![1],
+                                detailBangunanViewModel.detailBangunanValue.value!![2],
+                                detailBangunanViewModel.detailBangunanValue.value!![3],
+                                detailBangunanViewModel.detailBangunanValue.value!![4],
+                                detailBangunanViewModel.detailBangunanValue.value!![5],
+                                detailBangunanViewModel.detailBangunanValue.value!![6],
+                                detailBangunanViewModel.detailBangunanValue.value!![7])
+                        alptViewModel.insert(alptData)
+                    }
                     "Parshall Flume" -> {
                         val parshallData = ParshallFlumeModel(
                             null,
                             idBaseData.toInt(),
                             detailBangunanViewModel.detailBangunanValue.value!![0],
-                            detailBangunanViewModel.detailBangunanValue.value!![1],
                         )
                         parshallFluViewModel.insert(parshallData)
                     }
@@ -127,39 +145,37 @@ class DetailBangunanActivity : AppCompatActivity() {
 
         alpsViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
-                loading.dialog.dismiss()
-                val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
-                intent.putExtra("id_tipe_bangunan", it)
-                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
-                intent.putExtra("id_base_data", idBaseData)
-                startActivity(intent)
-                finish()
+                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        alptViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
             }
         })
 
         orificeViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
-                loading.dialog.dismiss()
-                val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
-                intent.putExtra("id_tipe_bangunan", it)
-                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
-                intent.putExtra("id_base_data", idBaseData)
-                startActivity(intent)
-                finish()
+                goToVariasiKetinggianAirActivity(it)
             }
         })
 
         parshallFluViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
-                loading.dialog.dismiss()
-                val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
-                intent.putExtra("id_tipe_bangunan", it)
-                intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
-                intent.putExtra("id_base_data", idBaseData)
-                startActivity(intent)
-                finish()
+               goToVariasiKetinggianAirActivity(it)
             }
         })
+    }
+
+    private fun goToVariasiKetinggianAirActivity(it: Long) {
+        loading.dialog.dismiss()
+        val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
+        intent.putExtra("id_tipe_bangunan", it)
+        intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+        intent.putExtra("id_base_data", idBaseData)
+        startActivity(intent)
+        finish()
     }
 
     override fun onBackPressed() {

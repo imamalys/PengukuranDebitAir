@@ -42,7 +42,7 @@ class ParshallFlumeActivity : AppCompatActivity() {
     var detailBangunan: String = ""
     var isInit = true
     var pengambilanDataModel: List<PengambilanDataModel> = ArrayList()
-    var parshallFlumeModel: ParshallFlumeModel = ParshallFlumeModel(null, 0, "0".toFloat(), "0".toFloat())
+    var parshallFlumeModel: ParshallFlumeModel = ParshallFlumeModel(null, 0, "0".toFloat())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,10 +79,9 @@ class ParshallFlumeActivity : AppCompatActivity() {
 
     private fun setVariable() {
         //set table title labels
-        LegacyTableView.insertLegacyTitle("b", "Hb")
+        LegacyTableView.insertLegacyTitle("b")
         LegacyTableView.insertLegacyContent(
-                String.format(Locale.ENGLISH,"%.3f", parshallFlumeModel.lebarTenggorokan),
-                String.format(Locale.ENGLISH,"%.3f", parshallFlumeModel.hb))
+                String.format(Locale.ENGLISH,"%.3f", parshallFlumeModel.lebarTenggorokan))
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()

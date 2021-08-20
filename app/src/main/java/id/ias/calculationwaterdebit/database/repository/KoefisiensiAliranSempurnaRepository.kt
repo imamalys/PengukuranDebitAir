@@ -16,4 +16,10 @@ class KoefisiensiAliranSempurnaRepository(private val koefisiensiAliranSempurnaD
     suspend fun insert(koefisiensiAmbangLebarModel: KoefisiensiAliranSempurnaModel) {
         koefisiensiAliranSempurnaDao.insert(koefisiensiAmbangLebarModel)
     }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteAll() {
+        koefisiensiAliranSempurnaDao.deleteAll()
+    }
 }

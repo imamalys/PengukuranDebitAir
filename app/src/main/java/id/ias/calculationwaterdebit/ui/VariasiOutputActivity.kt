@@ -217,6 +217,14 @@ class VariasiOutputActivity : AppCompatActivity() {
                             startActivity(alps)
                             finish()
                         }
+                        "Ambang Lebar Pengontrol Trapesium" -> {
+                            val alpt = Intent(this@VariasiOutputActivity, AmbangLebarPengontrolTrapesiumActivity::class.java)
+                            alpt.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            alpt.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            alpt.putExtra("id_base_data", idBaseData)
+                            startActivity(alpt)
+                            finish()
+                        }
                         "Parshall Flume" -> {
                             val parshallFlume = Intent(this@VariasiOutputActivity, ParshallFlumeActivity::class.java)
                             parshallFlume.putExtra("id_tipe_bangunan", idTipeBangunan)

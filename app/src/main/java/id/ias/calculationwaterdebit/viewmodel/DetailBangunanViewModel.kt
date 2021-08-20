@@ -16,7 +16,7 @@ class DetailBangunanViewModel: ViewModel() {
                 return R.drawable.ambang_lebar_segiempat_image_detail
             }
             "Ambang Lebar Pengontrol Trapesium" -> {
-                return R.drawable.ambang_lebar_trapesium_image
+                return R.drawable.ambang_lebar_trapesium_detail
             }
             "Ambang Tajam Segiempat" -> {
                 return R.drawable.ambang_tajam_segiempat_image
@@ -28,7 +28,7 @@ class DetailBangunanViewModel: ViewModel() {
                 return R.drawable.cipoletti_image
             }
             "Parshall Flume" -> {
-                return R.drawable.parshall_flume_image
+                return R.drawable.parshall_flume_image_detail
             }
             "Long Throated Flume" -> {
                 return R.drawable.long_throated_flume_image
@@ -74,9 +74,18 @@ class DetailBangunanViewModel: ViewModel() {
                 detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
                 detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
             }
+            "Ambang Lebar Pengontrol Trapesium" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", "0", "Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", "0", "Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
+                detailBangunans.add(DetailBangunanModel("Mc", "0", "Kemiringan Pengontrol"))
+            }
             "Parshall Flume" -> {
                 detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Tenggorokan"))
-                detailBangunans.add(DetailBangunanModel("hb", "0", ""))
             }
             "Orifice" -> {
                 detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Lubang"))

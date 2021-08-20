@@ -61,7 +61,7 @@ class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
         setViewModel()
         setAction()
 
-        ambangLebarPengontrolTrapesiumViewModel.getalpsDataById(idBaseData.toInt())
+        ambangLebarPengontrolTrapesiumViewModel.getalpsDataById(idTipeBangunan.toInt())
     }
 
     private fun setAction() {
@@ -203,7 +203,7 @@ class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
             cv.add(cvValue)
 
             LegacyTableView.insertLegacyContent(
-                    (i + 1).toString(), bc, pM, aQuote, a, nilai, cvValue)
+                    (i + 1).toString(), bc, pM, b1, aQuote, a, nilai, cvValue)
         }
 
         val readTitle = LegacyTableView.readLegacyTitle()

@@ -11,6 +11,10 @@ class KoefisiensiAliranSempurnaViewModel(private val repository: KoefisiensiAlir
     fun insert(koefisiensiAliranSempurnaModel: KoefisiensiAliranSempurnaModel) = viewModelScope.launch {
         repository.insert(koefisiensiAliranSempurnaModel)
     }
+
+    fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
+    }
 }
 
 class KoefisiensiAliranSempurnaViewModelFactory(private val repository: KoefisiensiAliranSempurnaRepository): ViewModelProvider.Factory {

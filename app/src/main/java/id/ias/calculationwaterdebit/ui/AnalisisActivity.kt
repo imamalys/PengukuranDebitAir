@@ -108,24 +108,30 @@ class AnalisisActivity : AppCompatActivity() {
         )
 
         val arrayItem: ArrayList<Array<String>> = ArrayList()
-        val arrayPercentageResidual = FloatArray(it.size)
+        val arrayPercentageResidual: ArrayList<String> = ArrayList()
+        val sortArrayPercentageResidual = FloatArray(it.size)
         for (i in it.indices) {
             val h1: String = String.format(Locale.ENGLISH,"%.3f", it[i].h1)
             val qPengukuran: String = String.format(Locale.ENGLISH,"%.3f", it[i].qPengukuran)
             val qPengukuran1000: String = String.format(Locale.ENGLISH,"%.3f", it[i].qPengukuran!! * 1000)
             val qBangunan: String = if (it[i].qBangunan == null) "0" else String.format(Locale.ENGLISH,"%.3f", it[i].qBangunan)
             val qBangunan1000: String = if (it[i].qBangunan== null) "0" else String.format(Locale.ENGLISH,"%.3f", (it[i].qBangunan!! * 1000))
-            val logQPengukuran: String = String.format(Locale.ENGLISH,"%.3f", log10(qPengukuran1000.toFloat()))
+            var logQPengukuran: String = String.format(Locale.ENGLISH,"%.3f", log10(qPengukuran1000.toFloat()))
+            if (logQPengukuran.contains("infinity", true)) {
+                logQPengukuran = "0.0"
+            }
             var logQBangunan: String = String.format(Locale.ENGLISH,"%.3f", log10(qBangunan1000.toFloat()))
             if (logQBangunan.contains("infinity", true)) {
                 logQBangunan = "0.0"
             }
-            val residual: String = String.format(
+            var residual: String = String.format(
                 Locale.ENGLISH,"%.3f",
                 logQPengukuran.toFloat() - logQBangunan.toFloat()
             )
-            val percentageResidual: Float = residual.toFloat() / logQPengukuran.toFloat()
-
+            if (residual.contains("infinity", true)) {
+                residual = "0.0"
+            }
+            var percentageResidual: Float = residual.toFloat() / logQPengukuran.toFloat()
             arrayItem.add(
                 arrayOf(
                     h1, qPengukuran, qPengukuran1000, qBangunan, qBangunan1000, logQPengukuran,
@@ -133,44 +139,56 @@ class AnalisisActivity : AppCompatActivity() {
                 )
             )
 
-            arrayPercentageResidual[i] = percentageResidual
+            arrayPercentageResidual.add(String.format(Locale.ENGLISH,"%.3f", percentageResidual))
+            sortArrayPercentageResidual[i] = percentageResidual
         }
 
-        Arrays.sort(arrayPercentageResidual)
-        val median: String = if (arrayPercentageResidual.size %2 == 0)
+        Arrays.sort(sortArrayPercentageResidual)
+        var median: String = if (sortArrayPercentageResidual.size %2 == 0)
             String.format(
                 Locale.ENGLISH,"%.4f",
-                arrayPercentageResidual[arrayPercentageResidual.size / 2] +
-                        arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1] / 2
+                    sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2] +
+                            sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2 - 1] / 2
             )
         else String.format(
             Locale.ENGLISH,"%.4f",
-                arrayPercentageResidual[arrayPercentageResidual.size / 2]
+                sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2]
         )
-
-        val arrayAbs = FloatArray(arrayPercentageResidual.size)
+        if (median.contains("infinity", true)) {
+            median = "0.0"
+        }
+        val arrayAbs: ArrayList<String> = ArrayList()
+        val sortArrayAbs = FloatArray(arrayPercentageResidual.size)
         for (i in arrayPercentageResidual.indices) {
-            val abs = abs(arrayPercentageResidual[i] - median.toFloat())
-            arrayAbs[i] = abs
+            var abs = abs(arrayPercentageResidual[i].toFloat() - median.toFloat())
+
+            arrayAbs.add(String.format(Locale.ENGLISH,"%.6f", abs))
+            sortArrayAbs[i] = abs
         }
 
-        Arrays.sort(arrayAbs)
-        val mad: String = if (arrayAbs.size %2 == 0)
+        Arrays.sort(sortArrayAbs)
+        var mad: String = if (sortArrayAbs.size %2 == 0)
             String.format(
                 Locale.ENGLISH,"%.6f",
-                (arrayAbs[arrayAbs.size / 2]) + (arrayAbs[arrayAbs.size / 2 - 1] / 2.0)
+                (sortArrayAbs[sortArrayAbs.size / 2]) + (sortArrayAbs[sortArrayAbs.size / 2 - 1] / 2.0)
             ) else String.format(
             Locale.ENGLISH,"%.6f",
-            (arrayAbs[arrayAbs.size / 2])
+            (sortArrayAbs[sortArrayAbs.size / 2])
         )
+        if (mad.contains("infinity", true)) {
+            mad = "0.0"
+        }
 
         val arrayZmod: ArrayList<String> = ArrayList()
 
         for (i in arrayAbs.indices) {
-            val zmod = String.format(
+            var zmod = String.format(
                 Locale.ENGLISH,"%.3f",
-                0.6745.toFloat() * arrayPercentageResidual[i] / mad.toFloat()
+                0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
             )
+            if (zmod.contains("infinity", true)) {
+                zmod = "0.0"
+            }
             arrayZmod.add(zmod)
         }
 
@@ -185,9 +203,9 @@ class AnalisisActivity : AppCompatActivity() {
                 arrayItem[i][5],
                 arrayItem[i][6],
                 arrayItem[i][7],
-                String.format(Locale.ENGLISH,"%.4f", arrayPercentageResidual[i]),
+                arrayPercentageResidual[i],
                 median,
-                String.format(Locale.ENGLISH,"%.6f", arrayAbs[i]),
+                arrayAbs[i],
                 mad,
                 arrayZmod[i]
             )
@@ -238,19 +256,28 @@ class AnalisisActivity : AppCompatActivity() {
         for (i in arrayItem.indices) {
             val h1: String = arrayItem[i][0]
             val qPengukuran: String = arrayItem[i][1]
-            val qPengukuran1000: String = arrayItem[i][2]
-            val qBangunan: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
+            var qPengukuran1000: String = arrayItem[i][2]
+            var qBangunan: String = if (String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() > (3.5).toFloat() ||
                     String.format(Locale.ENGLISH,"%.1f", arrayZmod[i].toFloat()).toFloat() < (-3.5).toFloat())
-                        "0" else arrayItem[i][3]
-            val qBangunan1000: String = if (qBangunan == "0") "0" else arrayItem[i][4]
-            val ape: String = if (qBangunan == "0") "0.00" else String.format(
+                        "0.0" else arrayItem[i][3]
+            if (qBangunan.contains("infinity", true)) {
+                qBangunan = "0.0"
+            }
+            val qBangunan1000: String = if (qBangunan == "0.0") "0.0" else arrayItem[i][4]
+            var ape: String = if (qBangunan == "0.0") "0.00" else String.format(
                 Locale.ENGLISH,"%.2f",
                 abs(qPengukuran1000.toFloat() - qBangunan1000.toFloat()) / qBangunan1000.toFloat() * 100
             )
-            val eValue: String = if (qBangunan == "0") "0.00" else String.format(
+            if (ape.contains("infinity", true)) {
+                ape = "0.0"
+            }
+            var eValue: String = if (qBangunan == "0.0") "0.00" else String.format(
                 Locale.ENGLISH,"%.2f",
                 (qPengukuran.toFloat() - qBangunan.toFloat()) / qBangunan.toFloat() * 100
             )
+            if (eValue.contains("infinity", true)) {
+                eValue = "0.0"
+            }
             newArrayItem.add(
                 arrayOf(
                     h1,
@@ -265,7 +292,7 @@ class AnalisisActivity : AppCompatActivity() {
             eSum += eValue.toFloat()
             e.add(eValue)
 
-            if (qBangunan != "0") {
+            if (qBangunan != "0.0") {
                 apeSumNotZeroCount += 1
                 apeSumNotZero += ape.toFloat()
             }
@@ -273,10 +300,13 @@ class AnalisisActivity : AppCompatActivity() {
 
         val dE: ArrayList<String> = ArrayList()
         for (i in newArrayItem.indices) {
-            val deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
+            var deValue = if (newArrayItem[i][3] == "0") "0.00" else String.format(
                 Locale.ENGLISH,"%.2f",
                 (newArrayItem[i][3].toFloat() - eSum).pow(2)
             )
+            if (deValue.contains("infinity", true)) {
+                deValue = "0.0"
+            }
             dE.add(deValue)
         }
 
@@ -342,7 +372,8 @@ class AnalisisActivity : AppCompatActivity() {
             )
 
             val arrayItem: ArrayList<Array<String>> = ArrayList()
-            val arrayPercentageResidual = FloatArray(pengambilanDataList.size)
+            val arrayPercentageResidual: ArrayList<String> = ArrayList()
+            val sortArrayPercentageResidual = FloatArray(pengambilanDataList.size)
             for (i in pengambilanDataList.indices) {
                 val h1: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].h1)
                 val qPengukuran: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].qPengukuran)
@@ -351,7 +382,7 @@ class AnalisisActivity : AppCompatActivity() {
                     pengambilanDataList[i].qPengukuran!! * 1000
                 )
                 val qTabel: String = String.format(
-                    Locale.ENGLISH, "%.3f", (baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat()).pow(
+                    Locale.ENGLISH, "%.3f", baseData.variablePertama!!.toFloat() * b.toFloat() * h1.toFloat().pow(
                         baseData.n!!.toFloat()
                     )
                 )
@@ -376,45 +407,52 @@ class AnalisisActivity : AppCompatActivity() {
                     )
                 )
 
-                arrayPercentageResidual[i] = percentageResidual
+                arrayPercentageResidual.add(String.format(Locale.ENGLISH,"%.3f", percentageResidual))
+                sortArrayPercentageResidual[i] = percentageResidual
             }
 
-            Arrays.sort(arrayPercentageResidual)
-            val median: String = if (arrayPercentageResidual.size % 2 == 0)
+            Arrays.sort(sortArrayPercentageResidual)
+            val median: String = if (sortArrayPercentageResidual.size % 2 == 0)
                 String.format(
                     Locale.ENGLISH,"%.4f",
-                    arrayPercentageResidual[arrayPercentageResidual.size / 2] +
-                            arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1] / 2
+                        sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2] +
+                                sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2 - 1] / 2
                 )
             else String.format(
                 Locale.ENGLISH,"%.4f",
-                    arrayPercentageResidual[arrayPercentageResidual.size / 2]
+                    sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2]
             )
 
-            val arrayAbs = FloatArray(arrayPercentageResidual.size)
+            val arrayAbs: ArrayList<String> = ArrayList()
+            val sortArrayAbs = FloatArray(arrayPercentageResidual.size)
             for (i in arrayPercentageResidual.indices) {
-                val abs = arrayPercentageResidual[i] - median.toFloat()
-                arrayAbs[i] = abs
+                val abs = abs(arrayPercentageResidual[i].toFloat() - median.toFloat())
+
+                arrayAbs.add(String.format(Locale.ENGLISH, "%.6f", abs))
+                sortArrayAbs[i] = abs
             }
 
-            Arrays.sort(arrayAbs)
-            val mad: String = if (arrayAbs.size % 2 == 0)
+            Arrays.sort(sortArrayAbs)
+            val mad: String = if (sortArrayAbs.size % 2 == 0)
                 String.format(
                     Locale.ENGLISH,  "%.6f",
-                    arrayAbs[arrayAbs.size / 2] + arrayAbs[arrayAbs.size / 2 - 1] / 2
+                        sortArrayAbs[sortArrayAbs.size / 2] + sortArrayAbs[sortArrayAbs.size / 2 - 1] / 2
                 )
             else String.format(
                 Locale.ENGLISH, "%.6f",
-                    arrayAbs[arrayAbs.size / 2]
+                    sortArrayAbs[sortArrayAbs.size / 2]
             )
 
             val arrayZmod: ArrayList<String> = ArrayList()
 
             for (i in arrayAbs.indices) {
-                val zmod = String.format(
+                var zmod = String.format(
                     Locale.ENGLISH,   "%.3f",
                     0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
                 )
+                if (zmod.contains("infinity", true)) {
+                    zmod = "0.0"
+                }
                 arrayZmod.add(zmod)
             }
 
@@ -429,9 +467,9 @@ class AnalisisActivity : AppCompatActivity() {
                     arrayItem[i][5],
                     arrayItem[i][6],
                     arrayItem[i][7],
-                    String.format(Locale.ENGLISH, "%.4f", arrayPercentageResidual[i]),
+                    arrayPercentageResidual[i],
                     median,
-                    String.format(Locale.ENGLISH, "%.6f", arrayAbs[i]),
+                    arrayAbs[i],
                     mad,
                     arrayZmod[i]
                 )
@@ -641,7 +679,8 @@ class AnalisisActivity : AppCompatActivity() {
         )
 
         val arrayItem: ArrayList<Array<String>> = ArrayList()
-        val arrayPercentageResidual = FloatArray(pengambilanDataList.size)
+        val arrayPercentageResidual: ArrayList<String> = ArrayList()
+        val sortArrayPercentageResidual = FloatArray(pengambilanDataList.size)
         for (i in pengambilanDataList.indices) {
             val h1: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].h1)
             val qPengukuran: String = String.format(Locale.ENGLISH,"%.3f", pengambilanDataList[i].qPengukuran)
@@ -666,45 +705,52 @@ class AnalisisActivity : AppCompatActivity() {
                 )
             )
 
-            arrayPercentageResidual[i] = percentageResidual
+            arrayPercentageResidual.add(String.format(Locale.ENGLISH,"%.3f", percentageResidual))
+            sortArrayPercentageResidual[i] = percentageResidual
         }
 
-        Arrays.sort(arrayPercentageResidual)
-        val median: String = if (arrayPercentageResidual.size %2 == 0)
+        Arrays.sort(sortArrayPercentageResidual)
+        val median: String = if (sortArrayPercentageResidual.size %2 == 0)
             String.format(
                 Locale.ENGLISH,  "%.4f",
-                arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat() +
-                        arrayPercentageResidual[arrayPercentageResidual.size / 2 - 1].toFloat() / 2
+                    sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2].toFloat() +
+                            sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2 - 1].toFloat() / 2
             )
         else String.format(
             Locale.ENGLISH, "%.4f",
-            arrayPercentageResidual[arrayPercentageResidual.size / 2].toFloat()
+                sortArrayPercentageResidual[sortArrayPercentageResidual.size / 2].toFloat()
         )
 
-        val arrayAbs = FloatArray(arrayPercentageResidual.size)
+        val arrayAbs: ArrayList<String> = ArrayList()
+        val sortArrayAbs = FloatArray(arrayPercentageResidual.size)
         for (i in arrayPercentageResidual.indices) {
-            val abs: Float = arrayPercentageResidual[i] - median.toFloat()
-            arrayAbs[i] = abs
+            val abs: Float = abs(arrayPercentageResidual[i].toFloat() - median.toFloat())
+
+            arrayAbs.add(String.format(Locale.ENGLISH,"%.6f", abs))
+            sortArrayAbs[i] = abs
         }
 
-        Arrays.sort(arrayAbs)
-        val mad: String = if (arrayAbs.size %2 == 0)
+        Arrays.sort(sortArrayAbs)
+        val mad: String = if (sortArrayAbs.size %2 == 0)
             String.format(
                 Locale.ENGLISH,  "%.6f",
-                arrayAbs[arrayAbs.size / 2] + arrayAbs[arrayAbs.size / 2 - 1] / 2
+                    sortArrayAbs[sortArrayAbs.size / 2] + sortArrayAbs[sortArrayAbs.size / 2 - 1] / 2
             )
         else String.format(
             Locale.ENGLISH,  "%.6f",
-                arrayAbs[arrayAbs.size / 2]
+                sortArrayAbs[sortArrayAbs.size / 2]
         )
 
         val arrayZmod: ArrayList<String> = ArrayList()
 
         for (i in arrayAbs.indices) {
-            val zmod = String.format(
+            var zmod = String.format(
                 Locale.ENGLISH,  "%.3f",
                 0.6745.toFloat() * arrayPercentageResidual[i].toFloat() / mad.toFloat()
             )
+            if (zmod.contains("infinity", true)) {
+                zmod = "0.0"
+            }
             arrayZmod.add(zmod)
         }
 
@@ -719,9 +765,9 @@ class AnalisisActivity : AppCompatActivity() {
                 arrayItem[i][5],
                 arrayItem[i][6],
                 arrayItem[i][7],
-                String.format(Locale.ENGLISH,  "%.4f",arrayPercentageResidual[i]),
+                arrayPercentageResidual[i],
                 median,
-                String.format(Locale.ENGLISH,"%.6f", arrayAbs[i]),
+                arrayAbs[i],
                 mad,
                 arrayZmod[i]
             )
