@@ -167,6 +167,7 @@ class DBAmbangTipisSegitigaSudutUtil {
             dao.insert(koefisiensi)
             koefisiensi = AmbangTipisSegitigaSudutModel(0 ,(0.0).toFloat(), 100, (0.80).toFloat())
             dao.insert(koefisiensi)
+            listener.ambangTipisSegitiga(0)
         }
     }
 

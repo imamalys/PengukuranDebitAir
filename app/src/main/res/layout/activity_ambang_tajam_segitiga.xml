@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AmbangLebarPengontrolSegiempatActivity">
+    tools:context=".ui.AmbangTajamSegitigaActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_alps"
+                android:id="@+id/tv_ats"
                 android:layout_marginTop="10dp"
                 android:textSize="22sp"
                 android:textAllCaps="true"
@@ -59,14 +59,55 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:text="Ambang Lebar Pengontrol Segiempat" />
+                android:text="Ambang Tajam Segitiga" />
 
             <com.levitnudi.legacytableview.LegacyTableView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/alps_table"
+                android:id="@+id/ats_table"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_alps" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_ats" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mencari muka air reaktif"
+                android:id="@+id/tv_reaktif"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/ats_table"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_reaktif"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/tv_q"
+                android:text="Rumus ="
+                android:textSize="14sp"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:id="@+id/iv_rumus_reaktif"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ats_rumus_reaktif"
+                app:layout_constraintLeft_toRightOf="@+id/tv_q"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_q"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_q"/>
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ats_reaktif"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/iv_rumus_reaktif" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,7 +117,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/alps_table"/>
+                app:layout_constraintTop_toBottomOf="@+id/ats_reaktif"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,82 +126,49 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/tv_cd"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:id="@+id/tv_q"
-                android:text="Rumus Cd ="
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                app:layout_constraintLeft_toRightOf="@+id/tv_q"
-                android:id="@+id/iv_rumus"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/alps_rumus_cd"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_q"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_q"/>
-
-            <com.levitnudi.legacytableview.LegacyTableView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/alps_cd"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_rumus" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mencari Nilai Cv"
-                android:id="@+id/tv_cv"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/alps_cd"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cv"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/tv_cd_rumus"
-                android:text="Rumus Cv ="
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                app:layout_constraintLeft_toRightOf="@+id/tv_cd_rumus"
-                android:id="@+id/iv_rumus_cv"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/alps_rumus_cv"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_cd_rumus"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_cd_rumus"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_rumus_cv"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:id="@+id/tv_cv_bentuk"
-                android:text="Bentuk ="
+                android:text="Rumus Cd = Berdasarkan Tabel"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
 
             <com.levitnudi.legacytableview.LegacyTableView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/alps_cv"
+                android:id="@+id/ats_cd"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cv_bentuk" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_cd_rumus" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/ats_cd"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/tv_cd_penuh"
+                android:text="Mencari nilai Cd Jika 90° dan kontraksi penuh"
+                android:textSize="14sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cd_penuh"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/tv_cd_penuh_rumus"
+                android:text="Rumus Cd = Berdasarkan Tabel"
+                android:textSize="14sp"
+                android:textColor="@color/black" />
+
+            <com.levitnudi.legacytableview.LegacyTableView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ats_cd_penuh"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cd_penuh_rumus" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,7 +178,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/alps_cv"/>
+                app:layout_constraintTop_toBottomOf="@+id/ats_cd_penuh"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -191,7 +199,7 @@
                 android:id="@+id/iv_rumus_debit"
                 android:layout_marginRight="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/alps_rumus_debit"
+                android:src="@drawable/ambang_tajam_segitiga"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_rumus_debit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_rumus_debit"/>
@@ -199,7 +207,7 @@
             <com.levitnudi.legacytableview.LegacyTableView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/alps_debit"
+                android:id="@+id/ats_debit"
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/iv_rumus_debit" />
 
@@ -212,7 +220,7 @@
                 android:id="@+id/btn_next"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/alps_debit"
+                app:layout_constraintTop_toBottomOf="@+id/ats_debit"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 

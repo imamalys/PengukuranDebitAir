@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.AmbangLebarPengontrolTrapesiumActivity">
-
-        </activity>
+        <activity android:name=".ui.CipolettiActivity"></activity>
+        <activity android:name=".ui.AmbangTajamSegitigaActivity" />
+        <activity android:name=".ui.AmbangLebarPengontrolTrapesiumActivity" />
         <activity android:name=".ui.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,7 +53,7 @@
         <activity
             android:name=".ui.MainMenuActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@ import id.ias.calculationwaterdebit.database.repository.KoefisiensiAliranSempurn
 import kotlinx.coroutines.launch
 
 class KoefisiensiAliranSempurnaViewModel(private val repository: KoefisiensiAliranSempurnaRepository): ViewModel() {
-    fun getKoefisiensiAliranSempurnaById(b: Float = (0.150).toFloat()): KoefisiensiAliranSempurnaModel = repository.getKoefisiensiAliranSempurnById(b)
+    fun getKoefisiensiAliranSempurnaById(b: Float): KoefisiensiAliranSempurnaModel = repository.getKoefisiensiAliranSempurnById(b)
 
     fun insert(koefisiensiAliranSempurnaModel: KoefisiensiAliranSempurnaModel) = viewModelScope.launch {
         repository.insert(koefisiensiAliranSempurnaModel)

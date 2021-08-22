@@ -22,10 +22,10 @@ class DetailBangunanViewModel: ViewModel() {
                 return R.drawable.ambang_tajam_segiempat_image
             }
             "Ambang Tajam Segitiga" -> {
-                return R.drawable.ambang_tajam_segitiga_image
+                return R.drawable.ambang_tajam_segitiga_image_detail
             }
             "Cipoletti" -> {
-                return R.drawable.cipoletti_image
+                return R.drawable.cipoletti_image_detail
             }
             "Parshall Flume" -> {
                 return R.drawable.parshall_flume_image_detail
@@ -83,6 +83,18 @@ class DetailBangunanViewModel: ViewModel() {
                 detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
                 detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
                 detailBangunans.add(DetailBangunanModel("Mc", "0", "Kemiringan Pengontrol"))
+            }
+            "Ambang Tajam Segitiga" -> {
+                detailBangunans.add(DetailBangunanModel("B", "0", "Lebar Saluran"))
+                detailBangunans.add(DetailBangunanModel("θ", "0", "Sudut celah Mercu"))
+                detailBangunans.add(DetailBangunanModel("p", "0", "Tinggi mercu diatas Ambang"))
+            }
+            "Cipoletti" -> {
+                detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Pengukur"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("p", "0", "Tinggi mercu diatas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Mercu"))
+                detailBangunans.add(DetailBangunanModel("B2", "0", "Lebar Atas"))
             }
             "Parshall Flume" -> {
                 detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Tenggorokan"))

@@ -8,7 +8,7 @@ import id.ias.calculationwaterdebit.database.repository.AmbangTipisSegitigaSudut
 import kotlinx.coroutines.launch
 
 class AmbangTipisSegitigaSudutViewModel(private val repository: AmbangTipisSegitigaSudutRepository): ViewModel() {
-    fun getAmbangTipisSegitigaSudutById(sudutDht: Int = 21): AmbangTipisSegitigaSudutModel = repository.getAmbangTipisSegitigaSudutById(sudutDht)
+    fun getAmbangTipisSegitigaSudutById(sudutDht: Int): AmbangTipisSegitigaSudutModel = repository.getAmbangTipisSegitigaSudutById(sudutDht)
 
     fun insert(ambangTipisSegitigaSudutModel: AmbangTipisSegitigaSudutModel) = viewModelScope.launch {
         repository.insert(ambangTipisSegitigaSudutModel)

@@ -22,6 +22,7 @@ class MessageDialogUtil {
         val inflater = (context as Activity).layoutInflater
         binding = MessageDialogBinding.inflate(inflater)
         dialog = CustomDialog(context)
+        dialog.setCancelable(false)
         dialog.setContentView(binding.root)
 
         binding.tvTitle.text = title

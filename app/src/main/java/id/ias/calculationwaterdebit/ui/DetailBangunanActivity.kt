@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.adapter.DetailBangunanAdapter
-import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolSegiempatModel
-import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolTrapesiumModel
-import id.ias.calculationwaterdebit.database.model.OrificeModel
-import id.ias.calculationwaterdebit.database.model.ParshallFlumeModel
+import id.ias.calculationwaterdebit.database.model.*
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
 import id.ias.calculationwaterdebit.util.MessageDialogUtil
@@ -34,6 +31,14 @@ class DetailBangunanActivity : AppCompatActivity() {
 
     private val alptViewModel: AmbangLebarPengontrolTrapesiumViewModel by viewModels {
         AmbangLebarPengontrolTrapesiumViewModelFactory((application as Application).alptRepository)
+    }
+
+    private val atsViewModel: AmbangTipisSegitigaViewModel by viewModels {
+        AmbangTipisSegitigaViewModelFactory((application as Application).atsRepository)
+    }
+
+    private val cipolettiViewModel: CipolettiViewModel by viewModels {
+        CipolettiViewModelFactory((application as Application).cipolettiRepository)
     }
 
     private val parshallFluViewModel: ParshallFlumeViewModel by viewModels {
@@ -95,6 +100,28 @@ class DetailBangunanActivity : AppCompatActivity() {
                                 detailBangunanViewModel.detailBangunanValue.value!![7])
                         alptViewModel.insert(alptData)
                     }
+                    "Ambang Tajam Segitiga" -> {
+                        var atsData = AmbangTipisSegitigaModel(
+                            null,
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                            detailBangunanViewModel.detailBangunanValue.value!![2],
+                        )
+                        atsViewModel.insert(atsData)
+                    }
+                    "Cipoletti" -> {
+                        val cipolettiData = CipolettiModel(
+                            null,
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                            detailBangunanViewModel.detailBangunanValue.value!![2],
+                            detailBangunanViewModel.detailBangunanValue.value!![3],
+                            detailBangunanViewModel.detailBangunanValue.value!![4],
+                        )
+                        cipolettiViewModel.insert(cipolettiData)
+                    }
                     "Parshall Flume" -> {
                         val parshallData = ParshallFlumeModel(
                             null,
@@ -150,6 +177,18 @@ class DetailBangunanActivity : AppCompatActivity() {
         })
 
         alptViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        atsViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        cipolettiViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
                 goToVariasiKetinggianAirActivity(it)
             }

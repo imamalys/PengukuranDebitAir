@@ -225,6 +225,22 @@ class VariasiOutputActivity : AppCompatActivity() {
                             startActivity(alpt)
                             finish()
                         }
+                        "Ambang Tajam Segitiga" -> {
+                            val ats = Intent(this@VariasiOutputActivity, AmbangTajamSegitigaActivity::class.java)
+                            ats.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            ats.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            ats.putExtra("id_base_data", idBaseData)
+                            startActivity(ats)
+                            finish()
+                        }
+                        "Cipoletti" -> {
+                            val cipoletti = Intent(this@VariasiOutputActivity, CipolettiActivity::class.java)
+                            cipoletti.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            cipoletti.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            cipoletti.putExtra("id_base_data", idBaseData)
+                            startActivity(cipoletti)
+                            finish()
+                        }
                         "Parshall Flume" -> {
                             val parshallFlume = Intent(this@VariasiOutputActivity, ParshallFlumeActivity::class.java)
                             parshallFlume.putExtra("id_tipe_bangunan", idTipeBangunan)

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 import id.ias.calculationwaterdebit.database.BaseRoomDatabase
+import id.ias.calculationwaterdebit.database.dao.AmbangTipisSegitigaSudutDao
 import id.ias.calculationwaterdebit.database.repository.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -25,10 +26,14 @@ class Application: Application() {
     val baseDataRepository by lazy { BaseDataRepository(database.baseDataDao()) }
     val alpsRepository by lazy { AmbangLebarPengontrolSegiempatRepository(database.alpsDao()) }
     val alptRepository by lazy { AmbangLebarPengontrolTrapesiumRepository(database.alptDao()) }
+    val atsRepository by lazy { AmbangTipisSegitigaRepository(database.atsDao()) }
+    val cipolettiRepository by lazy { CipolettiRepository(database.cipolettiDao()) }
     val orificeRepository by lazy { OrificeRepository(database.orificeDao()) }
     val parshallFlumeRepository by lazy { ParshallFlumeRepository(database.parshallFlumeDao()) }
     val pengambilanDataRepository by lazy { PengambilanDataRepository(database.pengambilanDataDao()) }
     val piasRepository by lazy { PiasDataRepository(database.piasDao()) }
     val koefisiensiAmbangLebarRepository by lazy { KoefiensiAmbangLebarRepository(database.koefisiensiDao()) }
     val koefisiensiAliranSempurnaRepository by lazy { KoefisiensiAliranSempurnaRepository(database.koefisiensiAliranSempurnaDao()) }
+    val ambangTipisSegitigaSudutRepository by lazy { AmbangTipisSegitigaSudutRepository(database.ambangTipisSegitigaSudutDao()) }
+    val koefisiensiAmbangTipisSegitigaRepository by lazy { KoefisiensiAmbangTipisSegitigaRepository(database.koefisiensiAmbangTipisSegitiga()) }
 }
