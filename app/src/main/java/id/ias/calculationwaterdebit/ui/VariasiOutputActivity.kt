@@ -249,12 +249,44 @@ class VariasiOutputActivity : AppCompatActivity() {
                             startActivity(parshallFlume)
                             finish()
                         }
+                        "Long Throated Flume" -> {
+                            val longThroatedFlume = Intent(this@VariasiOutputActivity, LongThroatedFlumeActivity::class.java)
+                            longThroatedFlume.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            longThroatedFlume.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            longThroatedFlume.putExtra("id_base_data", idBaseData)
+                            startActivity(longThroatedFlume)
+                            finish()
+                        }
+                        "Cut Throated Flume" -> {
+                            val cutThroatedFlume = Intent(this@VariasiOutputActivity, CutThroatedFlumeActivity::class.java)
+                            cutThroatedFlume.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            cutThroatedFlume.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            cutThroatedFlume.putExtra("id_base_data", idBaseData)
+                            startActivity(cutThroatedFlume)
+                            finish()
+                        }
                         "Orifice" -> {
                             val orifice = Intent(this@VariasiOutputActivity, OrificeActivity::class.java)
                             orifice.putExtra("id_tipe_bangunan", idTipeBangunan)
                             orifice.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
                             orifice.putExtra("id_base_data", idBaseData)
                             startActivity(orifice)
+                            finish()
+                        }
+                        "Romijn" -> {
+                            val romijn = Intent(this@VariasiOutputActivity, RomijnActivity::class.java)
+                            romijn.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            romijn.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            romijn.putExtra("id_base_data", idBaseData)
+                            startActivity(romijn)
+                            finish()
+                        }
+                        "Crump- De Gyuter" -> {
+                            val crump = Intent(this@VariasiOutputActivity, CrumpActivity::class.java)
+                            crump.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            crump.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            crump.putExtra("id_base_data", idBaseData)
+                            startActivity(crump)
                             finish()
                         }
                     }

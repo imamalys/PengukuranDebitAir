@@ -10,7 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.CipolettiActivity"></activity>
+        <activity android:name=".ui.CrumpActivity"></activity>
+        <activity android:name=".ui.CutThroatedFlumeActivity" />
+        <activity android:name=".ui.RomijnActivity" />
+        <activity android:name=".ui.LongThroatedFlumeActivity" />
+        <activity android:name=".ui.CipolettiActivity" />
         <activity android:name=".ui.AmbangTajamSegitigaActivity" />
         <activity android:name=".ui.AmbangLebarPengontrolTrapesiumActivity" />
         <activity android:name=".ui.SplashScreenActivity">

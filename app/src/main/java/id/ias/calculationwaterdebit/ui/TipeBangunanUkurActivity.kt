@@ -77,13 +77,7 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0 && position != 1 && position != 3 && position != 4 &&
-                    position != 5 && position != 8) {
-                    ToastUtils.showShort("Tipe Bangunan belum dapat dipilih")
-                    mBinding.spTipeBangunan.setSelection(0)
-                } else {
-                    tipeBangunanUkurViewModel.tipeBangunan.value = list[position]
-                }
+                tipeBangunanUkurViewModel.tipeBangunan.value = list[position]
             }
         }
     }

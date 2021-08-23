@@ -20,12 +20,17 @@ import kotlinx.coroutines.launch
     CipolettiModel::class,
     OrificeModel::class,
     ParshallFlumeModel::class,
+    LongThrotedFlumeModel::class,
+    CutThroatedFlumeModel::class,
+    RomijnModel::class,
+    CrumpModel::class,
     PengambilanDataModel::class,
     PiasModel::class,
     KoefisiensiAmbangLebarModel::class,
     KoefisiensiAliranSempurnaModel::class,
     AmbangTipisSegitigaSudutModel::class,
-    KoefisiensiAmbangTipisSegitigaModel::class],
+    KoefisiensiAmbangTipisSegitigaModel::class,
+    KoefisiensiCutThroatedFlumeModel::class],
     version = 2)
 abstract class BaseRoomDatabase: RoomDatabase() {
 
@@ -36,12 +41,17 @@ abstract class BaseRoomDatabase: RoomDatabase() {
     abstract fun cipolettiDao(): CipolettiDao
     abstract fun orificeDao(): OrificeDao
     abstract fun parshallFlumeDao(): ParshallFlumeDao
+    abstract fun longThroatedFlumeDao(): LongThroatedFlumeDao
+    abstract fun cutThroatedFlumeDao(): CutThroatedFlumeDao
+    abstract fun romijnDao(): RomijnDao
+    abstract fun crumpDao(): CrumpDao
     abstract fun pengambilanDataDao(): PengambilanDataDao
     abstract fun piasDao(): PiasDao
     abstract fun koefisiensiDao(): KoefisiensiAmbangLebarDao
     abstract fun koefisiensiAliranSempurnaDao(): KoefisiensiAliranSempurnaDao
     abstract fun ambangTipisSegitigaSudutDao(): AmbangTipisSegitigaSudutDao
     abstract fun koefisiensiAmbangTipisSegitiga(): KoefisiensiAmbangTipisSegitigaDao
+    abstract fun koefisiensiCutThroatedFlume(): KoefisiensiCutThroatedFlumeDao
 
     companion object {
         @Volatile

@@ -44,8 +44,25 @@ class DetailBangunanActivity : AppCompatActivity() {
     private val parshallFluViewModel: ParshallFlumeViewModel by viewModels {
         ParshallFlumeViewModelFactory((application as Application).parshallFlumeRepository)
     }
+
+    private val longThroatedFlumeViewModel: LongThroatedFlumeViewModel by viewModels {
+        LongThroatedFlumeViewModelFactory((application as Application).longThroatedFlumeRepository)
+    }
+
+    private val cutThroatedFlumeViewModel: CutThroaedFlumeViewModel by viewModels {
+        CutThroaedFlumeViewModelFactory((application as Application).cutThroatedFlumeRepository)
+    }
+
     private val orificeViewModel: OrificeViewModel by viewModels {
         OrificeViewModelFactory((application as Application).orificeRepository)
+    }
+
+    private val romijnViewModel: RomijnViewModel by viewModels {
+        RomijnViewModelFactory((application as Application).romijnRepository)
+    }
+
+    private val crumpViewModel: CrumpViewModel by viewModels {
+        CrumpViewModelFactory((application as Application).crumpRepository)
     }
 
     var idTipeBangunan: Long = 0
@@ -101,7 +118,7 @@ class DetailBangunanActivity : AppCompatActivity() {
                         alptViewModel.insert(alptData)
                     }
                     "Ambang Tajam Segitiga" -> {
-                        var atsData = AmbangTipisSegitigaModel(
+                        val atsData = AmbangTipisSegitigaModel(
                             null,
                             idBaseData.toInt(),
                             detailBangunanViewModel.detailBangunanValue.value!![0],
@@ -130,6 +147,28 @@ class DetailBangunanActivity : AppCompatActivity() {
                         )
                         parshallFluViewModel.insert(parshallData)
                     }
+                    "Long Throated Flume" -> {
+                        val ltfData = LongThrotedFlumeModel(
+                                null,
+                                idBaseData.toInt(),
+                                detailBangunanViewModel.detailBangunanValue.value!![0],
+                                detailBangunanViewModel.detailBangunanValue.value!![1],
+                                detailBangunanViewModel.detailBangunanValue.value!![2],
+                                detailBangunanViewModel.detailBangunanValue.value!![3],
+                                detailBangunanViewModel.detailBangunanValue.value!![4],
+                                detailBangunanViewModel.detailBangunanValue.value!![5],
+                                detailBangunanViewModel.detailBangunanValue.value!![6])
+                        longThroatedFlumeViewModel.insert(ltfData)
+                    }
+                    "Cut Throated Flume" -> {
+                        val ctfData = CutThroatedFlumeModel(
+                            null,
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue.value!![1]
+                        )
+                        cutThroatedFlumeViewModel.insert(ctfData)
+                    }
                     "Orifice" -> {
                         val orificeData = OrificeModel(
                             null,
@@ -138,6 +177,27 @@ class DetailBangunanActivity : AppCompatActivity() {
                             detailBangunanViewModel.detailBangunanValue.value!![1],
                         )
                         orificeViewModel.insert(orificeData)
+                    }
+                    "Romijn" -> {
+                        val romijnData = RomijnModel(
+                            null,
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                            detailBangunanViewModel.detailBangunanValue.value!![2],
+                            detailBangunanViewModel.detailBangunanValue.value!![3],
+                            detailBangunanViewModel.detailBangunanValue.value!![4],
+                        )
+                        romijnViewModel.insert(romijnData)
+                    }
+                    "Crump- De Gyuter" -> {
+                        val crumpData = CrumpModel(
+                            null,
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                        )
+                        crumpViewModel.insert(crumpData)
                     }
                 }
             } else {
@@ -203,6 +263,30 @@ class DetailBangunanActivity : AppCompatActivity() {
         parshallFluViewModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        longThroatedFlumeViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        cutThroatedFlumeViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        romijnViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        crumpViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
             }
         })
     }

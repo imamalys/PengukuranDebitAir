@@ -17,10 +17,7 @@ import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.database.viewmodel.AmbangTipisSegitigaSudutViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityMainMenuBinding
 import id.ias.calculationwaterdebit.helper.CirclePagerIndicatorDecoration
-import id.ias.calculationwaterdebit.util.DBAmbangTipisSegitigaSudutUtil
-import id.ias.calculationwaterdebit.util.DBInjectorUtil
-import id.ias.calculationwaterdebit.util.DBKoefisiensiAmbangTipisSegitigaUtil
-import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import id.ias.calculationwaterdebit.util.*
 
 class MainMenuActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
@@ -36,6 +33,10 @@ class MainMenuActivity : AppCompatActivity() {
     
     private val koefisiensiAmbangTipisSegitigaViewModel: KoefisiensiAmbangTipisSegitigaViewModel by viewModels {
         KoefisiensiAmbangTipisSegitigaViewModelFactory((application as Application).koefisiensiAmbangTipisSegitigaRepository)
+    }
+
+    private val koefisiensiCutThroatedFlumeViewModel: KoefisiensiCutThroatedFlumeViewModel by viewModels {
+        KoefisiensiCutThroatedFlumeViewModelFactory((application as Application).koefisiensiCutThroatedFlumeRepository)
     }
 
     private lateinit var SCROLLING_RUNNABLE: Runnable
@@ -140,6 +141,18 @@ class MainMenuActivity : AppCompatActivity() {
                     loadingDismiss()
                 }
             })
+        }
+
+        val koefisiensiCutThroatedFlumeModel = koefisiensiCutThroatedFlumeViewModel.getKoefisiensiCutThroatedFlumeViewModelById((0.50).toFloat())
+        if (koefisiensiCutThroatedFlumeModel == null) {
+            loadingShow()
+
+            DBKoefisiensiCutThroatedFlumeUtil.insertKoefisiensiCutThroatedFlume(koefisiensiCutThroatedFlumeViewModel,
+                    object: DBKoefisiensiCutThroatedFlumeUtil.InsertSuccess {
+                        override fun koefisiensiCutThroatedFlume(count: Int) {
+                            loadingDismiss()
+                        }
+                    })
         }
     }
 

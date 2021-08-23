@@ -46,7 +46,7 @@ class DetailBangunanViewModel: ViewModel() {
                 return R.drawable.crump_de_guyter_image
             }
             else -> {
-                return R.drawable.ambang_lebar_segiempat_image
+                return R.drawable.ambang_lebar_segiempat_image_detail
             }
         }
     }
@@ -99,9 +99,33 @@ class DetailBangunanViewModel: ViewModel() {
             "Parshall Flume" -> {
                 detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Tenggorokan"))
             }
+            "Long Throated Flume" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", "0", "Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", "0", "Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
+            }
+            "Cut Throated Flume" -> {
+                detailBangunans.add(DetailBangunanModel("W", "0", "Lebar Tenggorokan"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Flume"))
+            }
             "Orifice" -> {
                 detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Lubang"))
                 detailBangunans.add(DetailBangunanModel("W", "0", "Tinggi Lubang"))
+            }
+            "Romijn" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Meja"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "Tinggi Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Meja"))
+                detailBangunans.add(DetailBangunanModel("P", "0", "Tinggi Meja dari Dasar"))
+                detailBangunans.add(DetailBangunanModel("m", "0", "Tinggi Meja di Atas Meja"))
+            }
+            "Crump- De Gyuter" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Bukaan"))
+                detailBangunans.add(DetailBangunanModel("W", "0", "Tinggi Bukaan"))
             }
         }
 

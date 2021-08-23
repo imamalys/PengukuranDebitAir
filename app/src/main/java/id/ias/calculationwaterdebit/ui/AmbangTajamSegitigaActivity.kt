@@ -248,6 +248,7 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
                     sqrt((2 * g.toFloat())) * tan(Math.toRadians((o.toFloat() / 2).toDouble())).toFloat() *
                     h1.toFloat().pow(2.5.toFloat()))
 
+            pengambilanDataViewModel.update(pengambilanDataById[i].id!!, q)
 
             LegacyTableView.insertLegacyContent((i + 1).toString(), cd[i], g, o, h1, String.format(Locale.ENGLISH, "%.3f", q))
         }
