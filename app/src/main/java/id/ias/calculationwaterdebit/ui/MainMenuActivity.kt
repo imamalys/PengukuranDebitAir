@@ -39,6 +39,14 @@ class MainMenuActivity : AppCompatActivity() {
         KoefisiensiCutThroatedFlumeViewModelFactory((application as Application).koefisiensiCutThroatedFlumeRepository)
     }
 
+    private val koefisiensiAmbangTajamSegiempatViewModel: KoefisiensiAmbangTajamSegiempatViewModel by viewModels {
+        KoefisiensiAmbangTajamSegiempatViewModelFactory((application as Application).koefisiensiAmbangTajamSegiempatRepository)
+    }
+
+    private val mercuAmbangViewModel: MercuAmbangViewModel by viewModels {
+        MercuAmbangViewModelFactory((application as Application).mercuAmbangRepository)
+    }
+
     private lateinit var SCROLLING_RUNNABLE: Runnable
     private lateinit var mHandler: Handler
     var count = 0
@@ -108,8 +116,20 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        mBinding.ivIcon1.setOnClickListener {
+            val intent = Intent(this@MainMenuActivity, ReportActivity::class.java)
+            intent.putExtra("type", 0)
+            startActivity(intent)
+        }
+
         mBinding.ivIcon2.setOnClickListener {
             val intent = Intent(this@MainMenuActivity, ReportActivity::class.java)
+            intent.putExtra("type", 1)
+            startActivity(intent)
+        }
+
+        mBinding.ivIcon3.setOnClickListener {
+            val intent = Intent(this@MainMenuActivity, AboutActivity::class.java)
             startActivity(intent)
         }
     }
@@ -118,7 +138,7 @@ class MainMenuActivity : AppCompatActivity() {
         val koefisiensiAliranSempurna = koefisiensiAliranSempurnaViewModel.getKoefisiensiAliranSempurnaById((0.150).toFloat())
         if (koefisiensiAliranSempurna == null) {
             loadingShow()
-            injectAliranSempurna(count)
+            injectAliranSempurna(0)
         }
 
         val koefisiensiAmbangTipisSegitiga = koefisiensiAmbangTipisSegitigaViewModel.getAmbangTipisSegitigaCdViewModelById((1.0).toFloat(), (0.13).toFloat())
@@ -154,6 +174,26 @@ class MainMenuActivity : AppCompatActivity() {
                         }
                     })
         }
+
+        val mercuAmbangModel = mercuAmbangViewModel.getMercuAmbangById((0.11).toFloat())
+        if (mercuAmbangModel == null) {
+            loadingShow()
+
+            DBMercuAmbangUtil.insertMercuAmbang(mercuAmbangViewModel, object: DBMercuAmbangUtil.InsertSuccess {
+                override fun mercuAmbang(count: Int) {
+                    loadingDismiss()
+                }
+
+            })
+        }
+
+        val koefisiensiAmbangTajamSegitigaModel =
+                koefisiensiAmbangTajamSegiempatViewModel.getKoefisiensiAmbangTajamSegiempatViewModelById((1.0).toFloat(),(0.01).toFloat())
+        if (koefisiensiAmbangTajamSegitigaModel == null) {
+            loadingShow()
+
+            injectAmbangTajamSegitiga(0)
+        }
     }
 
     private fun injectAliranSempurna(count: Int) {
@@ -181,6 +221,59 @@ class MainMenuActivity : AppCompatActivity() {
                         injectAliranSempurna(count)
                     }
                 })
+            }
+        }
+    }
+
+    private fun injectAmbangTajamSegitiga(count: Int) {
+        when (count) {
+            1 -> {
+                DBKoefisiensiAmbangTajamSegiempatUtil.insertAmbangTajamSegitiga2(
+                    koefisiensiAmbangTajamSegiempatViewModel,
+                    object: DBKoefisiensiAmbangTajamSegiempatUtil.InsertSuccess {
+                        override fun koefisiensiAmbangTajamSegitiga(count: Int) {
+                            injectAmbangTajamSegitiga(count)
+                        }
+                    })
+            }
+            2 -> {
+                DBKoefisiensiAmbangTajamSegiempatUtil.insertAmbangTajamSegitiga3(
+                        koefisiensiAmbangTajamSegiempatViewModel,
+                        object: DBKoefisiensiAmbangTajamSegiempatUtil.InsertSuccess {
+                            override fun koefisiensiAmbangTajamSegitiga(count: Int) {
+                                injectAmbangTajamSegitiga(count)
+                            }
+                        })
+            }
+            3 -> {
+                DBKoefisiensiAmbangTajamSegiempatUtil.insertAmbangTajamSegitiga4(
+                        koefisiensiAmbangTajamSegiempatViewModel,
+                        object: DBKoefisiensiAmbangTajamSegiempatUtil.InsertSuccess {
+                            override fun koefisiensiAmbangTajamSegitiga(count: Int) {
+                                injectAmbangTajamSegitiga(count)
+                            }
+                        })
+            }
+            4 -> {
+                DBKoefisiensiAmbangTajamSegiempatUtil.insertAmbangTajamSegitiga5(
+                        koefisiensiAmbangTajamSegiempatViewModel,
+                        object: DBKoefisiensiAmbangTajamSegiempatUtil.InsertSuccess {
+                            override fun koefisiensiAmbangTajamSegitiga(count: Int) {
+                                injectAmbangTajamSegitiga(count)
+                            }
+                        })
+            }
+            5 -> {
+                loadingDismiss()
+            }
+            else -> {
+                DBKoefisiensiAmbangTajamSegiempatUtil.insertAmbangTajamSegitiga(
+                        koefisiensiAmbangTajamSegiempatViewModel,
+                        object: DBKoefisiensiAmbangTajamSegiempatUtil.InsertSuccess {
+                            override fun koefisiensiAmbangTajamSegitiga(count: Int) {
+                                injectAmbangTajamSegitiga(count)
+                            }
+                        })
             }
         }
     }

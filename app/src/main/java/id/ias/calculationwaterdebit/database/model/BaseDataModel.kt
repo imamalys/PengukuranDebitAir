@@ -9,6 +9,8 @@ import java.util.*
 data class BaseDataModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
+    @ColumnInfo(name = "nama_saluran")
+    var namaSaluran: String,
     @ColumnInfo(name = "nama_daerah_irigasi")
     var namaDaerahIrigasi: String,
     @ColumnInfo(name = "wilayah_kewenangan")
@@ -39,4 +41,9 @@ data class BaseDataModel(
     var keterangan: String?,
     @ColumnInfo(name = "nilai_keterangan")
     var nilaiKeterangan: Int,
+    var pertama: Int?,
+    var kedua: Int?,
+    var ketiga: Int?,
+    var keempat: Int?,
+    var kelima: Int?
     )

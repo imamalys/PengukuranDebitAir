@@ -16,7 +16,19 @@ class LongThroatedFlumeRepository(private val ltfDao: LongThroatedFlumeDao) {
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
+    suspend fun getLtfDataByIdBaseData(id: Int): LongThrotedFlumeModel {
+        return ltfDao.getLtfByIdBaseData(id)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
     suspend fun insert(ltfModel: LongThrotedFlumeModel): Long {
         return ltfDao.insert(ltfModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(ltfModel: LongThrotedFlumeModel): Int {
+        return ltfDao.update(ltfModel)
     }
 }

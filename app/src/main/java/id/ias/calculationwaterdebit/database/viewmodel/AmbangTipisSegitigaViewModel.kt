@@ -14,8 +14,16 @@ class AmbangTipisSegitigaViewModel(private val repository: AmbangTipisSegitigaRe
         atsById.value = repository.getAtsDataById(id)
     }
 
+    fun getAtsDataByIdBaseData(id: Int) = viewModelScope.launch {
+        atsById.value = repository.getAtsDataByIdBaseData(id)
+    }
+
     fun insert(atsModel: AmbangTipisSegitigaModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(atsModel)
+    }
+
+    fun update(atsModel: AmbangTipisSegitigaModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(atsModel).toLong()
     }
 }
 

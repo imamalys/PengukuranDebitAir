@@ -1,9 +1,7 @@
 package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
-import id.ias.calculationwaterdebit.database.model.LongThrotedFlumeModel
 import id.ias.calculationwaterdebit.database.model.RomijnModel
-import id.ias.calculationwaterdebit.database.repository.LongThroatedFlumeRepository
 import id.ias.calculationwaterdebit.database.repository.RomijnRepository
 import kotlinx.coroutines.launch
 
@@ -12,12 +10,20 @@ class RomijnViewModel(private val repository: RomijnRepository): ViewModel() {
     var idTipeBangunan: MutableLiveData<Long> = MutableLiveData(0)
     val romijnById: MutableLiveData<RomijnModel> = MutableLiveData()
 
-    fun getLtfDataById(id: Int) = viewModelScope.launch {
+    fun getRomijnDataById(id: Int) = viewModelScope.launch {
         romijnById.value = repository.getRomijnDataById(id)
+    }
+
+    fun getRomijnDataByIdBaseData(id: Int) = viewModelScope.launch {
+        romijnById.value = repository.getRomijnDataByIdBaseData(id)
     }
 
     fun insert(romijnModel: RomijnModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(romijnModel)
+    }
+
+    fun update(romijnModel: RomijnModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(romijnModel).toLong()
     }
 }
 

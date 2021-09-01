@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import com.levitnudi.legacytableview.LegacyTableView
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.model.AmbangLebarPengontrolTrapesiumModel
@@ -14,9 +13,7 @@ import id.ias.calculationwaterdebit.databinding.ActivityAmbangLebarPengontrolTra
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.hypot
 import kotlin.math.pow
-import kotlin.math.sqrt
 
 class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
@@ -61,7 +58,7 @@ class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
         setViewModel()
         setAction()
 
-        ambangLebarPengontrolTrapesiumViewModel.getalpsDataById(idTipeBangunan.toInt())
+        ambangLebarPengontrolTrapesiumViewModel.getAlptDataById(idTipeBangunan.toInt())
     }
 
     private fun setAction() {

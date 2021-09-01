@@ -21,6 +21,15 @@ class BaseDataRepository(private val baseDataDao: BaseDataDao) {
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
+    suspend fun updateLoad(id: Int, namaSaluran: String, namaDaerahIrigasi: String, wilayahKewenangan: String,
+                           provinsi: String, kabupaten: String, tanggal: String, noPengukuran: String,
+                           namaPengukur: String): Int {
+        return baseDataDao.updateLoad(id, namaSaluran, namaDaerahIrigasi, wilayahKewenangan, provinsi, kabupaten,
+                tanggal, noPengukuran, namaPengukur)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
     suspend fun update(id: Int, variablePertama: String, n: String): Int {
         return baseDataDao.update(id = id, variablePertama = variablePertama, n = n)
     }
@@ -39,8 +48,9 @@ class BaseDataRepository(private val baseDataDao: BaseDataDao) {
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
-    suspend fun update(id: Int, keterangan: String, nilaiKeterangan: Int): Int {
-        return baseDataDao.update(id = id, keterangan = keterangan, nilaiKeterangan = nilaiKeterangan)
+    suspend fun updateCheckKondisi(id: Int, keterangan: String, nilaiKeterangan: Int, pertama: Int, kedua: Int,
+                                   ketiga: Int, keempat: Int, kelima: Int): Int {
+        return baseDataDao.updateCheckKondisi(id, keterangan, nilaiKeterangan, pertama, kedua, ketiga, keempat, kelima)
     }
 
     @Suppress("RedudantSuspendModifier")

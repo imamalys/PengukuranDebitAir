@@ -2,7 +2,6 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.CutThroatedFlumeModel
-import id.ias.calculationwaterdebit.database.repository.AmbangLebarPengontrolSegiempatRepository
 import id.ias.calculationwaterdebit.database.repository.CutThroatedFlumeRepository
 import kotlinx.coroutines.launch
 
@@ -15,8 +14,16 @@ class CutThroaedFlumeViewModel(private val repository: CutThroatedFlumeRepositor
         ctfById.value = repository.getCtfDataById(id)
     }
 
+    fun getCtfDataByIdBaseData(id: Int) = viewModelScope.launch {
+        ctfById.value = repository.getCtfDataByIdBaseData(id)
+    }
+
     fun insert(ctfData: CutThroatedFlumeModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(ctfData)
+    }
+
+    fun update(ctfData: CutThroatedFlumeModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(ctfData).toLong()
     }
 }
 

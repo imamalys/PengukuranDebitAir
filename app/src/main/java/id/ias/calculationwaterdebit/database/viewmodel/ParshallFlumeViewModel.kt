@@ -1,9 +1,7 @@
 package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
-import id.ias.calculationwaterdebit.database.model.OrificeModel
 import id.ias.calculationwaterdebit.database.model.ParshallFlumeModel
-import id.ias.calculationwaterdebit.database.repository.OrificeRepository
 import id.ias.calculationwaterdebit.database.repository.ParshallFlumeRepository
 import kotlinx.coroutines.launch
 
@@ -16,8 +14,16 @@ class ParshallFlumeViewModel(private val repository: ParshallFlumeRepository): V
         parshallFlumeById.value = repository.getParshallFlumeDataById(id)
     }
 
+    fun getParshallFlumeDataByIdBaseData(id: Int) = viewModelScope.launch {
+        parshallFlumeById.value = repository.getParshallFlumeDataByIdBaseData(id)
+    }
+
     fun insert(parshallFlumeModel: ParshallFlumeModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(parshallFlumeModel)
+    }
+
+    fun update(parshallFlumeModel: ParshallFlumeModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(parshallFlumeModel).toLong()
     }
 }
 

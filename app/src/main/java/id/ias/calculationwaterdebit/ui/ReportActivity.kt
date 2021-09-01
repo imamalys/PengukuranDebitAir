@@ -22,12 +22,17 @@ class ReportActivity : AppCompatActivity() {
         BaseDataViewModelFactory((application as Application).baseDataRepository)
     }
 
+    private var type = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mBinding = ActivityReport2Binding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
+        if (intent.hasExtra("type")) {
+            type = intent.getIntExtra("type", 0)
+        }
         loading.show(this)
         setViewModel()
     }
@@ -43,14 +48,22 @@ class ReportActivity : AppCompatActivity() {
                             if (baseDataModel.k == null) {
                                 ToastUtils.showLong("Data tidak lengkap")
                             } else {
-                                val intent = Intent(this@ReportActivity, ReportDetailActivity::class.java)
-                                intent.putExtra("id_base_data", baseDataModel.id!!.toLong())
-                                startActivity(intent)
+                                if (type == 0) {
+                                    val intent = Intent(this@ReportActivity, DataInformasiActivity::class.java)
+                                    intent.putExtra("id_base_data", baseDataModel.id!!.toLong())
+                                    startActivity(intent)
+                                } else {
+                                    val intent = Intent(this@ReportActivity, ReportDetailActivity::class.java)
+                                    intent.putExtra("id_base_data", baseDataModel.id!!.toLong())
+                                    startActivity(intent)
+                                }
                             }
                         }
                     }
                 )
                 mBinding.rvReport.adapter = adapter
+                loading.dialog.dismiss()
+            } else {
                 loading.dialog.dismiss()
             }
         })

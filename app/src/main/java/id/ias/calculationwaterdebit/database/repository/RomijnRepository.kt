@@ -2,7 +2,6 @@ package id.ias.calculationwaterdebit.database.repository
 
 import androidx.annotation.WorkerThread
 import id.ias.calculationwaterdebit.database.dao.RomijnDao
-import id.ias.calculationwaterdebit.database.model.LongThrotedFlumeModel
 import id.ias.calculationwaterdebit.database.model.RomijnModel
 import kotlinx.coroutines.flow.Flow
 
@@ -17,7 +16,19 @@ class RomijnRepository(private val romijnDao: RomijnDao) {
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
+    suspend fun getRomijnDataByIdBaseData(id: Int): RomijnModel {
+        return romijnDao.getRomijnByIdBaseData(id)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
     suspend fun insert(romijnModel: RomijnModel): Long {
         return romijnDao.insert(romijnModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(romijnModel: RomijnModel): Int {
+        return romijnDao.update(romijnModel)
     }
 }

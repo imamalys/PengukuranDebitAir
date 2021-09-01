@@ -60,7 +60,7 @@ class CipolettiActivity : AppCompatActivity() {
         setViewModel()
         setAction()
 
-        cipolettiViewModel.getOrificeDataById(idTipeBangunan.toInt())
+        cipolettiViewModel.getCipolettiDataById(idTipeBangunan.toInt())
     }
 
     private fun setAction() {

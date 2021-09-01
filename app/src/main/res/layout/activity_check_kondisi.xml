@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Checklist Kondisi Bangunan"
+                android:text="Check list Kondisi Bangunan"
                 android:id="@+id/tv_title"
                 android:gravity="center"
                 android:layout_marginTop="20dp"

@@ -68,9 +68,9 @@ class FormDataActivity : AppCompatActivity() {
         loading.dialog.dismiss()
         piasModel.let {
             if (piasModel.size < formDataActivityViewModel.jumlahPias) {
-                mBinding.tvPias.text = String.format("Pias ke %s", ((piasModel.size + 1).toString()))
+                mBinding.tvPias.text = String.format("Penampang basah ke %s", ((piasModel.size + 1).toString()))
             } else {
-                mBinding.tvPias.text = "Pias ke 1"
+                mBinding.tvPias.text = "Penampang basah ke 1"
             }
         }
 

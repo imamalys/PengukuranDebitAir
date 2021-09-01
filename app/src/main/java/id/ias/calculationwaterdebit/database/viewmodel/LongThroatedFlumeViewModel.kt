@@ -2,7 +2,6 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.LongThrotedFlumeModel
-import id.ias.calculationwaterdebit.database.repository.AmbangLebarPengontrolSegiempatRepository
 import id.ias.calculationwaterdebit.database.repository.LongThroatedFlumeRepository
 import kotlinx.coroutines.launch
 
@@ -15,8 +14,16 @@ class LongThroatedFlumeViewModel(private val repository: LongThroatedFlumeReposi
         ltfById.value = repository.getLtfDataById(id)
     }
 
+    fun getLtfDataByIdBaseData(id: Int) = viewModelScope.launch {
+        ltfById.value = repository.getLtfDataByIdBaseData(id)
+    }
+
     fun insert(ltfData: LongThrotedFlumeModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(ltfData)
+    }
+
+    fun update(ltfData: LongThrotedFlumeModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(ltfData).toLong()
     }
 }
 

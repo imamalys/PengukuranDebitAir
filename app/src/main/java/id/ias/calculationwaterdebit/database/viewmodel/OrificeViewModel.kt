@@ -2,7 +2,6 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.OrificeModel
-import id.ias.calculationwaterdebit.database.repository.AmbangLebarPengontrolSegiempatRepository
 import id.ias.calculationwaterdebit.database.repository.OrificeRepository
 import kotlinx.coroutines.launch
 
@@ -15,9 +14,17 @@ class OrificeViewModel(private val repository: OrificeRepository): ViewModel() {
         orificeById.value = repository.getOrificeDataById(id)
     }
 
+    fun getOrificeDataByIdBaseData(id: Int) = viewModelScope.launch {
+        orificeById.value = repository.getOrificeDataByIdBaseData(id)
+    }
+
     fun insert(orificeModel: OrificeModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(orificeModel)
     }
+    fun update(orificeModel: OrificeModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(orificeModel).toLong()
+    }
+
 }
 
 class OrificeViewModelFactory(private val repository: OrificeRepository): ViewModelProvider.Factory {

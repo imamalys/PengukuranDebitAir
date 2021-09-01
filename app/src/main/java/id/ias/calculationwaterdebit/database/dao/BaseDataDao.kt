@@ -18,6 +18,11 @@ interface BaseDataDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(baseDataModel: BaseDataModel): Long
 
+    @Query("UPDATE base_data SET nama_saluran = :namaSaluran, nama_daerah_irigasi = :namaDaerahIrigasi, wilayah_kewenangan = :wilayahKewenangan, provinsi = :provinsi, kabupaten = :kabupaten, tanggal = :tanggal, no_pengukuran = :noPengukuran, nama_pengukur = :namaPengukur  WHERE id = :id")
+    suspend fun updateLoad(id: Int, namaSaluran: String, namaDaerahIrigasi: String, wilayahKewenangan: String,
+                           provinsi: String, kabupaten: String, tanggal: String, noPengukuran: String,
+                           namaPengukur: String): Int
+
     @Query("UPDATE base_data SET variable_pertama = :variablePertama, n = :n WHERE id = :id")
     suspend fun update(id: Int, variablePertama: String, n: String): Int
 
@@ -27,8 +32,9 @@ interface BaseDataDao {
     @Query("UPDATE base_data SET k = :k, c = :c, mape = :mape WHERE id = :id")
     suspend fun updateAnalisis(id: Int, k: String, c: String, mape: String): Int
 
-    @Query("UPDATE base_data SET keterangan = :keterangan, nilai_keterangan = :nilaiKeterangan WHERE id = :id")
-    suspend fun update(id: Int, keterangan: String, nilaiKeterangan: Int): Int
+    @Query("UPDATE base_data SET keterangan = :keterangan, nilai_keterangan = :nilaiKeterangan, pertama = :pertama, kedua = :kedua, ketiga = :ketiga, keempat = :keempat, kelima = :kelima WHERE id = :id")
+    suspend fun updateCheckKondisi(id: Int, keterangan: String, nilaiKeterangan: Int, pertama: Int, kedua: Int,
+                                   ketiga: Int, keempat: Int, kelima: Int): Int
 
     @Query("UPDATE base_data SET tipe_bangunan = :tipeBangunan WHERE id = :id")
     suspend fun update(id: Int, tipeBangunan: String): Int

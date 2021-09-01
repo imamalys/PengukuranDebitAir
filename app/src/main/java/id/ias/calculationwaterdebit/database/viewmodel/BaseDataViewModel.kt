@@ -2,7 +2,6 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.BaseDataModel
-import id.ias.calculationwaterdebit.database.model.PengambilanDataModel
 import id.ias.calculationwaterdebit.database.repository.BaseDataRepository
 import kotlinx.coroutines.launch
 
@@ -20,6 +19,12 @@ class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel()
         insertId.value = repository.insert(baseData)
     }
 
+    fun updateLoad(id: Int, namaSaluran: String, namaDaerahIrigasi: String, wilayahKewenangan: String, provinsi: String, kabupaten: String,
+                   tanggal: String, noPengukuran: String, namaPengukur: String) = viewModelScope.launch {
+        baseDataUpdate.value = repository.updateLoad(id, namaSaluran, namaDaerahIrigasi, wilayahKewenangan, provinsi,
+                kabupaten, tanggal, noPengukuran, namaPengukur)
+    }
+
     fun update(id: Int, variablePertama: String, n: String) = viewModelScope.launch {
         baseDataUpdate.value = repository.update(id = id, variablePertama = variablePertama, n = n)
     }
@@ -32,8 +37,9 @@ class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel()
         baseDataUpdate.value = repository.updateAnalisis(id, k, c, mape)
     }
 
-    fun update(id: Int, keterangan: String, nilaiKeterangan: Int) = viewModelScope.launch {
-        baseDataUpdate.value = repository.update(id = id, keterangan = keterangan, nilaiKeterangan = nilaiKeterangan)
+    fun updateCheckKondisi(id: Int, keterangan: String, nilaiKeterangan: Int, pertama: Int, kedua: Int,
+                           ketiga: Int, keempat: Int, kelima: Int) = viewModelScope.launch {
+        baseDataUpdate.value = repository.updateCheckKondisi(id, keterangan, nilaiKeterangan, pertama, kedua, ketiga, keempat, kelima)
     }
 
     fun update(id: Int, tipeBangunan: String) = viewModelScope.launch {

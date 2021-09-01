@@ -10,12 +10,20 @@ class CipolettiViewModel(private val repository: CipolettiRepository): ViewModel
     var idTipeBangunan: MutableLiveData<Long> = MutableLiveData(0)
     val cipolettiById: MutableLiveData<CipolettiModel> = MutableLiveData()
 
-    fun getOrificeDataById(id: Int) = viewModelScope.launch {
-        cipolettiById.value = repository.getOrificeDataById(id)
+    fun getCipolettiDataById(id: Int) = viewModelScope.launch {
+        cipolettiById.value = repository.getCipolettiDataById(id)
+    }
+
+    fun getCipolettiDataByIdBaseData(id: Int) = viewModelScope.launch {
+        cipolettiById.value = repository.getCipolettiDataByIdBaseData(id)
     }
 
     fun insert(cipolettiModel: CipolettiModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(cipolettiModel)
+    }
+
+    fun update(cipolettiModel: CipolettiModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(cipolettiModel).toLong()
     }
 }
 

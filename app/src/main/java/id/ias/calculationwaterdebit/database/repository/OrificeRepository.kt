@@ -16,7 +16,19 @@ class OrificeRepository(private val orificeDao: OrificeDao) {
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
+    suspend fun getOrificeDataByIdBaseData(id: Int): OrificeModel {
+        return orificeDao.getOrificeByIdBaseData(id)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
     suspend fun insert(orificeModel: OrificeModel): Long {
         return orificeDao.insert(orificeModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(orificeModel: OrificeModel): Int {
+        return orificeDao.update(orificeModel)
     }
 }

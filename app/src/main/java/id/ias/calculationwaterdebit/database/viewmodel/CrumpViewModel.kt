@@ -2,9 +2,7 @@ package id.ias.calculationwaterdebit.database.viewmodel
 
 import androidx.lifecycle.*
 import id.ias.calculationwaterdebit.database.model.CrumpModel
-import id.ias.calculationwaterdebit.database.model.CutThroatedFlumeModel
 import id.ias.calculationwaterdebit.database.repository.CrumpRepository
-import id.ias.calculationwaterdebit.database.repository.CutThroatedFlumeRepository
 import kotlinx.coroutines.launch
 
 class CrumpViewModel(private val repository: CrumpRepository): ViewModel() {
@@ -16,8 +14,16 @@ class CrumpViewModel(private val repository: CrumpRepository): ViewModel() {
         crumpById.value = repository.getCrumpDataById(id)
     }
 
+    fun getCrumpDataByIdBaseData(id: Int) = viewModelScope.launch {
+        crumpById.value = repository.getCrumpDataByIdBaseData(id)
+    }
+
     fun insert(crumpModel: CrumpModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(crumpModel)
+    }
+
+    fun update(crumpModel: CrumpModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(crumpModel).toLong()
     }
 }
 

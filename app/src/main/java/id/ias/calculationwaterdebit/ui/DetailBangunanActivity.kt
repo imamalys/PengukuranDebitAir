@@ -2,6 +2,7 @@ package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,10 @@ class DetailBangunanActivity : AppCompatActivity() {
 
     private val alptViewModel: AmbangLebarPengontrolTrapesiumViewModel by viewModels {
         AmbangLebarPengontrolTrapesiumViewModelFactory((application as Application).alptRepository)
+    }
+
+    private val ambangTajamSegiempatModel: AmbangTajamSegiempatViewModel by viewModels {
+        AmbangTajamSegiempatViewModelFactory((application as Application).ambangTajamSegiempatRepository)
     }
 
     private val atsViewModel: AmbangTipisSegitigaViewModel by viewModels {
@@ -67,6 +72,7 @@ class DetailBangunanActivity : AppCompatActivity() {
 
     var idTipeBangunan: Long = 0
     var idBaseData: Long = 0
+    var isLoad = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,112 +98,209 @@ class DetailBangunanActivity : AppCompatActivity() {
                 when (detailBangunanViewModel.detailBangunan.value!!) {
                     "Ambang Lebar Pengontrol Segiempat" -> {
                         val alpsData = AmbangLebarPengontrolSegiempatModel(
-                                null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                                 idBaseData.toInt(),
-                                detailBangunanViewModel.detailBangunanValue.value!![0],
-                                detailBangunanViewModel.detailBangunanValue.value!![1],
-                                detailBangunanViewModel.detailBangunanValue.value!![2],
-                                detailBangunanViewModel.detailBangunanValue.value!![3],
-                                detailBangunanViewModel.detailBangunanValue.value!![4],
-                                detailBangunanViewModel.detailBangunanValue.value!![5],
-                                detailBangunanViewModel.detailBangunanValue.value!![6])
-                        alpsViewModel.insert(alpsData)
+                                detailBangunanViewModel.detailBangunanValue[0],
+                                detailBangunanViewModel.detailBangunanValue[1],
+                                detailBangunanViewModel.detailBangunanValue[2],
+                                detailBangunanViewModel.detailBangunanValue[3],
+                                detailBangunanViewModel.detailBangunanValue[4],
+                                detailBangunanViewModel.detailBangunanValue[5],
+                                detailBangunanViewModel.detailBangunanValue[6])
+                        if (isLoad) {
+                            alpsViewModel.update(alpsData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            alpsViewModel.insert(alpsData)
+                        }
                     }
                     "Ambang Lebar Pengontrol Trapesium" -> {
                         val alptData = AmbangLebarPengontrolTrapesiumModel(
-                                null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                                 idBaseData.toInt(),
-                                detailBangunanViewModel.detailBangunanValue.value!![0],
-                                detailBangunanViewModel.detailBangunanValue.value!![1],
-                                detailBangunanViewModel.detailBangunanValue.value!![2],
-                                detailBangunanViewModel.detailBangunanValue.value!![3],
-                                detailBangunanViewModel.detailBangunanValue.value!![4],
-                                detailBangunanViewModel.detailBangunanValue.value!![5],
-                                detailBangunanViewModel.detailBangunanValue.value!![6],
-                                detailBangunanViewModel.detailBangunanValue.value!![7])
-                        alptViewModel.insert(alptData)
+                                detailBangunanViewModel.detailBangunanValue[0],
+                                detailBangunanViewModel.detailBangunanValue[1],
+                                detailBangunanViewModel.detailBangunanValue[2],
+                                detailBangunanViewModel.detailBangunanValue[3],
+                                detailBangunanViewModel.detailBangunanValue[4],
+                                detailBangunanViewModel.detailBangunanValue[5],
+                                detailBangunanViewModel.detailBangunanValue[6],
+                                detailBangunanViewModel.detailBangunanValue[7])
+
+                        if (isLoad) {
+                            alptViewModel.update(alptData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            alptViewModel.insert(alptData)
+                        }
+                    }
+                    "Ambang Tajam Segiempat" -> {
+                        val atsData = AmbangTajamSegiempatModel(
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
+                            idBaseData.toInt(),
+                            detailBangunanViewModel.detailBangunanValue[0],
+                            detailBangunanViewModel.detailBangunanValue[1],
+                            detailBangunanViewModel.detailBangunanValue[2],
+                        )
+
+                        if (isLoad) {
+                            ambangTajamSegiempatModel.update(atsData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            ambangTajamSegiempatModel.insert(atsData)
+                        }
                     }
                     "Ambang Tajam Segitiga" -> {
                         val atsData = AmbangTipisSegitigaModel(
-                            null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                             idBaseData.toInt(),
-                            detailBangunanViewModel.detailBangunanValue.value!![0],
-                            detailBangunanViewModel.detailBangunanValue.value!![1],
-                            detailBangunanViewModel.detailBangunanValue.value!![2],
+                            detailBangunanViewModel.detailBangunanValue[0],
+                            detailBangunanViewModel.detailBangunanValue[1],
+                            detailBangunanViewModel.detailBangunanValue[2],
                         )
-                        atsViewModel.insert(atsData)
+
+                        if (isLoad) {
+                            atsViewModel.update(atsData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            atsViewModel.insert(atsData)
+                        }
                     }
                     "Cipoletti" -> {
                         val cipolettiData = CipolettiModel(
-                            null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                             idBaseData.toInt(),
-                            detailBangunanViewModel.detailBangunanValue.value!![0],
-                            detailBangunanViewModel.detailBangunanValue.value!![1],
-                            detailBangunanViewModel.detailBangunanValue.value!![2],
-                            detailBangunanViewModel.detailBangunanValue.value!![3],
-                            detailBangunanViewModel.detailBangunanValue.value!![4],
+                            detailBangunanViewModel.detailBangunanValue[0],
+                            detailBangunanViewModel.detailBangunanValue[1],
+                            detailBangunanViewModel.detailBangunanValue[2],
+                            detailBangunanViewModel.detailBangunanValue[3],
+                            detailBangunanViewModel.detailBangunanValue[4],
                         )
-                        cipolettiViewModel.insert(cipolettiData)
+
+                        if (isLoad) {
+                            cipolettiViewModel.update(cipolettiData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            cipolettiViewModel.insert(cipolettiData)
+                        }
                     }
                     "Parshall Flume" -> {
                         val parshallData = ParshallFlumeModel(
-                            null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                             idBaseData.toInt(),
-                            detailBangunanViewModel.detailBangunanValue.value!![0],
+                            detailBangunanViewModel.detailBangunanValue[0],
                         )
-                        parshallFluViewModel.insert(parshallData)
+
+                        if (isLoad) {
+                            parshallFluViewModel.update(parshallData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            parshallFluViewModel.insert(parshallData)
+                        }
                     }
                     "Long Throated Flume" -> {
                         val ltfData = LongThrotedFlumeModel(
-                                null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                                 idBaseData.toInt(),
-                                detailBangunanViewModel.detailBangunanValue.value!![0],
-                                detailBangunanViewModel.detailBangunanValue.value!![1],
-                                detailBangunanViewModel.detailBangunanValue.value!![2],
-                                detailBangunanViewModel.detailBangunanValue.value!![3],
-                                detailBangunanViewModel.detailBangunanValue.value!![4],
-                                detailBangunanViewModel.detailBangunanValue.value!![5],
-                                detailBangunanViewModel.detailBangunanValue.value!![6])
-                        longThroatedFlumeViewModel.insert(ltfData)
+                                detailBangunanViewModel.detailBangunanValue[0],
+                                detailBangunanViewModel.detailBangunanValue[1],
+                                detailBangunanViewModel.detailBangunanValue[2],
+                                detailBangunanViewModel.detailBangunanValue[3],
+                                detailBangunanViewModel.detailBangunanValue[4],
+                                detailBangunanViewModel.detailBangunanValue[5],
+                                detailBangunanViewModel.detailBangunanValue[6])
+
+                        if (isLoad) {
+                            longThroatedFlumeViewModel.update(ltfData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            longThroatedFlumeViewModel.insert(ltfData)
+                        }
                     }
                     "Cut Throated Flume" -> {
                         val ctfData = CutThroatedFlumeModel(
-                            null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                             idBaseData.toInt(),
-                            detailBangunanViewModel.detailBangunanValue.value!![0],
-                            detailBangunanViewModel.detailBangunanValue.value!![1]
+                            detailBangunanViewModel.detailBangunanValue[0],
+                            detailBangunanViewModel.detailBangunanValue[1]
                         )
-                        cutThroatedFlumeViewModel.insert(ctfData)
+
+                        if (isLoad) {
+                            cutThroatedFlumeViewModel.update(ctfData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            cutThroatedFlumeViewModel.insert(ctfData)
+                        }
                     }
                     "Orifice" -> {
                         val orificeData = OrificeModel(
-                            null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                             idBaseData.toInt(),
-                            detailBangunanViewModel.detailBangunanValue.value!![0],
-                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                            detailBangunanViewModel.detailBangunanValue[0],
+                            detailBangunanViewModel.detailBangunanValue[1],
                         )
-                        orificeViewModel.insert(orificeData)
+
+                        if (isLoad) {
+                            orificeViewModel.update(orificeData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            orificeViewModel.insert(orificeData)
+                        }
                     }
                     "Romijn" -> {
                         val romijnData = RomijnModel(
-                            null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                             idBaseData.toInt(),
-                            detailBangunanViewModel.detailBangunanValue.value!![0],
-                            detailBangunanViewModel.detailBangunanValue.value!![1],
-                            detailBangunanViewModel.detailBangunanValue.value!![2],
-                            detailBangunanViewModel.detailBangunanValue.value!![3],
-                            detailBangunanViewModel.detailBangunanValue.value!![4],
+                            detailBangunanViewModel.detailBangunanValue[0],
+                            detailBangunanViewModel.detailBangunanValue[1],
+                            detailBangunanViewModel.detailBangunanValue[2],
+                            detailBangunanViewModel.detailBangunanValue[3],
+                            detailBangunanViewModel.detailBangunanValue[4],
                         )
-                        romijnViewModel.insert(romijnData)
+
+                        if (isLoad) {
+                            romijnViewModel.update(romijnData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            romijnViewModel.insert(romijnData)
+                        }
                     }
                     "Crump- De Gyuter" -> {
                         val crumpData = CrumpModel(
-                            null,
+                                if (idTipeBangunan.toInt() == 0) null else idTipeBangunan.toInt(),
                             idBaseData.toInt(),
-                            detailBangunanViewModel.detailBangunanValue.value!![0],
-                            detailBangunanViewModel.detailBangunanValue.value!![1],
+                            detailBangunanViewModel.detailBangunanValue[0],
+                            detailBangunanViewModel.detailBangunanValue[1],
                         )
-                        crumpViewModel.insert(crumpData)
+
+                        if (isLoad) {
+                            crumpViewModel.update(crumpData)
+                            Handler().postDelayed({
+                                goToVariasiKetinggianAirActivity(idTipeBangunan)
+                            }, 1000)
+                        } else {
+                            crumpViewModel.insert(crumpData)
+                        }
                     }
                 }
             } else {
@@ -220,14 +323,194 @@ class DetailBangunanActivity : AppCompatActivity() {
                 object: DetailBangunanAdapter.Listener {
                     override fun onChanged(value: String, position: Int) {
                         if (value != "" && value != ".") {
-                            detailBangunanViewModel.detailBangunanValue.value!![position - 1] = value.toFloat()
+                            detailBangunanViewModel.detailBangunanValue[position - 1] = value.toFloat()
                         } else {
-                            detailBangunanViewModel.detailBangunanValue.value!![position - 1] = "0".toFloat()
+                            detailBangunanViewModel.detailBangunanValue[position - 1] = "0".toFloat()
                         }
                     }
                 }
             )
             mBinding.rvDetailBangunan.adapter = adapter
+        }
+
+        when(detailBangunanViewModel.detailBangunan.value) {
+            "Ambang Lebar Pengontrol Segiempat" -> {
+                alpsViewModel.getalpsDataByIdBaseData(idBaseData.toInt())
+                alpsViewModel.alpsById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(7)
+                        value[0] = it.lebarAmbang
+                        value[1] = it.lebarDasar
+                        value[2] = it.panjangAmbang
+                        value[3] = it.tinggiAmbang
+                        value[4] = it.tinggiDiatasAmbang
+                        value[5] = it.tinggiDibawahAmbang
+                        value[6] = it.lebarAtas
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Ambang Lebar Pengontrol Trapesium" -> {
+                alptViewModel.getAlptDataByIdBaseData(idBaseData.toInt())
+                alptViewModel.alptById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(8)
+                        value[0] = it.lebarAmbang
+                        value[1] = it.lebarDasar
+                        value[2] = it.panjangAmbang
+                        value[3] = it.tinggiAmbang
+                        value[4] = it.tinggiDiatasAmbang
+                        value[5] = it.tinggiDibawahAmbang
+                        value[6] = it.lebarAtas
+                        value[6] = it.kemiringanPengontrol
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Ambang Tajam Segiempat" -> {
+                ambangTajamSegiempatModel.getAtsDataByIdBaseData(idBaseData.toInt())
+                ambangTajamSegiempatModel.atsById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(3)
+                        value[0] = it.lebarSaluran
+                        value[1] = it.lebarMercu
+                        value[2] = it.tinggiMercuDiatasAmbang
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Ambang Tajam Segitiga" -> {
+                atsViewModel.getAtsDataByIdBaseData(idBaseData.toInt())
+                atsViewModel.atsById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(3)
+                        value[0] = it.lebarSaluran
+                        value[1] = it.sudutCelahMercu
+                        value[2] = it.tinggiMercuDiatasAmbang
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Cipoletti" -> {
+                cipolettiViewModel.getCipolettiDataByIdBaseData(idBaseData.toInt())
+                cipolettiViewModel.cipolettiById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(5)
+                        value[0] = it.lebarPengukur
+                        value[1] = it.lebarDasar
+                        value[2] = it.tinggiMercuDiatasAmbang
+                        value[3] = it.tinggiMercu
+                        value[4] = it.lebarAtas
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Parshall Flume" -> {
+                parshallFluViewModel.getParshallFlumeDataByIdBaseData(idBaseData.toInt())
+                parshallFluViewModel.parshallFlumeById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(1)
+                        value[0] = it.lebarTenggorokan
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Long Throated Flume" -> {
+                longThroatedFlumeViewModel.getLtfDataByIdBaseData(idBaseData.toInt())
+                longThroatedFlumeViewModel.ltfById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(7)
+                        value[0] = it.lebarAmbang
+                        value[1] = it.lebarDasar
+                        value[2] = it.panjangAmbang
+                        value[3] = it.tinggiAmbang
+                        value[4] = it.tinggiDiatasAmbang
+                        value[5] = it.tinggiDibawahAmbang
+                        value[6] = it.lebarAtas
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Cut Throated Flume" -> {
+                cutThroatedFlumeViewModel.getCtfDataByIdBaseData(idBaseData.toInt())
+                cutThroatedFlumeViewModel.ctfById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(2)
+                        value[0] = it.w
+                        value[1] = it.l
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Orifice" -> {
+                orificeViewModel.getOrificeDataByIdBaseData(idBaseData.toInt())
+                orificeViewModel.orificeById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(2)
+                        value[0] = it.lebarLubang
+                        value[1] = it.tinggiLubang
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Romijn" -> {
+                romijnViewModel.getRomijnDataByIdBaseData(idBaseData.toInt())
+                romijnViewModel.romijnById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(5)
+                        value[0] = it.lebarMeja
+                        value[1] = it.lebarDasar
+                        value[2] = it.panjangMeja
+                        value[3] = it.tinggiMejaDariDasar
+                        value[4] = it.tinggiDiatasMeja
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
+            "Crump- De Gyuter" -> {
+                crumpViewModel.getCrumpDataByIdBaseData(idBaseData.toInt())
+                crumpViewModel.crumpById.observe(this, {
+                    if (it != null) {
+                        idTipeBangunan = it.id!!.toLong()
+                        val value = FloatArray(3)
+                        value[0] = it.bC
+                        value[1] = it.w
+
+                        isLoad = true
+                        setDetailBangunanLoad(value)
+                    }
+                })
+            }
         }
 
         alpsViewModel.idTipeBangunan.observe(this, {
@@ -237,6 +520,12 @@ class DetailBangunanActivity : AppCompatActivity() {
         })
 
         alptViewModel.idTipeBangunan.observe(this, {
+            if (it.toInt() != 0) {
+                goToVariasiKetinggianAirActivity(it)
+            }
+        })
+
+        ambangTajamSegiempatModel.idTipeBangunan.observe(this, {
             if (it.toInt() != 0) {
                 goToVariasiKetinggianAirActivity(it)
             }
@@ -289,6 +578,24 @@ class DetailBangunanActivity : AppCompatActivity() {
                 goToVariasiKetinggianAirActivity(it)
             }
         })
+    }
+
+    private fun setDetailBangunanLoad(value: FloatArray) {
+        mBinding.rvDetailBangunan.layoutManager = LinearLayoutManager(this)
+        val adapter = DetailBangunanAdapter(
+                this, detailBangunanViewModel.getDetailBangunanLoad(
+                detailBangunanViewModel.detailBangunan.value!!, value),
+                object: DetailBangunanAdapter.Listener {
+                    override fun onChanged(value: String, position: Int) {
+                        if (value != "" && value != ".") {
+                            detailBangunanViewModel.detailBangunanValue[position - 1] = value.toFloat()
+                        } else {
+                            detailBangunanViewModel.detailBangunanValue[position - 1] = "0".toFloat()
+                        }
+                    }
+                }
+        )
+        mBinding.rvDetailBangunan.adapter = adapter
     }
 
     private fun goToVariasiKetinggianAirActivity(it: Long) {

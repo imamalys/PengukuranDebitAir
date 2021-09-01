@@ -12,12 +12,20 @@ class AmbangLebarPengontrolTrapesiumViewModel(private val repository: AmbangLeba
     var idTipeBangunan: MutableLiveData<Long> = MutableLiveData(0)
     val alptById: MutableLiveData<AmbangLebarPengontrolTrapesiumModel> = MutableLiveData()
 
-    fun getalpsDataById(id: Int) = viewModelScope.launch {
+    fun getAlptDataById(id: Int) = viewModelScope.launch {
         alptById.value = repository.getAlptDataById(id)
+    }
+
+    fun getAlptDataByIdBaseData(id: Int) = viewModelScope.launch {
+        alptById.value = repository.getalpsDataByIdBaseData(id)
     }
 
     fun insert(alptData: AmbangLebarPengontrolTrapesiumModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(alptData)
+    }
+
+    fun update(alptData: AmbangLebarPengontrolTrapesiumModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(alptData).toLong()
     }
 }
 

@@ -13,7 +13,6 @@ import id.ias.calculationwaterdebit.databinding.ActivityRomijnBinding
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.hypot
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -61,7 +60,7 @@ class RomijnActivity : AppCompatActivity() {
         setViewModel()
         setAction()
 
-        romijnViewModel.getLtfDataById(idTipeBangunan.toInt())
+        romijnViewModel.getRomijnDataById(idTipeBangunan.toInt())
     }
 
     private fun setAction() {

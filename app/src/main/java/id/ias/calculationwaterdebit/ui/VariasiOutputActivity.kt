@@ -225,6 +225,14 @@ class VariasiOutputActivity : AppCompatActivity() {
                             startActivity(alpt)
                             finish()
                         }
+                        "Ambang Tajam Segiempat" -> {
+                            val ats = Intent(this@VariasiOutputActivity, AmbangTajamSegiempatActivity::class.java)
+                            ats.putExtra("id_tipe_bangunan", idTipeBangunan)
+                            ats.putExtra("tipe_bangunan", variasiOutputViewModel.detailBangunan)
+                            ats.putExtra("id_base_data", idBaseData)
+                            startActivity(ats)
+                            finish()
+                        }
                         "Ambang Tajam Segitiga" -> {
                             val ats = Intent(this@VariasiOutputActivity, AmbangTajamSegitigaActivity::class.java)
                             ats.putExtra("id_tipe_bangunan", idTipeBangunan)

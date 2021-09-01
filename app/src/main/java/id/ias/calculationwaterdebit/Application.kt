@@ -25,6 +25,7 @@ class Application: Application() {
     val baseDataRepository by lazy { BaseDataRepository(database.baseDataDao()) }
     val alpsRepository by lazy { AmbangLebarPengontrolSegiempatRepository(database.alpsDao()) }
     val alptRepository by lazy { AmbangLebarPengontrolTrapesiumRepository(database.alptDao()) }
+    val ambangTajamSegiempatRepository by lazy { AmbangTajamSegiempatRepository(database.ambangTajamSegiempatDao())}
     val atsRepository by lazy { AmbangTipisSegitigaRepository(database.atsDao()) }
     val cipolettiRepository by lazy { CipolettiRepository(database.cipolettiDao()) }
     val orificeRepository by lazy { OrificeRepository(database.orificeDao()) }
@@ -40,4 +41,6 @@ class Application: Application() {
     val ambangTipisSegitigaSudutRepository by lazy { AmbangTipisSegitigaSudutRepository(database.ambangTipisSegitigaSudutDao()) }
     val koefisiensiAmbangTipisSegitigaRepository by lazy { KoefisiensiAmbangTipisSegitigaRepository(database.koefisiensiAmbangTipisSegitiga()) }
     val koefisiensiCutThroatedFlumeRepository by lazy { KoefisiensiCutThroatedFlumeRepository(database.koefisiensiCutThroatedFlume()) }
+    val koefisiensiAmbangTajamSegiempatRepository by lazy { KoefisiensiAmbangTajamSegiempatRepository(database.koefisiensiAmbangTajamSegiempatDao()) }
+    val mercuAmbangRepository by lazy { MercuAmbangRepository(database.mercuAmbang()) }
 }

@@ -24,6 +24,12 @@ class CheckKondisiActivity : AppCompatActivity() {
     }
 
     var idBaseData: Long = 0
+    var pertamaInt: Int = 0
+    var keduaInt: Int = 0
+    var ketigaInt: Int = 0
+    var keempatInt: Int = 0
+    var kelimaInt: Int = 0
+    var tipeBangunan = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,23 +55,47 @@ class CheckKondisiActivity : AppCompatActivity() {
                 ToastUtils.showLong("Checklist Kondisi Bangunan masih kosong")
             } else {
                 loading.show(this)
-                var pertama = if (mBinding.rg1.checkedRadioButtonId == R.id.rb_yes_rg1) "Adanya" else
-                    "Tidak adanya"
+                var pertama = ""
+                if (mBinding.rg1.checkedRadioButtonId == R.id.rb_yes_rg1) {
+                    pertama = "Adanya"
+                    pertamaInt = R.id.rb_yes_rg1
+                } else {
+                    pertama = "Tidak adanya"
+                    pertamaInt = R.id.rb_no_rg1
+                }
                 pertama += "keretakan pada sayap banguanan ukur debit yang akan dikalibrasi"
                 val nilaiPertama = if (mBinding.rg1.checkedRadioButtonId == R.id.rb_yes_rg1) 1 else 0
-                var kedua = if (mBinding.rg2.checkedRadioButtonId == R.id.rb_yes_rg2) "Adanya" else
-                    "Tidak adanya"
-                kedua += "keretakan besar pada ambang/pengontrol/pengukur pada bangununan ukur debit yang akan dikalbrasi"
+
+                var kedua = ""
+                if (mBinding.rg2.checkedRadioButtonId == R.id.rb_yes_rg2) {
+                    kedua = "Adanya"
+                    keduaInt = R.id.rb_yes_rg2
+                } else {
+                    kedua = "Tidak adanya"
+                    keduaInt = R.id.rb_no_rg2
+                }
+                kedua += "keretakan besar pada ambang/pengontrol/pengukur pada bangunan ukur debit yang akan dikalbrasi"
                 val nilaiKedua = if (mBinding.rg2.checkedRadioButtonId == R.id.rb_yes_rg2) 3 else 0
-                val ketiga = when (mBinding.rg3.checkedRadioButtonId) {
-                    R.id.rb_yes_rg3 ->
-                        "Kondisi aliran (debit kecil/debit besarberfungsi dengan baik"
-                    R.id.rb_no1_rg3 ->
-                        "Kondisi aliran kecil tidak berfungsi dengan baik"
-                    R.id.rb_no2_rg3 ->
-                        "Kondisi aliran besar tidak berfungsi dengan baik"
-                    else ->
-                        "kedua kondisi tidak berfungsi dengan baik"
+
+                var ketiga = ""
+
+               when (mBinding.rg3.checkedRadioButtonId) {
+                    R.id.rb_yes_rg3 -> {
+                        ketiga = "Kondisi aliran debit kecil/debit besar berfungsi dengan baik"
+                        ketigaInt = R.id.rb_yes_rg3
+                    }
+                    R.id.rb_no1_rg3 -> {
+                        ketiga = "Kondisi aliran kecil tidak berfungsi dengan baik"
+                        ketigaInt = R.id.rb_yes_rg3
+                    }
+                    R.id.rb_no2_rg3 -> {
+                        ketiga = "Kondisi aliran besar tidak berfungsi dengan baik"
+                        ketigaInt = R.id.rb_no2_rg3
+                    }
+                    else -> {
+                        ketiga = "kedua kondisi tidak berfungsi dengan baik"
+                        ketigaInt = R.id.rb_no3_rg3
+                    }
                 }
                 val nilaiKetiga = when (mBinding.rg3.checkedRadioButtonId) {
                     R.id.rb_yes_rg3 ->
@@ -77,23 +107,41 @@ class CheckKondisiActivity : AppCompatActivity() {
                     else ->
                         3
                 }
-                val keempat = if (mBinding.rg4.checkedRadioButtonId == R.id.rb_yes_rg4)
-                    "Kondisi pielschall masih dapat terlihat" else "Kondisi pielschall tidak dapat terlihat"
+
+                var keempat = ""
+                if (mBinding.rg4.checkedRadioButtonId == R.id.rb_yes_rg4) {
+                    keempat = "Kondisi pielschall masih dapat terlihat"
+                    keempatInt = R.id.rb_yes_rg4
+                } else {
+                    keempat = "Kondisi pielschall tidak dapat terlihat"
+                    keempatInt = R.id.rb_no_rg4
+                }
                 val nilaiKeempat = if (mBinding.rg4.checkedRadioButtonId == R.id.rb_yes_rg4)
                     1 else 0
-                val kelima = when(mBinding.rg5.checkedRadioButtonId) {
-                    R.id.rb_no1_rg5 ->
-                        "Kondisi sedimen di saluran tidak ada"
-                    R.id.rb_no2_rg5 ->
-                        "Kondisi sedimen di saluran dengan sedikit batuan/pasir, tidak menganggu aliran"
-                    R.id.rb_no3_rg5 ->
-                        "Kondisi sedimen di saluran dengan sedikit tanah, tidak menganggu aliran"
-                    R.id.rb_no4_rg5 ->
-                        "Kondisi sedimen di saluran dengan tanah/pasir/tanah, berbentuk bongkohan"
-                    else ->
-                        "Kondisi sedimen di saluran dengan banyak tanah/pasir/batuan yang menutupi sebagian saluran"
-                }
 
+                var kelima = ""
+                when(mBinding.rg5.checkedRadioButtonId) {
+                    R.id.rb_no1_rg5 -> {
+                        kelima = "Kondisi sedimen di saluran tidak ada"
+                        kelimaInt = R.id.rb_no1_rg5
+                    }
+                    R.id.rb_no2_rg5 -> {
+                        kelima = "Kondisi sedimen di saluran dengan sedikit batuan/pasir, tidak menganggu aliran"
+                        kelimaInt = R.id.rb_no2_rg5
+                    }
+                    R.id.rb_no3_rg5 -> {
+                        kelima = "Kondisi sedimen di saluran dengan sedikit tanah, tidak menganggu aliran"
+                        kelimaInt = R.id.rb_no3_rg5
+                    }
+                    R.id.rb_no4_rg5 -> {
+                        kelima = "Kondisi sedimen di saluran dengan tanah/pasir/tanah, berbentuk bongkohan"
+                        kelimaInt = R.id.rb_no4_rg5
+                    }
+                    else -> {
+                        kelima = "Kondisi sedimen di saluran dengan banyak tanah/pasir/batuan yang menutupi sebagian saluran"
+                        kelimaInt = R.id.rb_no5_rg5
+                    }
+                }
                 val nilaiKelima = when(mBinding.rg5.checkedRadioButtonId) {
                     R.id.rb_no1_rg5 ->
                         0
@@ -115,27 +163,51 @@ class CheckKondisiActivity : AppCompatActivity() {
                         "Lanjutkan", "Tidak", object: MessageDialogUtil.DialogListener {
                         override fun onYes(action: Boolean) {
                             if (action) {
-                                baseDataViewModel.update(id = idBaseData.toInt(), keterangan =  result, nilaiKeterangan =  nilai)
+                                baseDataViewModel.updateCheckKondisi(idBaseData.toInt(), result, nilai,
+                                        pertamaInt, keduaInt, ketigaInt, keempatInt, kelimaInt)
                             } else {
                                 finish()
                             }
                         }
                     })
                 } else {
-                    baseDataViewModel.update(id = idBaseData.toInt(), keterangan =  result, nilaiKeterangan =  nilai)
+                    baseDataViewModel.updateCheckKondisi(idBaseData.toInt(), result, nilai, pertamaInt,
+                            keduaInt, ketigaInt, keempatInt, kelimaInt)
                 }
             }
         }
     }
 
     private fun setViewModel() {
+        baseDataViewModel.getBaseDataById(idBaseData.toInt())
+        baseDataViewModel.baseDataById.observe(this, {
+            if (it.pertama != 0) {
+                if (it.tipeBangunan != null) {
+                    tipeBangunan = it.tipeBangunan!!
+                }
+                mBinding.rg1.check(it.pertama!!)
+                mBinding.rg2.check(it.kedua!!)
+                mBinding.rg3.check(it.ketiga!!)
+                mBinding.rg4.check(it.keempat!!)
+                mBinding.rg5.check(it.kelima!!)
+            }
+        })
         baseDataViewModel.baseDataUpdate.observe(this, {
             if (it != 0) {
-                loading.dialog.dismiss()
-                val intent = Intent(this@CheckKondisiActivity, TipeBangunanUkurActivity::class.java)
-                intent.putExtra("id_base_data", idBaseData)
-                startActivity(intent)
-                finish()
+                if (tipeBangunan != "") {
+                    loading.dialog.dismiss()
+                    val intent = Intent(this@CheckKondisiActivity, DetailBangunanActivity::class.java)
+                    intent.putExtra("id_base_data", idBaseData)
+                    intent.putExtra("tipe_bangunan", tipeBangunan)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    loading.dialog.dismiss()
+                    val intent = Intent(this@CheckKondisiActivity, TipeBangunanUkurActivity::class.java)
+                    intent.putExtra("id_base_data", idBaseData)
+                    startActivity(intent)
+                    finish()
+                }
             }
         })
     }

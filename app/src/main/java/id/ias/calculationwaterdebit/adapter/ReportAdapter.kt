@@ -32,6 +32,18 @@ private val listener: Listener): RecyclerView.Adapter<ReportAdapter.ViewHolder>(
                     listener.onClick(this)
                 }
 
+                mBinding.etNamaDaerah.setOnClickListener {
+                    listener.onClick(this)
+                }
+
+                mBinding.etWilayahKewenangan.setOnClickListener {
+                    listener.onClick(this)
+                }
+
+                mBinding.etTipeBangunan.setOnClickListener {
+                    listener.onClick(this)
+                }
+
                 mBinding.cvMain.setOnClickListener {
                     listener.onClick(this)
                 }

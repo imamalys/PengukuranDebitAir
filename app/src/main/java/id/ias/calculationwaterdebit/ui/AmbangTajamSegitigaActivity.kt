@@ -74,7 +74,7 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
             alps.putExtra("id_tipe_bangunan", idTipeBangunan)
             alps.putExtra("tipe_bangunan", detailBangunan)
             alps.putExtra("id_base_data", idBaseData)
-            alps.putExtra("b", String.format(Locale.ENGLISH, "%.3f", atsData.b))
+            alps.putExtra("b", String.format(Locale.ENGLISH, "%.3f", atsData.lebarSaluran))
             startActivity(alps)
             finish()
         }
@@ -85,9 +85,9 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
             //set table title labels
             LegacyTableView.insertLegacyTitle("B", "θ", "p")
             LegacyTableView.insertLegacyContent(
-                String.format(Locale.ENGLISH, "%.3f", atsData.b),
-                String.format(Locale.ENGLISH,"%.3f", atsData.o),
-                String.format(Locale.ENGLISH,"%.3f", atsData.p))
+                String.format(Locale.ENGLISH, "%.3f", atsData.lebarSaluran),
+                String.format(Locale.ENGLISH,"%.3f", atsData.sudutCelahMercu),
+                String.format(Locale.ENGLISH,"%.3f", atsData.tinggiMercuDiatasAmbang))
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
@@ -120,8 +120,8 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
                 isInit = false
                 LegacyTableView.insertLegacyTitle("Banyaknya variasi air Ke-", "θ", "ϑHt", "hef")
 
-                val o = atsData.o.toInt().toString()
-                val sudut = ambangTipisSegitigaSudutViewModel.getAmbangTipisSegitigaSudutById(atsData.o.toInt())
+                val o = atsData.sudutCelahMercu.toInt().toString()
+                val sudut = ambangTipisSegitigaSudutViewModel.getAmbangTipisSegitigaSudutById(atsData.sudutCelahMercu.toInt())
                 var dht: Float = 0.toFloat()
                 if (sudut != null) {
                     dht = sudut.dht
@@ -158,7 +158,7 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
 
     private fun setCd(sudut: AmbangTipisSegitigaSudutModel) {
         LegacyTableView.insertLegacyTitle("Banyaknya variasi air Ke-", "θ", "Cd")
-        val o = atsData.o.toInt().toString()
+        val o = atsData.sudutCelahMercu.toInt().toString()
         var cd = 0.toFloat()
         if (sudut != null) {
             cd = sudut.dht
@@ -193,8 +193,8 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
     private fun setCdPenuh() {
         LegacyTableView.insertLegacyTitle("Banyaknya variasi air Ke-", "p", "b", "p/b", "h", "h/p", "Cd")
         for (i in pengambilanDataById.indices) {
-            val p: String = if (atsData.o.toInt() == 90) String.format(Locale.ENGLISH,"%.2f", atsData.p) else "Bukan 90"
-            val b = String.format(Locale.ENGLISH,"%.2f", atsData.b)
+            val p: String = if (atsData.sudutCelahMercu.toInt() == 90) String.format(Locale.ENGLISH,"%.2f", atsData.tinggiMercuDiatasAmbang) else "Bukan 90"
+            val b = String.format(Locale.ENGLISH,"%.2f", atsData.lebarSaluran)
             var pDivideB: String = if (p == "Bukan 90") "0.0" else String.format(Locale.ENGLISH,"%.1f",  p.toFloat() / b.toFloat())
             if (pDivideB.contains("infinity")) {
                 pDivideB = "0.0"
@@ -241,7 +241,7 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
         LegacyTableView.insertLegacyTitle("Banyaknya variasi air Ke-","Cd", "g", "θ", "H", "Q")
 
         val g: String = String.format(Locale.ENGLISH, "%.1f", (9.8).toFloat())
-        val o = atsData.o.toInt().toString()
+        val o = atsData.sudutCelahMercu.toInt().toString()
         for (i in cd.indices) {
             val h1: String = String.format(Locale.ENGLISH, "%.2f", pengambilanDataById[i].h1)
             val q:Float = ((8/15).toFloat() * cd[i].toFloat() *

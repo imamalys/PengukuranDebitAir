@@ -14,6 +14,6 @@ interface KoefisiensiAmbangTipisSegitigaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(koefiesiensiAmbangTipisSegitigaModel: KoefisiensiAmbangTipisSegitigaModel)
 
-    @Query("DELETE FROM sudut_ambang_tipis_segitiga")
+    @Query("DELETE FROM ambang_tipis_segitiga_cd")
     suspend fun deleteAll()
 }

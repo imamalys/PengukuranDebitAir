@@ -14,8 +14,16 @@ class AmbangLebarPengontrolSegiempatViewModel(private val repository: AmbangLeba
         alpsById.value = repository.getAlpsDataById(id)
     }
 
+    fun getalpsDataByIdBaseData(id: Int) = viewModelScope.launch {
+        alpsById.value = repository.getalpsDataByIdBaseData(id)
+    }
+
     fun insert(alpsData: AmbangLebarPengontrolSegiempatModel) = viewModelScope.launch {
         idTipeBangunan.value = repository.insert(alpsData)
+    }
+
+    fun update(alpsData: AmbangLebarPengontrolSegiempatModel) = viewModelScope.launch {
+        idTipeBangunan.value = repository.update(alpsData).toLong()
     }
 }
 

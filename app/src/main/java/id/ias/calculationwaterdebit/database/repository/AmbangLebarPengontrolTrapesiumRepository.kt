@@ -16,7 +16,19 @@ class AmbangLebarPengontrolTrapesiumRepository(private val alpt: AmbangLebarPeng
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
+    suspend fun getalpsDataByIdBaseData(id: Int): AmbangLebarPengontrolTrapesiumModel {
+        return alpt.getalpsDataByIdBaseData(id)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
     suspend fun insert(alptModel: AmbangLebarPengontrolTrapesiumModel): Long {
         return alpt.insert(alptModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(alptModel: AmbangLebarPengontrolTrapesiumModel): Int {
+        return alpt.update(alptModel)
     }
 }

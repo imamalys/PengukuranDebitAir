@@ -28,13 +28,17 @@ class DetailBangunanAdapter(
             with(dataLists[position]) {
                 if (position == 0) {
                     mBinding.tvNotasi.text = "Notasi"
-                    mBinding.tvInput.setText("(Input)")
+                    mBinding.tvInput.setText("")
                     mBinding.tvInput.isFocusable = false
                     mBinding.tvSatuan.text = "Satuan"
                     mBinding.tvKeterangan.text = "Keterangan"
                 } else {
                     mBinding.tvNotasi.text = this.notasi
-                    mBinding.tvInput.hint = this.input
+                    if (this.input != "0") {
+                        mBinding.tvInput.setText(this.input)
+                    } else {
+                        mBinding.tvInput.hint = this.input
+                    }
                     mBinding.tvInput.isFocusable = true
                     mBinding.tvSatuan.text = "m"
                     mBinding.tvKeterangan.text = this.keterangan

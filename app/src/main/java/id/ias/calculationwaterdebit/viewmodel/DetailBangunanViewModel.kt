@@ -8,7 +8,7 @@ import id.ias.calculationwaterdebit.model.DetailBangunanModel
 
 class DetailBangunanViewModel: ViewModel() {
     var detailBangunan: MutableLiveData<String> = MutableLiveData("Ambang Lebar Pengontrol Segiempat")
-    var detailBangunanValue: MutableLiveData<FloatArray> = MutableLiveData(FloatArray(0))
+    var detailBangunanValue: FloatArray = (FloatArray(0))
 
     fun getImage(item: String): Int {
         when(item) {
@@ -52,7 +52,7 @@ class DetailBangunanViewModel: ViewModel() {
     }
 
     fun checkHaveValue(): Boolean {
-        for (detail in detailBangunanValue.value!!) {
+        for (detail in detailBangunanValue) {
             if (detail.toString() == "0.0" || detail.toString() == "") {
                 return false
             }
@@ -62,7 +62,7 @@ class DetailBangunanViewModel: ViewModel() {
     }
 
     fun getDetailBangunan(item: String): ArrayList<DetailBangunanModel> {
-        var detailBangunans = ArrayList<DetailBangunanModel>()
+        val detailBangunans = ArrayList<DetailBangunanModel>()
         detailBangunans.add(DetailBangunanModel("", "", ""))
         when(item) {
             "Ambang Lebar Pengontrol Segiempat" -> {
@@ -83,6 +83,11 @@ class DetailBangunanViewModel: ViewModel() {
                 detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
                 detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
                 detailBangunans.add(DetailBangunanModel("Mc", "0", "Kemiringan Pengontrol"))
+            }
+            "Ambang Tajam Segiempat" -> {
+                detailBangunans.add(DetailBangunanModel("B", "0", "Lebar Saluran"))
+                detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Mercu"))
+                detailBangunans.add(DetailBangunanModel("p", "0", "Tinggi Mercu di atas Ambang"))
             }
             "Ambang Tajam Segitiga" -> {
                 detailBangunans.add(DetailBangunanModel("B", "0", "Lebar Saluran"))
@@ -129,7 +134,150 @@ class DetailBangunanViewModel: ViewModel() {
             }
         }
 
-        detailBangunanValue.postValue(FloatArray(detailBangunans.size - 1))
+        detailBangunanValue = FloatArray(detailBangunans.size - 1)
+
+        return detailBangunans
+    }
+
+    fun getDetailBangunanLoad(item: String, value: FloatArray): ArrayList<DetailBangunanModel> {
+        val detailBangunans = ArrayList<DetailBangunanModel>()
+        detailBangunans.add(DetailBangunanModel("", "", ""))
+        when(item) {
+            "Ambang Lebar Pengontrol Segiempat" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", value[0].toString(), "Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", value[1].toString(), "Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", value[2].toString(), "Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", value[3].toString(), "Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", value[4].toString(), "Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", value[5].toString(), "Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", value[6].toString(), "Lebar Atas"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+                detailBangunanValue[2] = value[2]
+                detailBangunanValue[3] = value[3]
+                detailBangunanValue[4] = value[4]
+                detailBangunanValue[5] = value[5]
+                detailBangunanValue[6] = value[6]
+            }
+            "Ambang Lebar Pengontrol Trapesium" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", value[0].toString(), "Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", value[1].toString(), "Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", value[2].toString(), "Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", value[3].toString(), "Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", value[4].toString(), "Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", value[5].toString(), "Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", value[6].toString(), "Lebar Atas"))
+                detailBangunans.add(DetailBangunanModel("Mc", value[7].toString(), "Kemiringan Pengontrol"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+                detailBangunanValue[2] = value[2]
+                detailBangunanValue[3] = value[3]
+                detailBangunanValue[4] = value[4]
+                detailBangunanValue[5] = value[5]
+                detailBangunanValue[6] = value[6]
+                detailBangunanValue[7] = value[7]
+            }
+            "Ambang Tajam Segiempat" -> {
+                detailBangunans.add(DetailBangunanModel("B", value[0].toString(), "Lebar Saluran"))
+                detailBangunans.add(DetailBangunanModel("b", value[1].toString(), "Lebar Mercu"))
+                detailBangunans.add(DetailBangunanModel("p", value[2].toString(), "Tinggi Mercu di atas Ambang"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+                detailBangunanValue[2] = value[2]
+            }
+            "Ambang Tajam Segitiga" -> {
+                detailBangunans.add(DetailBangunanModel("B", value[0].toString(), "Lebar Saluran"))
+                detailBangunans.add(DetailBangunanModel("θ", value[1].toString(), "Sudut celah Mercu"))
+                detailBangunans.add(DetailBangunanModel("p", value[2].toString(), "Tinggi mercu diatas Ambang"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+                detailBangunanValue[2] = value[2]
+            }
+            "Cipoletti" -> {
+                detailBangunans.add(DetailBangunanModel("b", value[0].toString(), "Lebar Pengukur"))
+                detailBangunans.add(DetailBangunanModel("B1", value[1].toString(), "Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("p", value[2].toString(), "Tinggi mercu diatas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", value[3].toString(), "Tinggi Mercu"))
+                detailBangunans.add(DetailBangunanModel("B2", value[4].toString(), "Lebar Atas"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+                detailBangunanValue[2] = value[2]
+                detailBangunanValue[3] = value[3]
+                detailBangunanValue[4] = value[4]
+            }
+            "Parshall Flume" -> {
+                detailBangunans.add(DetailBangunanModel("b", value[0].toString(), "Lebar Tenggorokan"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+            }
+            "Long Throated Flume" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", value[0].toString(), "Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", value[1].toString(), "Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", value[2].toString(), "Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", value[3].toString(), "Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", value[4].toString(), "Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", value[5].toString(), "Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", value[6].toString(), "Lebar Atas"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+                detailBangunanValue[2] = value[2]
+                detailBangunanValue[3] = value[3]
+                detailBangunanValue[4] = value[4]
+                detailBangunanValue[5] = value[5]
+                detailBangunanValue[6] = value[6]
+            }
+            "Cut Throated Flume" -> {
+                detailBangunans.add(DetailBangunanModel("W", value[0].toString(), "Lebar Tenggorokan"))
+                detailBangunans.add(DetailBangunanModel("L", value[1].toString(), "Panjang Flume"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+            }
+            "Orifice" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", value[0].toString(), "Lebar Lubang"))
+                detailBangunans.add(DetailBangunanModel("W", value[1].toString(), "Tinggi Lubang"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+            }
+            "Romijn" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", value[0].toString(), "Lebar Meja"))
+                detailBangunans.add(DetailBangunanModel("B1", value[1].toString(), "Tinggi Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", value[2].toString(), "Panjang Meja"))
+                detailBangunans.add(DetailBangunanModel("P", value[3].toString(), "Tinggi Meja dari Dasar"))
+                detailBangunans.add(DetailBangunanModel("m", value[4].toString(), "Tinggi Meja di Atas Meja"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+                detailBangunanValue[2] = value[2]
+                detailBangunanValue[3] = value[3]
+                detailBangunanValue[4] = value[4]
+            }
+            "Crump- De Gyuter" -> {
+                detailBangunans.add(DetailBangunanModel("Bc", value[0].toString(), "Lebar Bukaan"))
+                detailBangunans.add(DetailBangunanModel("W", value[1].toString(), "Tinggi Bukaan"))
+
+                detailBangunanValue = FloatArray(detailBangunans.size - 1)
+                detailBangunanValue[0] = value[0]
+                detailBangunanValue[1] = value[1]
+            }
+        }
 
         return detailBangunans
     }

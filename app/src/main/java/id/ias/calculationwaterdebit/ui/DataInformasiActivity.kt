@@ -28,6 +28,7 @@ class DataInformasiActivity : AppCompatActivity() {
     private var year = 0
     private  var month:Int = 0
     private  var day:Int = 0
+    var idBaseData: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +36,16 @@ class DataInformasiActivity : AppCompatActivity() {
         mBinding = ActivityDataInformasiBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        calendar = Calendar.getInstance()
-        year = calendar.get(Calendar.YEAR)
-        month = calendar.get(Calendar.MONTH)
-        day = calendar.get(Calendar.DAY_OF_MONTH)
+        if (intent.hasExtra("id_base_data")) {
+            idBaseData = intent.getLongExtra("id_base_data", 0)
+            mBinding.btnNext.text = "Save"
+        } else {
+            calendar = Calendar.getInstance()
+            year = calendar.get(Calendar.YEAR)
+            month = calendar.get(Calendar.MONTH)
+            day = calendar.get(Calendar.DAY_OF_MONTH)
+            mBinding.btnNext.text = "Next"
+        }
 
         setAction()
         setViewModel()
@@ -55,6 +62,10 @@ class DataInformasiActivity : AppCompatActivity() {
 
         mBinding.btnNext.setOnClickListener {
             when("") {
+                mBinding.etNamaSaluran.text.toString() -> {
+                    ToastUtils.showLong("Nama Saluran tidak boleh kosong")
+                }
+
                 mBinding.etNamaDaerah.text.toString() -> {
                     ToastUtils.showLong("Nama Daerah Irigasi tidak boleh kosong")
                 }
@@ -85,19 +96,29 @@ class DataInformasiActivity : AppCompatActivity() {
 
     private fun next() {
         loading.show(this)
-        val baseData = BaseDataModel(
-            null,
-            mBinding.etNamaDaerah.text.toString(),
-            mBinding.etWilayahKewenangan.text.toString(),
-            mBinding.etProvinsi.text.toString(),
-            mBinding.etKabupaten.text.toString(),
-            mBinding.etTanggal.text.toString(),
-            mBinding.etNoPengukuran.text.toString(),
-            mBinding.etNamaPengukur.text.toString(),
-            null, null, null, null, null, null,
-            null, null, null, null, null, 0
-        )
-        baseDataViewModel.insert(baseData)
+        if (idBaseData.toInt() != 0) {
+            baseDataViewModel.updateLoad(idBaseData.toInt(), mBinding.etNamaSaluran.text.toString(),
+                    mBinding.etNamaDaerah.text.toString(), mBinding.etWilayahKewenangan.text.toString(),
+                    mBinding.etProvinsi.text.toString(), mBinding.etKabupaten.text.toString(),
+                    mBinding.etTanggal.text.toString(), mBinding.etNoPengukuran.text.toString(),
+                    mBinding.etNamaPengukur.text.toString())
+        } else {
+            val baseData = BaseDataModel(
+                    null,
+                    mBinding.etNamaSaluran.text.toString(),
+                    mBinding.etNamaDaerah.text.toString(),
+                    mBinding.etWilayahKewenangan.text.toString(),
+                    mBinding.etProvinsi.text.toString(),
+                    mBinding.etKabupaten.text.toString(),
+                    mBinding.etTanggal.text.toString(),
+                    mBinding.etNoPengukuran.text.toString(),
+                    mBinding.etNamaPengukur.text.toString(),
+                    null, null, null, null, null, null,
+                    null, null, null, null, null, 0,
+                    0, 0, 0, 0 ,0
+            )
+            baseDataViewModel.insert(baseData)
+        }
     }
 
     private fun onCreateDialog(): Dialog {
@@ -113,6 +134,20 @@ class DataInformasiActivity : AppCompatActivity() {
         }
 
     private fun setViewModel() {
+        if (idBaseData.toInt() != 0) {
+            baseDataViewModel.getBaseDataById(idBaseData.toInt())
+            baseDataViewModel.baseDataById.observe(this, {
+                mBinding.etNamaSaluran.setText(it.namaSaluran)
+                mBinding.etNamaDaerah.setText(it.namaDaerahIrigasi)
+                mBinding.etWilayahKewenangan.setText(it.wilayahKewenangan)
+                mBinding.etProvinsi.setText(it.provinsi)
+                mBinding.etKabupaten.setText(it.kabupaten)
+                mBinding.etTanggal.setText(it.tanggal)
+                mBinding.etNoPengukuran.setText(it.noPengukuran)
+                mBinding.etNamaPengukur.setText(it.namaPengukur)
+            })
+        }
+
         baseDataViewModel.insertId.observe(this, {
             if (it.toInt() != 0) {
                 loading.dialog.dismiss()
@@ -122,15 +157,36 @@ class DataInformasiActivity : AppCompatActivity() {
                 finish()
             }
         })
+
+        baseDataViewModel.baseDataUpdate.observe(this, {
+            if (it.toInt() != 0) {
+                loading.dialog.dismiss()
+                val intent = Intent(this@DataInformasiActivity, CheckKondisiActivity::class.java)
+                intent.putExtra("id_base_data", idBaseData.toLong())
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
     override fun onBackPressed() {
-        back.show(this, object: MessageDialogUtil.DialogListener {
-            override fun onYes(action: Boolean) {
-                if (action) {
-                    finish()
+        if (idBaseData.toInt() != 0) {
+            back.show(this, title = "Apakah anda yakin ingin kembali?", yes = "Ya", no = "Tidak",
+                    object: MessageDialogUtil.DialogListener {
+                override fun onYes(action: Boolean) {
+                    if (action) {
+                        finish()
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            back.show(this, object: MessageDialogUtil.DialogListener {
+                override fun onYes(action: Boolean) {
+                    if (action) {
+                        finish()
+                    }
+                }
+            })
+        }
     }
 }
