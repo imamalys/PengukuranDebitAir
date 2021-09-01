@@ -109,9 +109,6 @@ class DetailBangunanActivity : AppCompatActivity() {
                                 detailBangunanViewModel.detailBangunanValue[6])
                         if (isLoad) {
                             alpsViewModel.update(alpsData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             alpsViewModel.insert(alpsData)
                         }
@@ -131,9 +128,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             alptViewModel.update(alptData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             alptViewModel.insert(alptData)
                         }
@@ -149,9 +143,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             ambangTajamSegiempatModel.update(atsData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             ambangTajamSegiempatModel.insert(atsData)
                         }
@@ -167,9 +158,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             atsViewModel.update(atsData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             atsViewModel.insert(atsData)
                         }
@@ -187,9 +175,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             cipolettiViewModel.update(cipolettiData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             cipolettiViewModel.insert(cipolettiData)
                         }
@@ -203,9 +188,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             parshallFluViewModel.update(parshallData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             parshallFluViewModel.insert(parshallData)
                         }
@@ -224,9 +206,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             longThroatedFlumeViewModel.update(ltfData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             longThroatedFlumeViewModel.insert(ltfData)
                         }
@@ -241,9 +220,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             cutThroatedFlumeViewModel.update(ctfData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             cutThroatedFlumeViewModel.insert(ctfData)
                         }
@@ -258,9 +234,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             orificeViewModel.update(orificeData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             orificeViewModel.insert(orificeData)
                         }
@@ -278,9 +251,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             romijnViewModel.update(romijnData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             romijnViewModel.insert(romijnData)
                         }
@@ -295,9 +265,6 @@ class DetailBangunanActivity : AppCompatActivity() {
 
                         if (isLoad) {
                             crumpViewModel.update(crumpData)
-                            Handler().postDelayed({
-                                goToVariasiKetinggianAirActivity(idTipeBangunan)
-                            }, 1000)
                         } else {
                             crumpViewModel.insert(crumpData)
                         }
@@ -599,13 +566,22 @@ class DetailBangunanActivity : AppCompatActivity() {
     }
 
     private fun goToVariasiKetinggianAirActivity(it: Long) {
-        loading.dialog.dismiss()
-        val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
-        intent.putExtra("id_tipe_bangunan", it)
-        intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
-        intent.putExtra("id_base_data", idBaseData)
-        startActivity(intent)
-        finish()
+        if (isLoad) {
+            val intent = Intent(this@DetailBangunanActivity, VariasiOutputActivity::class.java)
+            intent.putExtra("id_base_data", idBaseData)
+            intent.putExtra("id_tipe_bangunan", idTipeBangunan)
+            intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+            startActivity(intent)
+            finish()
+        } else {
+            loading.dialog.dismiss()
+            val intent = Intent(this@DetailBangunanActivity, VariasiKetinggianAirActivity::class.java)
+            intent.putExtra("id_tipe_bangunan", it)
+            intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
+            intent.putExtra("id_base_data", idBaseData)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onBackPressed() {

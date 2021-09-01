@@ -19,7 +19,7 @@ class DetailBangunanViewModel: ViewModel() {
                 return R.drawable.ambang_lebar_trapesium_detail
             }
             "Ambang Tajam Segiempat" -> {
-                return R.drawable.ambang_tajam_segiempat_image
+                return R.drawable.ambang_tajam_segiempat_image_detail
             }
             "Ambang Tajam Segitiga" -> {
                 return R.drawable.ambang_tajam_segitiga_image_detail
@@ -34,16 +34,16 @@ class DetailBangunanViewModel: ViewModel() {
                 return R.drawable.long_throated_flume_image
             }
             "Cut Throated Flume" -> {
-                return R.drawable.cut_throated_flume_image
+                return R.drawable.cut_throated_flume_image_detail
             }
             "Orifice" -> {
                 return R.drawable.orifice_image_detail
             }
             "Romijn" -> {
-                return R.drawable.romijn_image
+                return R.drawable.romijn_image_detail
             }
             "Crump- De Gyuter" -> {
-                return R.drawable.crump_de_guyter_image
+                return R.drawable.crump_de_guyter_image_detail
             }
             else -> {
                 return R.drawable.ambang_lebar_segiempat_image_detail
