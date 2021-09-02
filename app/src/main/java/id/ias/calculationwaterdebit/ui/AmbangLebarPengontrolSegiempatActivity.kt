@@ -162,12 +162,14 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
 
         cv.removeAll(cv)
         val bentukA =
-            if (alpsActivityViewModel.alpsData.lebarAmbang == alpsActivityViewModel.alpsData.lebarAtas)
+            if (alpsActivityViewModel.alpsData.lebarAtas == alpsActivityViewModel.alpsData.lebarDasar)
                 "Bentuk Peralihan Persegiempat"
-            else if (alpsActivityViewModel.alpsData.lebarAmbang > alpsActivityViewModel.alpsData.lebarAtas ||
-                alpsActivityViewModel.alpsData.lebarAmbang < alpsActivityViewModel.alpsData.lebarAtas)
+            else if (alpsActivityViewModel.alpsData.lebarAtas > alpsActivityViewModel.alpsData.lebarDasar ||
+                    alpsActivityViewModel.alpsData.lebarAtas < alpsActivityViewModel.alpsData.lebarDasar)
                     "Bentuk Peralihan Trapesium"
-            else "Bentuk Peralihan Segitiga"
+            else if (alpsActivityViewModel.alpsData.lebarAtas.toInt() == 0)
+                "Bentuk Peralihan Segitiga"
+            else ""
 
         mBinding.tvCvBentuk.text = String.format(Locale.ENGLISH, "Bentuk = %s", bentukA)
 
@@ -190,7 +192,13 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
                     String.format(Locale.ENGLISH, "%.3f", mc2.toFloat() * b1.toFloat())
             val nilai: String = String.format(Locale.ENGLISH, "%.2f", (cd[i].toFloat() * aQuote.toFloat()) / a.toFloat())
             var cvValue: String
-            var koefisiensi = koefisiensiAmbangLebarViewModel.getKoefiensiAmbangLebarById(nilai.toFloat())
+            var checkNilai = nilai
+            if (checkNilai.toFloat() < 0.02.toFloat()) {
+                checkNilai = "0.02"
+            } else if (checkNilai.toFloat() > 0.80.toFloat()) {
+                checkNilai = "0.80"
+            }
+            var koefisiensi = koefisiensiAmbangLebarViewModel.getKoefiensiAmbangLebarById(checkNilai.toFloat())
 
             cvValue = if (koefisiensi == null) {
                 "0.0"
@@ -202,8 +210,11 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
                     "Bentuk Peralihan Trapesium" -> {
                         String.format(Locale.ENGLISH, "%.3f", koefisiensi.trapesium)
                     }
-                    else -> {
+                    "Bentuk Peralihan Segitiga" -> {
                         String.format(Locale.ENGLISH, "%.3f", koefisiensi.segitiga)
+                    }
+                    else -> {
+                        "0.0"
                     }
                 }
             }

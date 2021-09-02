@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="20dp"
-                    android:text="Jumlah Saluran Basah (Buah)"
+                    android:text="Jumlah Penampang Basah (Buah)"
                     android:textColor="@color/black"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_ketinggian_air_hulu" />

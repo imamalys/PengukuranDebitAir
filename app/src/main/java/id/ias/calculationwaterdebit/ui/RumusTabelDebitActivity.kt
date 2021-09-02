@@ -63,7 +63,7 @@ class RumusTabelDebitActivity : AppCompatActivity() {
                 if (s.toString() != "" && s.toString() != ".") {
                     mBinding.tvRumus.text = String.format("Q = %s x B x H1", s.toString())
                 } else {
-                    mBinding.tvRumus.text = "Q = (V) x B x H1"
+                    mBinding.tvRumus.text = "Q = (C) x B x H1"
                 }
             }
 

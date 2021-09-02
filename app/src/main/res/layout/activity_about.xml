@@ -174,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Yusuf"
+                    android:text="Yusuf Wijayanto, S.Kom"
                     android:textSize="18sp"
                     android:textColor="#000000"
                     android:gravity="center"/>
@@ -183,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Imam  Aly Syafii"
+                    android:text="Imam  Aly Syafii, S.Kom"
                     android:textSize="18sp"
                     android:textColor="#000000"
                     android:gravity="center"/>

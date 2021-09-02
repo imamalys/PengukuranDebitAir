@@ -18,6 +18,7 @@ import id.ias.calculationwaterdebit.database.viewmodel.AmbangTipisSegitigaSudutV
 import id.ias.calculationwaterdebit.databinding.ActivityMainMenuBinding
 import id.ias.calculationwaterdebit.helper.CirclePagerIndicatorDecoration
 import id.ias.calculationwaterdebit.util.*
+import java.util.*
 
 class MainMenuActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
@@ -45,6 +46,10 @@ class MainMenuActivity : AppCompatActivity() {
 
     private val mercuAmbangViewModel: MercuAmbangViewModel by viewModels {
         MercuAmbangViewModelFactory((application as Application).mercuAmbangRepository)
+    }
+
+    private val koefisiensiAmbangLebarViewModel: KoefisiensiAmbangLebarViewModel by viewModels {
+        KoefisiensiAmbangLebarViewModelFactory((application as Application).koefisiensiAmbangLebarRepository)
     }
 
     private lateinit var SCROLLING_RUNNABLE: Runnable
@@ -139,6 +144,17 @@ class MainMenuActivity : AppCompatActivity() {
         if (koefisiensiAliranSempurna == null) {
             loadingShow()
             injectAliranSempurna(0)
+        }
+
+        val koefisiensiAmbangLebarSegiempat = koefisiensiAmbangLebarViewModel.getKoefiensiAmbangLebarById((0.02).toFloat())
+        if (koefisiensiAmbangLebarSegiempat == null) {
+            loadingShow()
+
+            DBKoefisiensiAmbangLebarSegiempat.insertKoefisiensiAmbangLebarSegiempat(koefisiensiAmbangLebarViewModel, object: DBKoefisiensiAmbangLebarSegiempat.Companion.InsertSuccess {
+                override fun ambangLebarSegiempat(count: Int) {
+                    loadingDismiss()
+                }
+            })
         }
 
         val koefisiensiAmbangTipisSegitiga = koefisiensiAmbangTipisSegitigaViewModel.getAmbangTipisSegitigaCdViewModelById((1.0).toFloat(), (0.13).toFloat())

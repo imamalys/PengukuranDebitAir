@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
-            android:text="Variable Pertama (V)"
+            android:text="Variable Pertama (C)"
             android:textColor="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
@@ -108,7 +108,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Q = (V) x B x H1"
+            android:text="Q = (C) x B x H1"
             android:layout_marginTop="30dp"
             android:textSize="20sp"
             android:id="@+id/tv_rumus"
