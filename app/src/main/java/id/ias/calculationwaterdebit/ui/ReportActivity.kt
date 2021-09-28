@@ -2,6 +2,7 @@ package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,8 +14,10 @@ import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityReport2Binding
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 
 class ReportActivity : AppCompatActivity() {
+    val dialog = MessageDialogUtil()
     val loading = LoadingDialogUtil()
     private lateinit var mBinding: ActivityReport2Binding
 
@@ -59,11 +62,26 @@ class ReportActivity : AppCompatActivity() {
                                 }
                             }
                         }
+
+                        override fun onDelete(baseDataModel: BaseDataModel) {
+                            dialog.show(this@ReportActivity, "Apakah anda yakin menghapus data?",
+                                    "Iya", "Tidak", object: MessageDialogUtil.DialogListener {
+                                override fun onYes(action: Boolean) {
+                                    if (action) {
+                                        loading.show(this@ReportActivity)
+                                        baseDataViewModel.delete(baseDataModel)
+                                    } else {
+                                        finish()
+                                    }
+                                }
+                            })
+                        }
                     }
                 )
                 mBinding.rvReport.adapter = adapter
                 loading.dialog.dismiss()
             } else {
+                mBinding.rvReport.visibility = View.GONE
                 loading.dialog.dismiss()
             }
         })

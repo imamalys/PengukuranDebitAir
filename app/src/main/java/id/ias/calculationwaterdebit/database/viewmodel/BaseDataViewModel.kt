@@ -9,6 +9,7 @@ class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel()
     val allBaseDatas: LiveData<List<BaseDataModel>> = repository.allBaseDatas.asLiveData()
     var baseDataById: MutableLiveData<BaseDataModel> = MutableLiveData()
     var insertId: MutableLiveData<Long> = MutableLiveData(0)
+    var deleteId: MutableLiveData<Int> = MutableLiveData(0)
     var baseDataUpdate: MutableLiveData<Int> = MutableLiveData(0)
 
     fun getBaseDataById(id: Int) = viewModelScope.launch {
@@ -17,6 +18,10 @@ class BaseDataViewModel(private val repository: BaseDataRepository): ViewModel()
 
     fun insert(baseData: BaseDataModel) = viewModelScope.launch {
         insertId.value = repository.insert(baseData)
+    }
+
+    fun delete(baseData: BaseDataModel) = viewModelScope.launch {
+        deleteId.value = repository.delete(baseData)
     }
 
     fun updateLoad(id: Int, namaSaluran: String, namaDaerahIrigasi: String, wilayahKewenangan: String, provinsi: String, kabupaten: String,

@@ -27,6 +27,8 @@ private val listener: Listener): RecyclerView.Adapter<ReportAdapter.ViewHolder>(
                 mBinding.etNamaDaerah.setText(this.namaDaerahIrigasi)
                 mBinding.etWilayahKewenangan.setText(this.wilayahKewenangan)
                 mBinding.etTipeBangunan.setText(this.tipeBangunan)
+                mBinding.etNamaSaluran.setText(this.namaSaluran)
+                mBinding.etBangunanUkur.setText(this.noPengukuran)
 
                 mBinding.root.setOnClickListener {
                     listener.onClick(this)
@@ -51,6 +53,10 @@ private val listener: Listener): RecyclerView.Adapter<ReportAdapter.ViewHolder>(
                 mBinding.llMain.setOnClickListener {
                     listener.onClick(this)
                 }
+                
+                mBinding.ivDelete.setOnClickListener {
+                    listener.onDelete(this)
+                }
             }
         }
     }
@@ -61,5 +67,7 @@ private val listener: Listener): RecyclerView.Adapter<ReportAdapter.ViewHolder>(
 
     interface Listener {
         fun onClick(baseDataModel: BaseDataModel)
+
+        fun onDelete(baseDataModel: BaseDataModel)
     }
 }

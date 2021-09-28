@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.anychart.charts.Cartesian
+import com.anychart.charts.Scatter
 import com.anychart.core.cartesian.series.Line
 import com.anychart.data.Mapping
 import com.anychart.data.Set
@@ -58,7 +58,8 @@ class ReportDetailActivity : AppCompatActivity() {
 
     private fun setView() {
         mBinding.tvTitle.text = "Hasil Kalibrasi Bangunan Ukur Debit\nDi Daerah Irigasi ${baseData.namaDaerahIrigasi}"
-        mBinding.tvNamaBangunanValue.text = "Nama Irigasi ${baseData.namaDaerahIrigasi}"
+        mBinding.tvNamaSaluran.text = "Nama Saluran: ${baseData.namaSaluran}"
+        mBinding.tvNamaBangunanValue.text = "Nama Irigasi: ${baseData.namaDaerahIrigasi}"
         mBinding.tvTanggalKalibrasi.text = "Tanggal Kalibrasi: ${baseData.tanggal}"
         mBinding.tvInstansiKalibrasi.text = "Instansi Pengelola: ${baseData.wilayahKewenangan}"
         mBinding.tvLokasiKalibrasi.text = "Lokasi: ${baseData.kabupaten}, ${baseData.provinsi}"
@@ -266,26 +267,26 @@ class ReportDetailActivity : AppCompatActivity() {
     }
 
     private fun setGrafik() {
-        val cartesian: Cartesian = AnyChart.line()
+        val scatter: Scatter = AnyChart.scatter()
 
-        cartesian.animation(true)
+        scatter.animation(true)
 
-        cartesian.padding(10.0, 20.0, 5.0, 20.0)
+        scatter.padding(10.0, 20.0, 5.0, 20.0)
 
-        cartesian.crosshair().enabled(true)
-        cartesian.crosshair()
+        scatter.crosshair().enabled(true)
+        scatter.crosshair()
             .yLabel(true) // TODO ystroke
             .yStroke(null as Stroke?, null, null, null as String?, null as String?)
             .xLabel(true)
             .xStroke(null as Stroke?, null, null, null as String?, null as String?)
 
-        cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+        scatter.tooltip().positionMode(TooltipPositionMode.POINT)
 
-        cartesian.title("Lengkung Debit Bangunan Ukur di Daerah Irigasi ${baseData.namaDaerahIrigasi}")
+        scatter.title("Lengkung Debit Bangunan Ukur di Daerah Irigasi ${baseData.namaDaerahIrigasi}")
 
-        cartesian.yAxis(0).title("(m)")
-        cartesian.xAxis(0).title("(m3/s)")
-        cartesian.xAxis(0).labels().padding(5.0, 5.0, 5.0, 5.0)
+        scatter.yAxis(0).title("(m)")
+        scatter.xAxis(0).title("(m3/s)")
+        scatter.xAxis(0).labels().padding(5.0, 5.0, 5.0, 5.0)
 
         val seriesData: ArrayList<DataEntry> = ArrayList()
         for (i in grafikData.indices) {
@@ -296,7 +297,7 @@ class ReportDetailActivity : AppCompatActivity() {
         set.data(seriesData)
         val series1Mapping: Mapping = set.mapAs("{ x: 'x', value: 'value' }")
 
-        val series1: Line = cartesian.line(series1Mapping)
+        val series1: com.anychart.core.scatter.series.Line = scatter.line(series1Mapping)
         series1.name("")
         series1.hovered().markers().enabled(true)
         series1.hovered().markers()
@@ -307,11 +308,11 @@ class ReportDetailActivity : AppCompatActivity() {
             .anchor(Anchor.LEFT_CENTER)
             .offsetX(5.0)
             .offsetY(5.0)
-        cartesian.legend().enabled(true)
-        cartesian.legend().fontSize(13.0)
-        cartesian.legend().padding(0.0, 0.0, 10.0, 0.0)
+        scatter.legend().enabled(true)
+        scatter.legend().fontSize(13.0)
+        scatter.legend().padding(0.0, 0.0, 10.0, 0.0)
 
-        mBinding.chart.setChart(cartesian)
+        mBinding.chart.setChart(scatter)
 
         loading.dialog.dismiss()
 

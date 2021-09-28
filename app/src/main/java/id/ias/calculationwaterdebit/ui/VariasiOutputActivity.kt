@@ -116,29 +116,29 @@ class VariasiOutputActivity : AppCompatActivity() {
             val jarak = piasDatas[i].jarakAntarPias
             var previousRai: Float
             var currentRai: Float
+            if (i == 0) {
+                previousRai = "0".toFloat()
+            } else {
+                when (piasDatas[i - 1].metodePengmbilan) {
+                    "Dua Titik" -> {
+                        previousRai = (piasDatas[i - 1].d8 + piasDatas[i - 1].d2) / 2
+                    }
+                    "Tiga Titik" -> {
+                        previousRai = (piasDatas[i - 1].d8 + piasDatas[i - 1].d2) / 2 + piasDatas[i - 1].d6
+                    }
+                    else -> {
+                        previousRai = piasDatas[i - 1].d6
+                    }
+                }
+            }
             when (piasDatas[i].metodePengmbilan) {
                 "Dua Titik" -> {
-                    previousRai = if (i == 0) {
-                        "0".toFloat()
-                    } else {
-                        (piasDatas[i - 1].d8 + piasDatas[i - 1].d2) / 2
-                    }
                     currentRai = (piasDatas[i].d8 + piasDatas[i].d2) / 2
                 }
                 "Tiga Titik" -> {
-                    previousRai = if (i == 0) {
-                        "0".toFloat()
-                    } else {
-                        (piasDatas[i - 1].d8 + piasDatas[i - 1].d2) / 2 + piasDatas[i - 1].d6
-                    }
                     currentRai = (piasDatas[i].d8 + piasDatas[i].d2) / 2 + piasDatas[i].d6
                 }
                 else -> {
-                    previousRai = if (i == 0) {
-                        "0".toFloat()
-                    } else {
-                        piasDatas[i - 1].d6
-                    }
                     currentRai = piasDatas[i].d6
                 }
             }

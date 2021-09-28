@@ -162,9 +162,9 @@ class LongThroatedFlumeActivity : AppCompatActivity() {
         LegacyTableView.insertLegacyTitle("Banyaknya variasi air Ke-","Bc", "p", "A*", "B1", "m", "P", "w", "b1", "mc", "A", "Nilai", "Cv")
         cv.removeAll(cv)
         val bentukA =
-                if (ltfData.lebarAmbang == ltfData.lebarAtas)
+                if (ltfData.lebarAtas == ltfData.lebarDasar)
                     "Bentuk Peralihan Persegiempat"
-                else if (ltfData.lebarAmbang > ltfData.lebarAtas || ltfData.lebarAmbang < ltfData.lebarAtas)
+                else if (ltfData.lebarAtas > ltfData.lebarDasar || ltfData.lebarAtas < ltfData.lebarDasar)
                     "Bentuk Peralihan Trapesium"
                 else "Bentuk Peralihan Segitiga"
 

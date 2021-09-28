@@ -21,6 +21,12 @@ class BaseDataRepository(private val baseDataDao: BaseDataDao) {
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
+    suspend fun delete(baseDataModel: BaseDataModel): Int {
+        return baseDataDao.delete(baseDataModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
     suspend fun updateLoad(id: Int, namaSaluran: String, namaDaerahIrigasi: String, wilayahKewenangan: String,
                            provinsi: String, kabupaten: String, tanggal: String, noPengukuran: String,
                            namaPengukur: String): Int {

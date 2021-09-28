@@ -170,27 +170,27 @@ class ParshallFlumeActivity : AppCompatActivity() {
 
             pengambilanDataViewModel.update(pengambilanDataModel[i].id!!, q.toFloat())
             LegacyTableView.insertLegacyContent((i + 1).toString(), b, c, n, q)
-
-            val readTitle = LegacyTableView.readLegacyTitle()
-            val readBody = LegacyTableView.readLegacyContent()
-            mBinding.parshallFlumeDebit.setTitle(readTitle)
-            mBinding.parshallFlumeDebit.setContent(readBody)
-
-            //depending on the phone screen size default table scale is 100
-            //you can change it using this method
-            //legacyTableView.setInitialScale(100);//default initialScale is zero (0)
-
-            //if you want a smaller table, change the padding setting
-            mBinding.parshallFlumeDebit.setTablePadding(7);
-
-            //to enable users to zoom in and out:
-            mBinding.parshallFlumeDebit.setZoomEnabled(true)
-            mBinding.parshallFlumeDebit.setShowZoomControls(true)
-
-            //remember to build your table as the last step
-            mBinding.parshallFlumeDebit.build()
-            loading.dialog.dismiss()
         }
+
+        val readTitle = LegacyTableView.readLegacyTitle()
+        val readBody = LegacyTableView.readLegacyContent()
+        mBinding.parshallFlumeDebit.setTitle(readTitle)
+        mBinding.parshallFlumeDebit.setContent(readBody)
+
+        //depending on the phone screen size default table scale is 100
+        //you can change it using this method
+        //legacyTableView.setInitialScale(100);//default initialScale is zero (0)
+
+        //if you want a smaller table, change the padding setting
+        mBinding.parshallFlumeDebit.setTablePadding(7);
+
+        //to enable users to zoom in and out:
+        mBinding.parshallFlumeDebit.setZoomEnabled(true)
+        mBinding.parshallFlumeDebit.setShowZoomControls(true)
+
+        //remember to build your table as the last step
+        mBinding.parshallFlumeDebit.build()
+        loading.dialog.dismiss()
     }
 
     private fun setViewModel() {
