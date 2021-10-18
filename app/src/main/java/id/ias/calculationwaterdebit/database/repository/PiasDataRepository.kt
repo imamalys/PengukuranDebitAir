@@ -20,4 +20,10 @@ class PiasDataRepository(private val piasDataDao: PiasDao) {
     suspend fun insert(piasModel: PiasModel): Long {
         return piasDataDao.insert(piasModel)
     }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
+    suspend fun update(piasModel: PiasModel): Int {
+        return piasDataDao.update(piasModel)
+    }
 }

@@ -58,6 +58,7 @@ class ReportActivity : AppCompatActivity() {
                                 } else {
                                     val intent = Intent(this@ReportActivity, ReportDetailActivity::class.java)
                                     intent.putExtra("id_base_data", baseDataModel.id!!.toLong())
+                                    intent.putExtra("is_report", true)
                                     startActivity(intent)
                                 }
                             }

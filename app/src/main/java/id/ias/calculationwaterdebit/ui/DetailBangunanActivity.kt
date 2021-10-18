@@ -567,7 +567,7 @@ class DetailBangunanActivity : AppCompatActivity() {
 
     private fun goToVariasiKetinggianAirActivity(it: Long) {
         if (isLoad) {
-            val intent = Intent(this@DetailBangunanActivity, VariasiOutputActivity::class.java)
+            val intent = Intent(this@DetailBangunanActivity, PengambilanDataActivity::class.java)
             intent.putExtra("id_base_data", idBaseData)
             intent.putExtra("id_tipe_bangunan", idTipeBangunan)
             intent.putExtra("tipe_bangunan", detailBangunanViewModel.detailBangunan.value)
@@ -585,7 +585,8 @@ class DetailBangunanActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, object: MessageDialogUtil.DialogListener {
+        back.show(this, title = "Apakah anda yakin ingin kembali ke menu sebelumnya",
+                yes = "Ya", no = "Tidak", object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

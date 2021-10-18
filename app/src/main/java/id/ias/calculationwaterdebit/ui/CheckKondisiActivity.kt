@@ -63,7 +63,7 @@ class CheckKondisiActivity : AppCompatActivity() {
                     pertama = "Tidak adanya"
                     pertamaInt = R.id.rb_no_rg1
                 }
-                pertama += "keretakan pada sayap banguanan ukur debit yang akan dikalibrasi"
+                pertama += " keretakan pada sayap bangunan ukur debit yang akan dikalibrasi"
                 val nilaiPertama = if (mBinding.rg1.checkedRadioButtonId == R.id.rb_yes_rg1) 1 else 0
 
                 var kedua = ""
@@ -74,7 +74,7 @@ class CheckKondisiActivity : AppCompatActivity() {
                     kedua = "Tidak adanya"
                     keduaInt = R.id.rb_no_rg2
                 }
-                kedua += "keretakan besar pada ambang/pengontrol/pengukur pada bangunan ukur debit yang akan dikalbrasi"
+                kedua += " keretakan besar pada ambang/pengontrol/pengukur pada bangunan ukur debit yang akan dikalbrasi"
                 val nilaiKedua = if (mBinding.rg2.checkedRadioButtonId == R.id.rb_yes_rg2) 3 else 0
 
                 var ketiga = ""
@@ -200,20 +200,19 @@ class CheckKondisiActivity : AppCompatActivity() {
                     intent.putExtra("id_base_data", idBaseData)
                     intent.putExtra("tipe_bangunan", tipeBangunan)
                     startActivity(intent)
-                    finish()
                 } else {
                     loading.dialog.dismiss()
                     val intent = Intent(this@CheckKondisiActivity, TipeBangunanUkurActivity::class.java)
                     intent.putExtra("id_base_data", idBaseData)
                     startActivity(intent)
-                    finish()
                 }
             }
         })
     }
 
     override fun onBackPressed() {
-        back.show(this, object: MessageDialogUtil.DialogListener {
+        back.show(this, title = "Apakah anda yakin ingin kembali ke menu sebelumnya",
+                yes = "Ya", no = "Tidak", object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()

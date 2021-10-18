@@ -1,8 +1,11 @@
 package id.ias.calculationwaterdebit.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.Constraints
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -41,6 +44,7 @@ class ReportDetailActivity : AppCompatActivity() {
     var idBaseData: Long = 0
     lateinit var baseData: BaseDataModel
     var grafikData: ArrayList<Array<String>> = ArrayList()
+    private var isReport = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +54,7 @@ class ReportDetailActivity : AppCompatActivity() {
 
         intent.let {
             idBaseData = it.getLongExtra("id_base_data", 0)
+            isReport = it.getBooleanExtra("is_report", false)
         }
 
         loading.show(this)
@@ -318,11 +323,13 @@ class ReportDetailActivity : AppCompatActivity() {
 
         mBinding.btnNext.setOnClickListener {
             mBinding.btnNext.visibility = android.view.View.GONE
+            mBinding.clPdf.visibility = android.view.View.GONE
             PdfGenerator.getBuilder()
                 .setContext(this@ReportDetailActivity)
                 .fromViewSource()
-                .fromView(mBinding.root)
-                .setFileName("Report")
+                .fromView(mBinding.clMid, mBinding.clBottom)
+                .setPageSize(PdfGenerator.PageSize.A4)
+                .setFileName("Report_Output")
                 .setFolderName("Debit")
                 .openPDFafterGeneration(true)
                 .build(object : PdfGeneratorListener() {
@@ -359,5 +366,15 @@ class ReportDetailActivity : AppCompatActivity() {
             baseData = it
             setView()
         })
+    }
+
+    override fun onBackPressed() {
+        if (isReport) {
+            finish()
+        } else {
+            val intent = Intent(this@ReportDetailActivity, MainMenuActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+        }
     }
 }

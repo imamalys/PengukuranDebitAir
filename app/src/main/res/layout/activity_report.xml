@@ -8,233 +8,235 @@
     android:background="@color/white"
     tools:context=".ui.ReportDetailActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/data_informasi_bottom_corner"
+        android:paddingBottom="10dp"
+        android:id="@+id/cl_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="IRCAL-BOP"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="#000000"
+            android:padding="10dp" />
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pupr_logo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/sv_detail">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/cl_top"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp">
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/data_informasi_bottom_corner"
-                android:paddingBottom="10dp"
-                android:id="@+id/cl_top">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="IRCAL-BOP"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="#000000"
-                    android:padding="10dp" />
-
-                <ImageView
-                    android:layout_width="160dp"
-                    android:layout_height="70dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/pupr_logo"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hasil Kalibrasi Bangunan Ukur Debit Di Daerah Irigasi"
-                android:id="@+id/tv_title"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cl_top" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nama Saluran:"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_nama_saluran" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_nama_saluran"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_nama_bangunan_value" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Instansi Pengelola:"
-                app:layout_constraintTop_toBottomOf="@+id/tv_nama_bangunan_value"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_instansi_kalibrasi" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lokasi:"
-                app:layout_constraintTop_toBottomOf="@+id/tv_instansi_kalibrasi"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_lokasi_kalibrasi" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tanggal Kalibrasi:"
-                app:layout_constraintTop_toBottomOf="@+id/tv_lokasi_kalibrasi"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_tanggal_kalibrasi" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Metode Kalibrasi:"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_kalibrasi"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_metode_kalibrasi" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv_metode_kalibrasi"
-                android:layout_marginLeft="50dp"
-                android:id="@+id/tv_detail"
-                android:text="a)acuan" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Manufaktur:"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_manufaktur_kalibrasi" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rumus Debit Kalibrasi"
-                app:layout_constraintTop_toBottomOf="@+id/tv_manufaktur_kalibrasi"
-                android:id="@+id/tv_rumus_debit"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="10dp"/>
-
-            <TextView
-                android:id="@+id/tv_detail_rumus1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintLeft_toRightOf="@+id/tv_rumus_debit"
-                app:layout_constraintTop_toTopOf="@+id/tv_rumus_debit" />
-
-            <TextView
-                android:id="@+id/tv_detail_rumus_n1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintLeft_toRightOf="@+id/tv_detail_rumus1"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_detail_rumus1" />
-
-            <TextView
-                android:id="@+id/tv_detail_rumus2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintLeft_toRightOf="@+id/tv_rumus_debit"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_rumus1" />
-
-            <TextView
-                android:id="@+id/tv_detail_rumus_n2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintLeft_toRightOf="@+id/tv_detail_rumus2"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_detail_rumus2" />
-
-            <com.anychart.AnyChartView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/chart"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_rumus2" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/chart"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/tv_keterangan"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cv_rekomendasi"
-                android:layout_margin="10dp"
-                android:padding="15dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_keterangan">
+                android:id="@+id/cl_mid"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textSize="12sp"
-                    android:id="@+id/tv_nilai_result"
+                    android:text="Hasil Kalibrasi Bangunan Ukur Debit Di Daerah Irigasi"
+                    android:id="@+id/tv_title"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:text="" />
-            </androidx.cardview.widget.CardView>
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Saluran:"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    android:id="@+id/tv_nama_saluran" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nama_saluran"
+                    android:id="@+id/tv_nama_bangunan_value" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Instansi Pengelola:"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nama_bangunan_value"
+                    android:id="@+id/tv_instansi_kalibrasi" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lokasi:"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_instansi_kalibrasi"
+                    android:id="@+id/tv_lokasi_kalibrasi" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal Kalibrasi:"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lokasi_kalibrasi"
+                    android:id="@+id/tv_tanggal_kalibrasi" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Metode Kalibrasi:"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_kalibrasi"
+                    android:id="@+id/tv_metode_kalibrasi" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_metode_kalibrasi"
+                    android:layout_marginLeft="40dp"
+                    android:id="@+id/tv_detail"
+                    android:text="a)acuan" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Manufaktur:"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail"
+                    android:id="@+id/tv_manufaktur_kalibrasi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rumus Debit Kalibrasi"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_manufaktur_kalibrasi"
+                    android:id="@+id/tv_rumus_debit"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_detail_rumus1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_rumus_debit"
+                    app:layout_constraintTop_toTopOf="@+id/tv_rumus_debit" />
+
+                <TextView
+                    android:id="@+id/tv_detail_rumus_n1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_detail_rumus1"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_detail_rumus1" />
+
+                <TextView
+                    android:id="@+id/tv_detail_rumus2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_rumus_debit"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_rumus1" />
+
+                <TextView
+                    android:id="@+id/tv_detail_rumus_n2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_detail_rumus2"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_detail_rumus2" />
+
+                <com.anychart.AnyChartView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:id="@+id/chart"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_rumus2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/chart"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:gravity="left"
+                    android:textSize="12sp"
+                    android:id="@+id/tv_keterangan"
+                    android:layout_marginTop="20dp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_rekomendasi"
+                    android:layout_margin="10dp"
+                    android:padding="15dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_keterangan">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="12sp"
+                        android:id="@+id/tv_nilai_result"
+                        android:textColor="@color/black"
+                        android:text="" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/cv_rekomendasi"
-                android:id="@+id/tv_tabel_debit" />
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:id="@+id/cl_bottom"
+                app:layout_constraintTop_toBottomOf="@+id/cl_mid">
 
-            <com.levitnudi.legacytableview.LegacyTableView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/q_table1"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tabel_debit" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/tv_tabel_debit" />
 
-            <com.levitnudi.legacytableview.LegacyTableView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/q_table2"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/q_table1" />
+                <com.levitnudi.legacytableview.LegacyTableView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/q_table1"
+                    android:paddingTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tabel_debit"/>
+
+                <com.levitnudi.legacytableview.LegacyTableView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/q_table2"
+                    android:paddingTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/q_table1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:layout_width="wrap_content"
@@ -242,12 +244,13 @@
                 android:background="@null"
                 android:backgroundTint="#3F51B5"
                 android:text="Save PDF"
+                android:textColor="@color/white"
                 android:id="@+id/btn_next"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/q_table2"/>
+                app:layout_constraintTop_toBottomOf="@+id/cl_bottom"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

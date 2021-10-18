@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 class PengambilanDataViewModel(private val repository: PengambilanDataRepository): ViewModel() {
     val allPengambilanDatas: LiveData<List<PengambilanDataModel>> = repository.allPengambilanDatas.asLiveData()
     var idPengambilanData: MutableLiveData<Long> = MutableLiveData(0)
+    var idUpdateData: MutableLiveData<Int> = MutableLiveData(0)
     var pengambilanDataUpdate: MutableLiveData<Int> = MutableLiveData()
     var pengambilanDataById: MutableLiveData<List<PengambilanDataModel>> = MutableLiveData()
     fun getPengambilanDataById(id: Int) = viewModelScope.launch {
@@ -16,6 +17,10 @@ class PengambilanDataViewModel(private val repository: PengambilanDataRepository
 
     fun insert(pengambilanData: PengambilanDataModel) = viewModelScope.launch {
         idPengambilanData.value = repository.insert(pengambilanData)
+    }
+
+    fun update(pengambilanData: PengambilanDataModel) = viewModelScope.launch {
+        idUpdateData.value = repository.update(pengambilanData)
     }
 
     fun update(id: Int, jumlahRataRata: Float, debitSaluran: Float) = viewModelScope.launch {

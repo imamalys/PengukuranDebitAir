@@ -117,7 +117,7 @@ class ParshallFlumeActivity : AppCompatActivity() {
                 for (i in it.indices) {
                     val ha: String = String.format(Locale.ENGLISH,"%.2f", it[i].h1)
                     val hb: String = String.format(Locale.ENGLISH,"%.2f", it[i].hb)
-                    val d: String = String.format(Locale.ENGLISH,"%.2f", it[i].h1 - it[i].hb)
+                    val d: String = String.format(Locale.ENGLISH,"%.2f", it[i].hb/it[i].h1)
                     var koefisiensi = koefisiensiAliranSempurnaViewModel.getKoefisiensiAliranSempurnaById(parshallFlumeModel.lebarTenggorokan)
                     var dc:String = String.format(Locale.ENGLISH,"%.3f",
                             if (koefisiensi != null) koefisiensi.dc else "0.0")

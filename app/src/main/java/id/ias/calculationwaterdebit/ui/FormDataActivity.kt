@@ -16,8 +16,8 @@ import id.ias.calculationwaterdebit.database.model.PiasModel
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.PiasDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityFormDataBinding
-import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModel
 import id.ias.calculationwaterdebit.viewmodel.FormDataActivityViewModelFactory
 
@@ -25,9 +25,11 @@ class FormDataActivity : AppCompatActivity() {
     val loading = LoadingDialogUtil()
     val back = MessageDialogUtil()
     lateinit var mBinding: ActivityFormDataBinding
+    var isBack = false
     val formDataActivityViewModel: FormDataActivityViewModel by viewModels {
         FormDataActivityViewModelFactory()
     }
+    var isInitBack = false
 
     private val piasViewModel: PiasDataViewModel by viewModels {
         PiasDataViewModelFactory((application as Application).piasRepository)
@@ -36,6 +38,11 @@ class FormDataActivity : AppCompatActivity() {
     var idTipeBangunan: Long = 0
     var isLast = false
     var idBaseData: Long = 0
+    var saveId: ArrayList<Int> = ArrayList()
+    var savePias: List<PiasModel> = ArrayList()
+    var currentVariasi = 0
+    var isPengambilanDataEdit = false
+    var isBackFromPengambilanData = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +61,10 @@ class FormDataActivity : AppCompatActivity() {
                 formDataActivityViewModel.h1 = it.getFloatExtra("h1", "0".toFloat()).toString()
                 formDataActivityViewModel.hb = it.getFloatExtra("hb", "0".toFloat()).toString()
                 isLast = it.getBooleanExtra("is_last", false)
+                currentVariasi = it.getIntExtra("current_variasi", 0)
+                isBack = it.getBooleanExtra("is_back", false)
+                isPengambilanDataEdit= it.getBooleanExtra("is_pengambilan_data_edit", false)
+                isBackFromPengambilanData =  it.getBooleanExtra("is_back_from_pengambilan_data", false)
             }
         }
 
@@ -67,7 +78,9 @@ class FormDataActivity : AppCompatActivity() {
     fun setView(piasModel: List<PiasModel>) {
         loading.dialog.dismiss()
         piasModel.let {
-            if (piasModel.size < formDataActivityViewModel.jumlahPias) {
+            if (isBack) {
+                mBinding.tvPias.text = String.format("Penampang basah ke %s", ((formDataActivityViewModel.currentPiasSize + 1).toString()))
+            } else if (piasModel.size < formDataActivityViewModel.jumlahPias) {
                 mBinding.tvPias.text = String.format("Penampang basah ke %s", ((piasModel.size + 1).toString()))
             } else {
                 mBinding.tvPias.text = "Penampang basah ke 1"
@@ -214,7 +227,7 @@ class FormDataActivity : AppCompatActivity() {
                 val d6 =  mBinding.d6.text.toString()
                 val d2 =  mBinding.d2.text.toString()
                 val piasModel = PiasModel(
-                    null,
+                    if (isBack) savePias[formDataActivityViewModel.currentPiasSize].id else null,
                     formDataActivityViewModel.idPengambilanData,
                     formDataActivityViewModel.h2.toFloat(),
                     formDataActivityViewModel.jarakPias.toFloat(),
@@ -223,7 +236,7 @@ class FormDataActivity : AppCompatActivity() {
                     formDataActivityViewModel.kecepatanAirValues.value!![2], d2.toFloat(),
                     formDataActivityViewModel.metodePengambilan.value!!
                 )
-                piasViewModel.insert(piasModel)
+                if (isBack) piasViewModel.update(piasModel) else piasViewModel.insert(piasModel)
             }
         }
     }
@@ -231,6 +244,21 @@ class FormDataActivity : AppCompatActivity() {
     private fun clearView(piasModel: List<PiasModel>) {
         piasModel.let {
             when {
+                isBack -> {
+                    mBinding.etH2.setText(piasModel[formDataActivityViewModel.currentPiasSize].h2.toString())
+                    mBinding.etJarakPias.setText(piasModel[formDataActivityViewModel.currentPiasSize].jarakAntarPias.toString())
+                    formDataActivityViewModel.h2 = piasModel[formDataActivityViewModel.currentPiasSize].h2.toString()
+                    formDataActivityViewModel.jarakPias = piasModel[formDataActivityViewModel.currentPiasSize].jarakAntarPias.toString()
+                    formDataActivityViewModel.kecepatanAirValues.value = FloatArray(3)
+                    formDataActivityViewModel.kecepatanAirValues.value!![0] = piasModel[formDataActivityViewModel.currentPiasSize].d8
+                    formDataActivityViewModel.kecepatanAirValues.value!![1] = piasModel[formDataActivityViewModel.currentPiasSize].d6
+                    formDataActivityViewModel.kecepatanAirValues.value!![2] = piasModel[formDataActivityViewModel.currentPiasSize].d2
+                    mBinding.svView.fullScroll(View.FOCUS_UP)
+                    mBinding.svView.pageScroll(View.FOCUS_UP)
+                    mBinding.svView.smoothScrollTo(0, 0)
+                    isInitBack = true
+                    setView(piasModel)
+                }
                 it.size < formDataActivityViewModel.jumlahPias -> {
     //                mBinding.etH1.setText("")
                     mBinding.etH2.setText("")
@@ -257,12 +285,14 @@ class FormDataActivity : AppCompatActivity() {
                 }
                 else -> {
                     loading.dialog.dismiss()
-                    val intent = Intent(this@FormDataActivity, PengambilanDataActivity::class.java)
-                    intent.putExtra("id_tipe_bangunan", idTipeBangunan)
-                    intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
-                    intent.putExtra("id_base_data", idBaseData)
-                    intent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
-                    startActivity(intent)
+                    val setIntent = Intent(this@FormDataActivity, PengambilanDataActivity::class.java)
+                    setIntent.putExtra("id_tipe_bangunan", idTipeBangunan)
+                    setIntent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
+                    setIntent.putExtra("id_base_data", idBaseData)
+                    setIntent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
+                    setIntent.putExtra("is_back", intent.getBooleanExtra("is_back", false))
+                    setIntent.putExtra("current_variasi", currentVariasi + 1)
+                    startActivity(setIntent)
                     finish()
                 }
             }
@@ -290,19 +320,33 @@ class FormDataActivity : AppCompatActivity() {
             }
         }
 
-        mBinding.spMetodePengambilan.setSelection(0)
+        if (isBack) {
+            if (savePias[formDataActivityViewModel.currentPiasSize].d2.toInt() != 0 &&
+                    savePias[formDataActivityViewModel.currentPiasSize].d6.toInt() != 0 &&
+                    savePias[formDataActivityViewModel.currentPiasSize].d8.toInt() != 0) {
+                mBinding.spMetodePengambilan.setSelection(1)
+            } else {
+                mBinding.spMetodePengambilan.setSelection(0)
+            }
+        } else {
+            mBinding.spMetodePengambilan.setSelection(0)
+        }
     }
 
     fun setInputKecepatanAir() {
-        mBinding.d2Value.setText("")
-        mBinding.d6Value.setText("")
-        mBinding.d8Value.setText("")
-        mBinding.d2Value.hint = "0"
-        mBinding.d6Value.hint = "0"
-        mBinding.d8Value.hint = "0"
-        mBinding.d2Value.isEnabled = false
-        mBinding.d6Value.isEnabled = false
-        mBinding.d8Value.isEnabled = false
+        if (isInitBack) {
+            isInitBack = false
+        } else {
+            mBinding.d2Value.setText("")
+            mBinding.d6Value.setText("")
+            mBinding.d8Value.setText("")
+            mBinding.d2Value.hint = "0"
+            mBinding.d6Value.hint = "0"
+            mBinding.d8Value.hint = "0"
+            mBinding.d2Value.isEnabled = false
+            mBinding.d6Value.isEnabled = false
+            mBinding.d8Value.isEnabled = false
+        }
         when(formDataActivityViewModel.metodePengambilanInt()) {
             1 -> {
                 mBinding.d2Value.isEnabled = true
@@ -332,28 +376,91 @@ class FormDataActivity : AppCompatActivity() {
         mBinding.d2.text = d2
         mBinding.d6.text = d6
         mBinding.d8.text = d8
+        if (isBack) {
+            if (savePias[formDataActivityViewModel.currentPiasSize].d2.toInt() != 0 &&
+                    savePias[formDataActivityViewModel.currentPiasSize].d6.toInt() != 0 &&
+                    savePias[formDataActivityViewModel.currentPiasSize].d8.toInt() != 0) {
+                mBinding.d2Value.setText(savePias[formDataActivityViewModel.currentPiasSize].d2.toString())
+                mBinding.d6Value.setText(savePias[formDataActivityViewModel.currentPiasSize].d6.toString())
+                mBinding.d8Value.setText(savePias[formDataActivityViewModel.currentPiasSize].d8.toString())
+            } else if (savePias[formDataActivityViewModel.currentPiasSize].d6.toInt() == 0) {
+                mBinding.d2Value.setText(savePias[formDataActivityViewModel.currentPiasSize].d2.toString())
+                mBinding.d8Value.setText(savePias[formDataActivityViewModel.currentPiasSize].d8.toString())
+            } else {
+                mBinding.d6Value.setText(savePias[formDataActivityViewModel.currentPiasSize].d6.toString())
+            }
+        }
     }
 
     private fun setViewModel() {
-        piasViewModel.insertId.observe(this, {
+        if (isPengambilanDataEdit) {
+            loading.show(this)
             piasViewModel.getPiasDataById(formDataActivityViewModel.idPengambilanData)
+        }
+
+        piasViewModel.insertId.observe(this, {
+            if (it.toInt() != 0) {
+                saveId.add(it.toInt())
+                piasViewModel.getPiasDataById(formDataActivityViewModel.idPengambilanData)
+            }
+        })
+
+        piasViewModel.updateId.observe(this, {
+            if (it != 0) {
+                piasViewModel.getPiasDataById(formDataActivityViewModel.idPengambilanData)
+            }
         })
 
         piasViewModel.piasDatas.observe(this, { piasData ->
             if (piasData.isNotEmpty()) {
-                formDataActivityViewModel.currentPiasSize = piasData.size
+                savePias = piasData
+                if (formDataActivityViewModel.currentPiasSize != 0 && formDataActivityViewModel.currentPiasSize + 1 != piasData.size) {
+                    formDataActivityViewModel.currentPiasSize += 1
+                } else if (isPengambilanDataEdit) {
+                    formDataActivityViewModel.currentPiasSize = 0
+                    isPengambilanDataEdit = false
+                } else {
+                    if (isBackFromPengambilanData) formDataActivityViewModel.currentPiasSize += 1
+                    else formDataActivityViewModel.currentPiasSize = piasData.size
+                    isBack = if (formDataActivityViewModel.currentPiasSize + 1 >  piasData.size) {
+                        try {
+                            piasData[formDataActivityViewModel.currentPiasSize + 1].jarakAntarPias != 0.toFloat()
+                        } catch (e: Exception) {
+                            false
+                        }
+                    } else {
+                        isBackFromPengambilanData
+                    }
+                }
                 clearView(piasData)
             }
         })
     }
 
     override fun onBackPressed() {
-        back.show(this, object: MessageDialogUtil.DialogListener {
-            override fun onYes(action: Boolean) {
-                if (action) {
-                    finish()
-                }
+        if (formDataActivityViewModel.currentPiasSize - 2 != -2) {
+            if (formDataActivityViewModel.currentPiasSize != 0) {
+                isBack = true
+                formDataActivityViewModel.currentPiasSize -= 1
+                clearView(savePias)
             }
-        })
+        } else {
+            back.show(this, title = "Apakah anda yakin ingin kembali ke Data Pengambilan variasi air?",
+                    yes = "Ya", no = "Tidak", object: MessageDialogUtil.DialogListener {
+                override fun onYes(action: Boolean) {
+                    if (action) {
+                        val intent = Intent(this@FormDataActivity, PengambilanDataActivity::class.java)
+                        intent.putExtra("id_tipe_bangunan", idTipeBangunan)
+                        intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
+                        intent.putExtra("id_base_data", idBaseData)
+                        intent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
+                        intent.putExtra("is_back", true)
+                        intent.putExtra("current_variasi", currentVariasi)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            })
+        }
     }
 }

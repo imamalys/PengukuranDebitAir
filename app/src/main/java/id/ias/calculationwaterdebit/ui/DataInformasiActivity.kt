@@ -151,10 +151,10 @@ class DataInformasiActivity : AppCompatActivity() {
         baseDataViewModel.insertId.observe(this, {
             if (it.toInt() != 0) {
                 loading.dialog.dismiss()
+                idBaseData = it
                 val intent = Intent(this@DataInformasiActivity, CheckKondisiActivity::class.java)
                 intent.putExtra("id_base_data", it)
                 startActivity(intent)
-                finish()
             }
         })
 
@@ -164,29 +164,18 @@ class DataInformasiActivity : AppCompatActivity() {
                 val intent = Intent(this@DataInformasiActivity, CheckKondisiActivity::class.java)
                 intent.putExtra("id_base_data", idBaseData.toLong())
                 startActivity(intent)
-                finish()
             }
         })
     }
 
     override fun onBackPressed() {
-        if (idBaseData.toInt() != 0) {
-            back.show(this, title = "Apakah anda yakin ingin kembali?", yes = "Ya", no = "Tidak",
-                    object: MessageDialogUtil.DialogListener {
-                override fun onYes(action: Boolean) {
-                    if (action) {
-                        finish()
+        back.show(this, title = "Apakah anda yakin ingin kembali?", yes = "Ya", no = "Tidak",
+                object: MessageDialogUtil.DialogListener {
+                    override fun onYes(action: Boolean) {
+                        if (action) {
+                            finish()
+                        }
                     }
-                }
-            })
-        } else {
-            back.show(this, object: MessageDialogUtil.DialogListener {
-                override fun onYes(action: Boolean) {
-                    if (action) {
-                        finish()
-                    }
-                }
-            })
-        }
+                })
     }
 }

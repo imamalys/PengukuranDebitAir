@@ -12,7 +12,6 @@
         android:theme="@style/NoActionBar">
         <activity android:name=".ui.AboutActivity"></activity>
         <activity android:name=".ui.AmbangTajamSegiempatActivity" />
-        <activity android:name=".ui.MercuAmbangActivity" />
         <activity android:name=".ui.CrumpActivity" />
         <activity android:name=".ui.CutThroatedFlumeActivity" />
         <activity android:name=".ui.RomijnActivity" />
@@ -33,7 +32,9 @@
         <activity android:name=".ui.CheckKondisiActivity" />
         <activity android:name=".ui.ReportDetailActivity" />
         <activity android:name=".ui.RumusTabelDebitActivity" />
-        <activity android:name=".ui.AnalisisActivity" />
+        <activity android:name=".ui.AnalisisActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".ui.VariasiKetinggianAirActivity" />
         <activity android:name=".ui.AmbangLebarPengontrolSegiempatActivity" />
         <activity android:name=".ui.VariasiOutputActivity" />

@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.databinding.DetailBangunanItemBinding
 import id.ias.calculationwaterdebit.model.DetailBangunanModel
 
@@ -32,7 +33,9 @@ class DetailBangunanAdapter(
                     mBinding.tvInput.isFocusable = false
                     mBinding.tvSatuan.text = "Satuan"
                     mBinding.tvKeterangan.text = "Keterangan"
+                    mBinding.tvInput.setBackgroundResource(0)
                 } else {
+                    mBinding.tvInput.setBackgroundResource(R.drawable.edit_text_border)
                     mBinding.tvNotasi.text = this.notasi
                     if (this.input != "0") {
                         mBinding.tvInput.setText(this.input)

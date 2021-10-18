@@ -50,6 +50,9 @@ class VariasiKetinggianAirActivity : AppCompatActivity() {
                     "variasi_ketinggian_air",
                     mBinding.etVariasiKetinggianAir.text.toString()
                 )
+                intent.putExtra("is_back", false)
+                intent.putExtra("current_variasi", 0)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
                 finish()
             } else {

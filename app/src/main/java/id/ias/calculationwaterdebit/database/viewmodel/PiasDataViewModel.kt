@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 class PiasDataViewModel(private val repository: PiasDataRepository): ViewModel() {
     val piasDatas: MutableLiveData<List<PiasModel>> = MutableLiveData()
     val insertId: MutableLiveData<Long> = MutableLiveData(0)
+    val updateId: MutableLiveData<Int> = MutableLiveData(0)
 
     fun getPiasDatas(id: Int): LiveData<List<PiasModel>> = repository.piasByFormData(id).asLiveData()
 
@@ -16,6 +17,10 @@ class PiasDataViewModel(private val repository: PiasDataRepository): ViewModel()
     }
     fun insert(piasModel: PiasModel) = viewModelScope.launch {
         insertId.value = repository.insert(piasModel)
+    }
+
+    fun update(piasModel: PiasModel) = viewModelScope.launch {
+        updateId.value = repository.update(piasModel)
     }
 }
 

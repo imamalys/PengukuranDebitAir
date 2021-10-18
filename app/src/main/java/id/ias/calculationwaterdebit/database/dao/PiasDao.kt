@@ -1,9 +1,6 @@
 package id.ias.calculationwaterdebit.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import id.ias.calculationwaterdebit.database.model.PiasModel
 import kotlinx.coroutines.flow.Flow
 
@@ -17,4 +14,7 @@ interface PiasDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(piasModel: PiasModel): Long
+
+    @Update
+    suspend fun update(piasModel: PiasModel): Int
 }

@@ -2,6 +2,7 @@ package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.anychart.AnyChart
@@ -16,6 +17,10 @@ import com.anychart.enums.Anchor
 import com.anychart.enums.MarkerType
 import com.anychart.enums.TooltipPositionMode
 import com.anychart.graphics.vector.Stroke
+import com.gkemon.XMLtoPDF.PdfGenerator
+import com.gkemon.XMLtoPDF.PdfGeneratorListener
+import com.gkemon.XMLtoPDF.model.FailureResponse
+import com.gkemon.XMLtoPDF.model.SuccessResponse
 import com.levitnudi.legacytableview.LegacyTableView
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.database.model.BaseDataModel
@@ -87,6 +92,39 @@ class AnalisisActivity : AppCompatActivity() {
             cUse = cUse.replace(",", ".")
             mapeTerkecil = mapeTerkecil.replace(",", ".")
             baseDataViewModel.updateAnalisis(idBaseData.toInt(), kUse, cUse, mapeTerkecil)
+        }
+
+        mBinding.btnSave.setOnClickListener {
+            mBinding.btnSave.visibility = View.GONE
+            PdfGenerator.getBuilder()
+                    .setContext(this@AnalisisActivity)
+                    .fromViewSource()
+                    .fromView(mBinding.clMid, mBinding.clBottom, mBinding.clChart)
+                    .setPageSize(PdfGenerator.PageSize.A4)
+                    .setFileName("Report_analisis")
+                    .setFolderName("Debit")
+                    .openPDFafterGeneration(true)
+                    .build(object : PdfGeneratorListener() {
+                        override fun onFailure(failureResponse: FailureResponse) {
+                            super.onFailure(failureResponse)
+                        }
+
+                        override fun showLog(log: String) {
+                            super.showLog(log)
+                        }
+
+                        override fun onStartPDFGeneration() {
+                            /*When PDF generation begins to start*/
+                        }
+
+                        override fun onFinishPDFGeneration() {
+                            /*When PDF generation is finished*/
+                        }
+
+                        override fun onSuccess(response: SuccessResponse) {
+                            super.onSuccess(response)
+                        }
+                    })
         }
     }
 
@@ -1134,6 +1172,11 @@ class AnalisisActivity : AppCompatActivity() {
         scatter.legend().padding(0.0, 0.0, 10.0, 0.0)
 
         mBinding.chart.setChart(scatter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mBinding.btnSave.visibility = android.view.View.VISIBLE
     }
 
     private fun setViewModel() {

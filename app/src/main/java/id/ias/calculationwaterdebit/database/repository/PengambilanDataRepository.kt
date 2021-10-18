@@ -20,6 +20,12 @@ class PengambilanDataRepository(private val pengambilanDataDao: PengambilanDataD
 
     @Suppress("RedudantSuspendModifier")
     @WorkerThread
+    suspend fun update(pengambilanDataModel: PengambilanDataModel): Int {
+        return pengambilanDataDao.update(pengambilanDataModel)
+    }
+
+    @Suppress("RedudantSuspendModifier")
+    @WorkerThread
     suspend fun update(id: Int, jumlahRataRata: Float, debitSaluran: Float): Int {
         return pengambilanDataDao.update(id, jumlahRataRata, debitSaluran)
     }

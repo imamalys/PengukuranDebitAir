@@ -96,13 +96,13 @@ class TipeBangunanUkurActivity : AppCompatActivity() {
                 intent.putExtra("tipe_bangunan", tipeBangunanUkurViewModel.tipeBangunan.value)
                 intent.putExtra("id_base_data", idBaseData)
                 startActivity(intent)
-                finish()
             }
         })
     }
 
     override fun onBackPressed() {
-        back.show(this, object: MessageDialogUtil.DialogListener {
+        back.show(this,  title = "Apakah anda yakin ingin kembali ke menu sebelumnya",
+                yes = "Ya", no = "Tidak", object: MessageDialogUtil.DialogListener {
             override fun onYes(action: Boolean) {
                 if (action) {
                     finish()
