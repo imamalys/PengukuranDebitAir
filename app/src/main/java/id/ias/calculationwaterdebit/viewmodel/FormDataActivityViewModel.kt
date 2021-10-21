@@ -13,7 +13,7 @@ class FormDataActivityViewModel: ViewModel() {
     var detailBangunan: String = ""
     var idPengambilanData: Int = 0
     var jumlahPias: Int = 0
-    var variasiKetinggianAir: Int = 0
+    var variasiKetinggianAir: String = "0"
     var currentPiasSize: Int = 0
 
     var h1: String = "0"

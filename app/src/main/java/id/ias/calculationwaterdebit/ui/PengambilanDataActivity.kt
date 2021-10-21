@@ -167,7 +167,7 @@ class PengambilanDataActivity : AppCompatActivity() {
                 intent.putExtra("jumlah_pias", mBinding.etJmlhSaluranBasah.text.toString().toInt())
                 intent.putExtra("h1", pengambilanDataActivityViewModel.pengambilValue.value!![0])
                 intent.putExtra("hb", pengambilanDataActivityViewModel.pengambilValue.value!![1])
-                intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir.toInt())
+                intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir)
                 intent.putExtra("current_variasi", currentVariasi)
                 intent.putExtra("is_last", isLast)
                 intent.putExtra("is_back", isBack)
@@ -187,7 +187,7 @@ class PengambilanDataActivity : AppCompatActivity() {
                 intent.putExtra("jumlah_pias", mBinding.etJmlhSaluranBasah.text.toString().toInt())
                 intent.putExtra("h1", pengambilanDataActivityViewModel.pengambilValue.value!![0])
                 intent.putExtra("hb", pengambilanDataActivityViewModel.pengambilValue.value!![1])
-                intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir.toInt())
+                intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir)
                 intent.putExtra("current_variasi", currentVariasi)
                 intent.putExtra("is_last", isLast)
                 intent.putExtra("is_back", isBack)
@@ -200,20 +200,25 @@ class PengambilanDataActivity : AppCompatActivity() {
         pengambilanDataViewModel.pengambilanDataById.observe(this, {
             if (variasiKetinggianAir.toInt() == 0) {
                 variasiKetinggianAir = it[0].variasaiKetinggianAir.toInt().toString()
-                currentVariasi = it.size - 1
+                isBack = true
             }
-            if (variasiKetinggianAir.toInt() - it.size == 0) {
+            if (variasiKetinggianAir.toInt() - currentVariasi == 1) {
+                isLast = true
+            }
+            else if (variasiKetinggianAir.toInt() - it.size == 0 && currentVariasi < it.size) {
                 isLast = true
             }
             if (isBack) {
                 if (it.isNotEmpty()) {
-                    if (currentVariasi < it.size) {
+                    if (currentVariasi < it.size ) {
                         pengambilanDataModel = it[currentVariasi]
                         idPengambilanData = it[currentVariasi].id!!
                         mBinding.etKetinggianBangunanUkur.setText(it[currentVariasi].h1.toString())
                         mBinding.etKetinggianAirHulu.setText(it[currentVariasi].hb.toString())
                         mBinding.etJmlhSaluranBasah.setText(it[currentVariasi].jumlahSaluranBasah.toInt().toString())
                         mBinding.etJmlhSaluranBasah.hint = it[currentVariasi].jumlahSaluranBasah.toInt().toString()
+                    } else {
+                        isBack = false
                     }
                 }
                 mBinding.tvTitle.text = String.format("Data Pengambilan Variasi Air Ke-%s", (currentVariasi + 1).toString())
@@ -246,9 +251,9 @@ class PengambilanDataActivity : AppCompatActivity() {
             intent.putExtra("jumlah_pias", previousPengambilanDataModel.jumlahSaluranBasah)
             intent.putExtra("h1", previousPengambilanDataModel.h1)
             intent.putExtra("hb", previousPengambilanDataModel.hb)
-            intent.putExtra("variasi_Ketinggian_air", previousPengambilanDataModel.variasaiKetinggianAir)
+            intent.putExtra("variasi_Ketinggian_air", previousPengambilanDataModel.variasaiKetinggianAir.toInt().toString())
             intent.putExtra("current_variasi", currentVariasi - 1)
-            intent.putExtra("is_last", isLast)
+            intent.putExtra("is_last", false)
             intent.putExtra("is_back", true)
             intent.putExtra("is_pengambilan_data_edit", true)
             intent.putExtra("is_back_from_pengambilan_data", true)

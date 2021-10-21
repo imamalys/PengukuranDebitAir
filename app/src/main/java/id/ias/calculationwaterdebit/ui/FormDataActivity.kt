@@ -57,7 +57,8 @@ class FormDataActivity : AppCompatActivity() {
                 formDataActivityViewModel.idPengambilanData = it.getIntExtra("id_pengambilan_data", 0)
                 idBaseData = it.getLongExtra("id_base_data", 0)
                 formDataActivityViewModel.jumlahPias = it.getIntExtra("jumlah_pias", 0)
-                formDataActivityViewModel.variasiKetinggianAir = it.getIntExtra("variasi_Ketinggian_air", 0)
+                formDataActivityViewModel.variasiKetinggianAir = if (it.hasExtra("variasi_Ketinggian_air"))
+                    it.getStringExtra("variasi_Ketinggian_air")!! else "0"
                 formDataActivityViewModel.h1 = it.getFloatExtra("h1", "0".toFloat()).toString()
                 formDataActivityViewModel.hb = it.getFloatExtra("hb", "0".toFloat()).toString()
                 isLast = it.getBooleanExtra("is_last", false)
@@ -289,7 +290,7 @@ class FormDataActivity : AppCompatActivity() {
                     setIntent.putExtra("id_tipe_bangunan", idTipeBangunan)
                     setIntent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
                     setIntent.putExtra("id_base_data", idBaseData)
-                    setIntent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
+                    setIntent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir)
                     setIntent.putExtra("is_back", intent.getBooleanExtra("is_back", false))
                     setIntent.putExtra("current_variasi", currentVariasi + 1)
                     startActivity(setIntent)
@@ -433,6 +434,11 @@ class FormDataActivity : AppCompatActivity() {
                     }
                 }
                 clearView(piasData)
+            } else {
+                isBackFromPengambilanData = false
+                isBack = false
+                isPengambilanDataEdit = false
+                loading.dialog.dismiss()
             }
         })
     }
@@ -453,7 +459,7 @@ class FormDataActivity : AppCompatActivity() {
                         intent.putExtra("id_tipe_bangunan", idTipeBangunan)
                         intent.putExtra("tipe_bangunan", formDataActivityViewModel.detailBangunan)
                         intent.putExtra("id_base_data", idBaseData)
-                        intent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir.toString())
+                        intent.putExtra("variasi_ketinggian_air", formDataActivityViewModel.variasiKetinggianAir)
                         intent.putExtra("is_back", true)
                         intent.putExtra("current_variasi", currentVariasi)
                         startActivity(intent)
