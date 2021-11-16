@@ -79,13 +79,7 @@ class FormDataActivity : AppCompatActivity() {
     fun setView(piasModel: List<PiasModel>) {
         loading.dialog.dismiss()
         piasModel.let {
-            if (isBack) {
-                mBinding.tvPias.text = String.format("Penampang basah ke %s", ((formDataActivityViewModel.currentPiasSize + 1).toString()))
-            } else if (piasModel.size < formDataActivityViewModel.jumlahPias) {
-                mBinding.tvPias.text = String.format("Penampang basah ke %s", ((piasModel.size + 1).toString()))
-            } else {
-                mBinding.tvPias.text = "Penampang basah ke 1"
-            }
+            mBinding.tvPias.text = String.format("Penampang basah ke %s", ((formDataActivityViewModel.currentPiasSize + 1).toString()))
         }
 
         mBinding.btnNext.isEnabled = true
@@ -421,16 +415,19 @@ class FormDataActivity : AppCompatActivity() {
                     formDataActivityViewModel.currentPiasSize = 0
                     isPengambilanDataEdit = false
                 } else {
-                    if (isBackFromPengambilanData) formDataActivityViewModel.currentPiasSize += 1
-                    else formDataActivityViewModel.currentPiasSize = piasData.size
-                    isBack = if (formDataActivityViewModel.currentPiasSize + 1 >  piasData.size) {
+                    formDataActivityViewModel.currentPiasSize += 1
+                    isBack = if (formDataActivityViewModel.currentPiasSize <  formDataActivityViewModel.jumlahPias) {
                         try {
-                            piasData[formDataActivityViewModel.currentPiasSize + 1].jarakAntarPias != 0.toFloat()
+                            piasData[formDataActivityViewModel.currentPiasSize].jarakAntarPias != 0.toFloat()
                         } catch (e: Exception) {
                             false
                         }
                     } else {
-                        isBackFromPengambilanData
+                        if (formDataActivityViewModel.currentPiasSize !=  piasData.size) {
+                            true
+                        } else {
+                            isBackFromPengambilanData
+                        }
                     }
                 }
                 clearView(piasData)
