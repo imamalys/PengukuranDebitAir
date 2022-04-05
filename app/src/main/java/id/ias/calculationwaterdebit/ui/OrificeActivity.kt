@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -83,6 +84,11 @@ class OrificeActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.orificeTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.orificeTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.orificeTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.orificeTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.orificeTable.setTitle(readTitle)
             mBinding.orificeTable.setContent(readBody)
 
@@ -131,6 +137,11 @@ class OrificeActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.orificeDebit.setTheme(LegacyTableView.CUSTOM)
+                mBinding.orificeDebit.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.orificeDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.orificeDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.orificeDebit.setTitle(readTitle)
                 mBinding.orificeDebit.setContent(readBody)
 

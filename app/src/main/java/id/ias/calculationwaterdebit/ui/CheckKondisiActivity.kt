@@ -1,21 +1,25 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import com.aceinteract.android.stepper.StepperNavListener
+import com.aceinteract.android.stepper.StepperNavigationView
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.calculationwaterdebit.Application
 import id.ias.calculationwaterdebit.R
+import id.ias.calculationwaterdebit.base.BaseActivity
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModel
 import id.ias.calculationwaterdebit.database.viewmodel.BaseDataViewModelFactory
 import id.ias.calculationwaterdebit.databinding.ActivityCheckKondisiBinding
+import id.ias.calculationwaterdebit.model.KondisiModel
+import id.ias.calculationwaterdebit.ui.fragment.ChecklistFragment
 import id.ias.calculationwaterdebit.util.MessageDialogUtil
-import id.ias.calculationwaterdebit.util.LoadingDialogUtil
 
-class CheckKondisiActivity : AppCompatActivity() {
+class CheckKondisiActivity : BaseActivity(), StepperNavListener, ChecklistFragment.ChecklistFragmentListener {
     val back = MessageDialogUtil()
-    val loading = LoadingDialogUtil()
 
     private lateinit var mBinding: ActivityCheckKondisiBinding
 
@@ -30,178 +34,121 @@ class CheckKondisiActivity : AppCompatActivity() {
     var keempatInt: Int = 0
     var kelimaInt: Int = 0
     var tipeBangunan = ""
+    var kondisiArray: ArrayList<KondisiModel> = ArrayList()
+    private lateinit var kondisiList: IntArray
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        mBinding = ActivityCheckKondisiBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
-
+    override fun initViews() {
         intent.let {
             if (it.hasExtra("id_base_data")) {
                 idBaseData = it.getLongExtra("id_base_data", 0)
             }
         }
 
+        mBinding.stepper.initializeStepper()
+
         setViewModel()
         setAction()
     }
 
+    override fun createViewBinding(): View {
+        mBinding = ActivityCheckKondisiBinding.inflate(layoutInflater)
+        return mBinding.root
+    }
+
+    private fun checkKondisiFill(): Boolean {
+        when (mBinding.stepper.currentStep) {
+            0 -> return kondisiArray.size > 0
+            1 -> return  kondisiArray.size > 1
+            2 -> return  kondisiArray.size > 2
+            3 -> return  kondisiArray.size > 3
+            4 -> return  kondisiArray.size > 4
+        }
+
+        return false
+    }
+
+    private fun StepperNavigationView.initializeStepper() {
+        stepperNavListener = this@CheckKondisiActivity
+        setupWithNavController(findNavController(R.id.fragment_steper))
+    }
+
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
-            if (mBinding.rg1.checkedRadioButtonId == -1 || mBinding.rg2.checkedRadioButtonId == -1 ||
-                    mBinding.rg3.checkedRadioButtonId == -1 || mBinding.rg4.checkedRadioButtonId == -1 ||
-                    mBinding.rg5.checkedRadioButtonId == -1) {
-                ToastUtils.showLong("Checklist Kondisi Bangunan masih kosong")
+            if (checkKondisiFill()) {
+                if (mBinding.stepper.currentStep != 4) {
+                    mBinding.stepper.goToNextStep()
+                } else {
+                    loadingShow()
+                    val result = "Keterangan:" +
+                            "\n1.${kondisiArray[0].detailKondisi}" +
+                            "\n2.${kondisiArray[1].detailKondisi}" +
+                            "\n3.${kondisiArray[2].detailKondisi}" +
+                            "\n4.${kondisiArray[3].detailKondisi}" +
+                            "\n5.${kondisiArray[4].detailKondisi}"
+                    val nilai = kondisiArray[0].nilaiKondisi +
+                            kondisiArray[1].nilaiKondisi +
+                            kondisiArray[2].nilaiKondisi +
+                            kondisiArray[3].nilaiKondisi +
+                            kondisiArray[4].nilaiKondisi
+
+                    if (nilai >= 5) {
+                        back.show(this, "Kondisi Kurang Baik\nTidak dianjurkan melakukan kalibrasi",
+                            "Lanjutkan", "Tidak", object: MessageDialogUtil.DialogListener {
+                                override fun onYes(action: Boolean) {
+                                    if (action) {
+                                        baseDataViewModel.updateCheckKondisi(idBaseData.toInt(), result, nilai,
+                                            kondisiArray[0].kondisiId, kondisiArray[1].kondisiId,
+                                            kondisiArray[2].kondisiId,  kondisiArray[3].kondisiId,
+                                            kondisiArray[4].kondisiId)
+                                    } else {
+                                        finish()
+                                    }
+                                }
+                            })
+                    } else {
+                        baseDataViewModel.updateCheckKondisi(idBaseData.toInt(), result, nilai,
+                            kondisiArray[0].kondisiId, kondisiArray[1].kondisiId,
+                            kondisiArray[2].kondisiId,  kondisiArray[3].kondisiId,
+                            kondisiArray[4].kondisiId)
+                    }
+                }
             } else {
-                loading.show(this)
-                var pertama = ""
-                if (mBinding.rg1.checkedRadioButtonId == R.id.rb_yes_rg1) {
-                    pertama = "Adanya"
-                    pertamaInt = R.id.rb_yes_rg1
-                } else {
-                    pertama = "Tidak adanya"
-                    pertamaInt = R.id.rb_no_rg1
-                }
-                pertama += " keretakan pada sayap bangunan ukur debit yang akan dikalibrasi"
-                val nilaiPertama = if (mBinding.rg1.checkedRadioButtonId == R.id.rb_yes_rg1) 1 else 0
-
-                var kedua = ""
-                if (mBinding.rg2.checkedRadioButtonId == R.id.rb_yes_rg2) {
-                    kedua = "Adanya"
-                    keduaInt = R.id.rb_yes_rg2
-                } else {
-                    kedua = "Tidak adanya"
-                    keduaInt = R.id.rb_no_rg2
-                }
-                kedua += " keretakan besar pada ambang/pengontrol/pengukur pada bangunan ukur debit yang akan dikalbrasi"
-                val nilaiKedua = if (mBinding.rg2.checkedRadioButtonId == R.id.rb_yes_rg2) 3 else 0
-
-                var ketiga = ""
-
-               when (mBinding.rg3.checkedRadioButtonId) {
-                    R.id.rb_yes_rg3 -> {
-                        ketiga = "Kondisi aliran debit kecil/debit besar berfungsi dengan baik"
-                        ketigaInt = R.id.rb_yes_rg3
-                    }
-                    R.id.rb_no1_rg3 -> {
-                        ketiga = "Kondisi aliran kecil tidak berfungsi dengan baik"
-                        ketigaInt = R.id.rb_yes_rg3
-                    }
-                    R.id.rb_no2_rg3 -> {
-                        ketiga = "Kondisi aliran besar tidak berfungsi dengan baik"
-                        ketigaInt = R.id.rb_no2_rg3
-                    }
-                    else -> {
-                        ketiga = "kedua kondisi tidak berfungsi dengan baik"
-                        ketigaInt = R.id.rb_no3_rg3
-                    }
-                }
-                val nilaiKetiga = when (mBinding.rg3.checkedRadioButtonId) {
-                    R.id.rb_yes_rg3 ->
-                        0
-                    R.id.rb_no1_rg3 ->
-                        0
-                    R.id.rb_no2_rg3 ->
-                        2
-                    else ->
-                        3
-                }
-
-                var keempat = ""
-                if (mBinding.rg4.checkedRadioButtonId == R.id.rb_yes_rg4) {
-                    keempat = "Kondisi pielschall masih dapat terlihat"
-                    keempatInt = R.id.rb_yes_rg4
-                } else {
-                    keempat = "Kondisi pielschall tidak dapat terlihat"
-                    keempatInt = R.id.rb_no_rg4
-                }
-                val nilaiKeempat = if (mBinding.rg4.checkedRadioButtonId == R.id.rb_yes_rg4)
-                    1 else 0
-
-                var kelima = ""
-                when(mBinding.rg5.checkedRadioButtonId) {
-                    R.id.rb_no1_rg5 -> {
-                        kelima = "Kondisi sedimen di saluran tidak ada"
-                        kelimaInt = R.id.rb_no1_rg5
-                    }
-                    R.id.rb_no2_rg5 -> {
-                        kelima = "Kondisi sedimen di saluran dengan sedikit batuan/pasir, tidak menganggu aliran"
-                        kelimaInt = R.id.rb_no2_rg5
-                    }
-                    R.id.rb_no3_rg5 -> {
-                        kelima = "Kondisi sedimen di saluran dengan sedikit tanah, tidak menganggu aliran"
-                        kelimaInt = R.id.rb_no3_rg5
-                    }
-                    R.id.rb_no4_rg5 -> {
-                        kelima = "Kondisi sedimen di saluran dengan tanah/pasir/tanah, berbentuk bongkohan"
-                        kelimaInt = R.id.rb_no4_rg5
-                    }
-                    else -> {
-                        kelima = "Kondisi sedimen di saluran dengan banyak tanah/pasir/batuan yang menutupi sebagian saluran"
-                        kelimaInt = R.id.rb_no5_rg5
-                    }
-                }
-                val nilaiKelima = when(mBinding.rg5.checkedRadioButtonId) {
-                    R.id.rb_no1_rg5 ->
-                        0
-                    R.id.rb_no2_rg5 ->
-                        0
-                    R.id.rb_no3_rg5 ->
-                        0
-                    R.id.rb_no4_rg5 ->
-                        3
-                    else ->
-                        5
-                }
-
-                val result = "Keterangan:\n1.$pertama\n2.$kedua\n3.$ketiga\n4.$keempat\n5.$kelima"
-                val nilai = nilaiPertama + nilaiKedua + nilaiKetiga + nilaiKeempat + nilaiKelima
-
-                if (nilai >= 5) {
-                    back.show(this, "Kondisi Kurang Baik\nTidak dianjurkan melakukan kalibrasi",
-                        "Lanjutkan", "Tidak", object: MessageDialogUtil.DialogListener {
-                        override fun onYes(action: Boolean) {
-                            if (action) {
-                                baseDataViewModel.updateCheckKondisi(idBaseData.toInt(), result, nilai,
-                                        pertamaInt, keduaInt, ketigaInt, keempatInt, kelimaInt)
-                            } else {
-                                finish()
-                            }
-                        }
-                    })
-                } else {
-                    baseDataViewModel.updateCheckKondisi(idBaseData.toInt(), result, nilai, pertamaInt,
-                            keduaInt, ketigaInt, keempatInt, kelimaInt)
-                }
+                ToastUtils.showLong("Silahkan pilih kondisi terlebih dahulu")
             }
+        }
+
+        mBinding.btnBack.setOnClickListener {
+            mBinding.stepper.goToPreviousStep()
         }
     }
 
     private fun setViewModel() {
         baseDataViewModel.getBaseDataById(idBaseData.toInt())
         baseDataViewModel.baseDataById.observe(this, {
-            if (it.pertama != 0) {
+            if (it != null) {
                 if (it.tipeBangunan != null) {
                     tipeBangunan = it.tipeBangunan!!
                 }
-                mBinding.rg1.check(it.pertama!!)
-                mBinding.rg2.check(it.kedua!!)
-                mBinding.rg3.check(it.ketiga!!)
-                mBinding.rg4.check(it.keempat!!)
-                mBinding.rg5.check(it.kelima!!)
+                kondisiList = IntArray(5)
+                kondisiList[0] = it.pertama ?: 0
+                kondisiList[1] = it.kedua ?: 0
+                kondisiList[2] = it.ketiga ?: 0
+                kondisiList[3] = it.keempat ?: 0
+                kondisiList[4] = it.kelima ?: 0
+
+                onCheckFillData()
             }
         })
         baseDataViewModel.baseDataUpdate.observe(this, {
             if (it != 0) {
                 if (tipeBangunan != "") {
-                    loading.dialog.dismiss()
+                    loadingDismiss()
                     val intent = Intent(this@CheckKondisiActivity, DetailBangunanActivity::class.java)
                     intent.putExtra("id_base_data", idBaseData)
                     intent.putExtra("tipe_bangunan", tipeBangunan)
                     startActivity(intent)
                 } else {
-                    loading.dialog.dismiss()
+                    loadingDismiss()
                     val intent = Intent(this@CheckKondisiActivity, TipeBangunanUkurActivity::class.java)
                     intent.putExtra("id_base_data", idBaseData)
                     startActivity(intent)
@@ -211,13 +158,100 @@ class CheckKondisiActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        back.show(this, title = "Apakah anda yakin ingin kembali ke menu sebelumnya",
+        if (mBinding.stepper.currentStep != 0) {
+            findNavController(R.id.fragment_steper).navigateUp()
+        } else {
+            back.show(this, title = "Apakah anda yakin ingin kembali ke menu sebelumnya",
                 yes = "Ya", no = "Tidak", object: MessageDialogUtil.DialogListener {
-            override fun onYes(action: Boolean) {
-                if (action) {
-                    finish()
+                    override fun onYes(action: Boolean) {
+                        if (action) {
+                            finish()
+                        }
+                    }
+                })
+        }
+    }
+
+    override fun onCompleted() {
+
+    }
+
+    override fun onStepChanged(step: Int) {
+        if (step > 2) {
+            mBinding.stepper.pageScroll(View.FOCUS_RIGHT)
+        } else {
+            mBinding.stepper.pageScroll(View.FOCUS_LEFT)
+        }
+        if (step != 0) {
+            mBinding.btnBack.visibility = View.VISIBLE
+        } else {
+            mBinding.btnBack.visibility = View.GONE
+        }
+    }
+
+    private fun getFragment(): Fragment {
+        val navHostFragment: Fragment? =
+            supportFragmentManager.findFragmentById(R.id.fragment_steper)
+        return (navHostFragment?.childFragmentManager?.fragments?.get(0))!!
+    }
+
+    override fun onChecklist(kondisiPosition: Int, kondisiModel: KondisiModel) {
+        when (kondisiPosition) {
+            0 -> {
+                if (kondisiArray.size == 0) {
+                    kondisiArray.add(kondisiModel)
+                } else {
+                    kondisiArray[0] = kondisiModel
                 }
             }
-        })
+            1 -> {
+                if (kondisiArray.size == 1) {
+                    kondisiArray.add(kondisiModel)
+                } else {
+                    kondisiArray[1] = kondisiModel
+                }
+            }
+            2 -> {
+                if (kondisiArray.size == 2) {
+                    kondisiArray.add(kondisiModel)
+                } else {
+                    kondisiArray[2] = kondisiModel
+                }
+            }
+            3 -> {
+                if (kondisiArray.size == 3) {
+                    kondisiArray.add(kondisiModel)
+                } else {
+                    kondisiArray[3] = kondisiModel
+                }
+            }
+            4 -> {
+                if (kondisiArray.size == 4) {
+                    kondisiArray.add(kondisiModel)
+                } else {
+                    kondisiArray[4] = kondisiModel
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated() {
+        onCheckFillData()
+    }
+
+    private fun onCheckFillData() {
+        if (::mBinding.isInitialized) {
+            if (::kondisiList.isInitialized) {
+                val fragment = getFragment() as ChecklistFragment
+                fragment.setKondisiFill(mBinding.stepper.currentStep, kondisiList[mBinding.stepper.currentStep])
+            } else {
+                (kondisiArray.size > 0).let {
+                    if (mBinding.stepper.currentStep == kondisiArray.size - 1) {
+                        val fragment = getFragment() as ChecklistFragment
+                        fragment.setKondisiFill(mBinding.stepper.currentStep, kondisiArray[mBinding.stepper.currentStep])
+                    }
+                }
+            }
+        }
     }
 }

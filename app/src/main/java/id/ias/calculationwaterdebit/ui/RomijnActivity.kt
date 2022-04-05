@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -88,6 +89,11 @@ class RomijnActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.romijnTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.romijnTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.romijnTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.romijnTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.romijnTable.setTitle(readTitle)
             mBinding.romijnTable.setContent(readBody)
 
@@ -133,6 +139,11 @@ class RomijnActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.romijnCd.setTheme(LegacyTableView.CUSTOM)
+                mBinding.romijnCd.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.romijnCd.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.romijnCd.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.romijnCd.setTitle(readTitle)
                 mBinding.romijnCd.setContent(readBody)
 
@@ -186,6 +197,11 @@ class RomijnActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.romijnCv.setTheme(LegacyTableView.CUSTOM)
+        mBinding.romijnCv.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.romijnCv.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.romijnCv.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.romijnCv.setTitle(readTitle)
         mBinding.romijnCv.setContent(readBody)
 
@@ -223,6 +239,11 @@ class RomijnActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.romijnDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.romijnDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.romijnDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.romijnDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.romijnDebit.setTitle(readTitle)
         mBinding.romijnDebit.setContent(readBody)
 

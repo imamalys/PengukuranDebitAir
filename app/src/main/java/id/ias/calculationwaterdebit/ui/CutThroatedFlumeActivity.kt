@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -71,6 +72,11 @@ class CutThroatedFlumeActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.ctfTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.ctfTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.ctfTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.ctfTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.ctfTable.setTitle(readTitle)
             mBinding.ctfTable.setContent(readBody)
 
@@ -117,6 +123,11 @@ class CutThroatedFlumeActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.ctfTentukan.setTheme(LegacyTableView.CUSTOM)
+                mBinding.ctfTentukan.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.ctfTentukan.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.ctfTentukan.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.ctfTentukan.setTitle(readTitle)
                 mBinding.ctfTentukan.setContent(readBody)
 
@@ -153,6 +164,11 @@ class CutThroatedFlumeActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.ctfC.setTheme(LegacyTableView.CUSTOM)
+        mBinding.ctfC.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.ctfC.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.ctfC.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.ctfC.setTitle(readTitle)
         mBinding.ctfC.setContent(readBody)
 
@@ -191,6 +207,11 @@ class CutThroatedFlumeActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.ctfDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.ctfDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.ctfDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.ctfDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.ctfDebit.setTitle(readTitle)
         mBinding.ctfDebit.setContent(readBody)
 

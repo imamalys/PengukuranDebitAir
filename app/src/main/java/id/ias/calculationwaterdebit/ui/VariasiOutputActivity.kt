@@ -1,12 +1,15 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.levitnudi.legacytableview.LegacyTableView
 import id.ias.calculationwaterdebit.Application
+import id.ias.calculationwaterdebit.R
 import id.ias.calculationwaterdebit.database.model.PiasModel
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityVariasiOutputBinding
@@ -66,6 +69,7 @@ class VariasiOutputActivity : AppCompatActivity() {
         mBinding.btnNext.setOnClickListener {
             if (currentFormData < variasiOutputViewModel.pengambilanDataById.size) {
                 currentFormData += 1
+                mBinding.btnPrevious.visibility = View.VISIBLE
             }
             getPias()
         }
@@ -73,6 +77,9 @@ class VariasiOutputActivity : AppCompatActivity() {
         mBinding.btnPrevious.setOnClickListener {
             if (currentFormData != 0) {
                 currentFormData -= 1
+                if (currentFormData == 0) {
+                    mBinding.btnPrevious.visibility = View.GONE
+                }
                 getPias()
             }
         }
@@ -131,6 +138,7 @@ class VariasiOutputActivity : AppCompatActivity() {
                     }
                 }
             }
+
             when (piasDatas[i].metodePengmbilan) {
                 "Dua Titik" -> {
                     currentRai = (piasDatas[i].d8 + piasDatas[i].d2) / 2
@@ -167,7 +175,10 @@ class VariasiOutputActivity : AppCompatActivity() {
                 debitSaluranAll.add(debitSaluran)
             }
         }
-
+        mBinding.legacyTableView.setTheme(LegacyTableView.CUSTOM)
+        mBinding.legacyTableView.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.legacyTableView.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.legacyTableView.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.legacyTableView.setTitle(LegacyTableView.readLegacyTitle())
         mBinding.legacyTableView.setContent(LegacyTableView.readLegacyContent())
 

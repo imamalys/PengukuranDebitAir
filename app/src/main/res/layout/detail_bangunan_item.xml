@@ -4,52 +4,46 @@
     android:layout_height="40dp"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
-    android:weightSum="12">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:padding="3dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:id="@+id/tv_notasi"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="8">
 
-    <EditText
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:padding="3dp"
-        android:layout_marginEnd="4dp"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:background="@drawable/edit_text_border"
-        android:inputType="numberDecimal"
-        android:id="@+id/tv_input"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:padding="3dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:id="@+id/tv_notasi"/>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:padding="3dp"
-        android:layout_marginEnd="4dp"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:id="@+id/tv_satuan"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:padding="3dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:background="@drawable/edit_text_border"
+            android:inputType="numberDecimal"
+            android:id="@+id/tv_input"/>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:padding="3dp"
-        android:layout_marginEnd="4dp"
-        android:autoSizeMaxTextSize="12sp"
-        android:autoSizeMinTextSize="6sp"
-        android:autoSizeTextType="uniform"
-        android:autoSizeStepGranularity="1sp"
-        android:gravity="center"
-        android:id="@+id/tv_keterangan"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:padding="3dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:id="@+id/tv_satuan"/>
 
+    </LinearLayout>
 </LinearLayout>

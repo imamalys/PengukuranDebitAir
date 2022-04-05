@@ -34,7 +34,7 @@
                     android:text="Ya"
                     android:textSize="16sp"
                     android:gravity="center"
-                    android:textColor="@color/purple_500"
+                    android:textColor="@color/green_3E8E7E"
                     android:padding="10dp"
                     android:id="@+id/tv_ya"/>
 

@@ -66,71 +66,71 @@ class DetailBangunanViewModel: ViewModel() {
         detailBangunans.add(DetailBangunanModel("", "", ""))
         when(item) {
             "Ambang Lebar Pengontrol Segiempat" -> {
-                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Ambang"))
-                detailBangunans.add(DetailBangunanModel("B1", "0", "Lebar Dasar"))
-                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Ambang"))
-                detailBangunans.add(DetailBangunanModel("P", "0", "Tinggi Ambang"))
-                detailBangunans.add(DetailBangunanModel("m", "0", "Tinggi Di Atas Ambang"))
-                detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
-                detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "*Bc: Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "*B1: Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "*L: Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", "0", "*P: Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", "0", "*m: Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", "0", "*w: Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", "0", "*b1: Lebar Atas"))
             }
             "Ambang Lebar Pengontrol Trapesium" -> {
-                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Ambang"))
-                detailBangunans.add(DetailBangunanModel("B1", "0", "Lebar Dasar"))
-                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Ambang"))
-                detailBangunans.add(DetailBangunanModel("P", "0", "Tinggi Ambang"))
-                detailBangunans.add(DetailBangunanModel("m", "0", "Tinggi Di Atas Ambang"))
-                detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
-                detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
-                detailBangunans.add(DetailBangunanModel("Mc", "0", "Kemiringan Pengontrol"))
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "*Bc: Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "*B1: Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "*L: Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", "0", "*P: Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", "0", "*m: Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", "0", "*w: Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", "0", "*b1: Lebar Atas"))
+                detailBangunans.add(DetailBangunanModel("Mc", "0", "*Mc: Kemiringan Pengontrol"))
             }
             "Ambang Tajam Segiempat" -> {
-                detailBangunans.add(DetailBangunanModel("B", "0", "Lebar Saluran"))
-                detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Mercu"))
-                detailBangunans.add(DetailBangunanModel("p", "0", "Tinggi Mercu di atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("B", "0", "*B: Lebar Saluran"))
+                detailBangunans.add(DetailBangunanModel("b", "0", "*b: Lebar Mercu"))
+                detailBangunans.add(DetailBangunanModel("p", "0", "*p: Tinggi Mercu di atas Ambang"))
             }
             "Ambang Tajam Segitiga" -> {
-                detailBangunans.add(DetailBangunanModel("B", "0", "Lebar Saluran"))
-                detailBangunans.add(DetailBangunanModel("θ", "0", "Sudut celah Mercu"))
-                detailBangunans.add(DetailBangunanModel("p", "0", "Tinggi mercu diatas Ambang"))
+                detailBangunans.add(DetailBangunanModel("B", "0", "*B: Lebar Saluran"))
+                detailBangunans.add(DetailBangunanModel("θ", "0", "*θ: Sudut celah Mercu"))
+                detailBangunans.add(DetailBangunanModel("p", "0", "*p: Tinggi mercu diatas Ambang"))
             }
             "Cipoletti" -> {
-                detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Pengukur"))
-                detailBangunans.add(DetailBangunanModel("B1", "0", "Lebar Dasar"))
-                detailBangunans.add(DetailBangunanModel("p", "0", "Tinggi mercu diatas Ambang"))
-                detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Mercu"))
-                detailBangunans.add(DetailBangunanModel("B2", "0", "Lebar Atas"))
+                detailBangunans.add(DetailBangunanModel("b", "0", "*b: Lebar Pengukur"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "*B1: Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("p", "0", "*p: Tinggi mercu diatas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", "0", "*w: Tinggi Mercu"))
+                detailBangunans.add(DetailBangunanModel("B2", "0", "*B2: Lebar Atas"))
             }
             "Parshall Flume" -> {
-                detailBangunans.add(DetailBangunanModel("b", "0", "Lebar Tenggorokan"))
+                detailBangunans.add(DetailBangunanModel("b", "0", "*b: Lebar Tenggorokan"))
             }
             "Long Throated Flume" -> {
-                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Ambang"))
-                detailBangunans.add(DetailBangunanModel("B1", "0", "Lebar Dasar"))
-                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Ambang"))
-                detailBangunans.add(DetailBangunanModel("P", "0", "Tinggi Ambang"))
-                detailBangunans.add(DetailBangunanModel("m", "0", "Tinggi Di Atas Ambang"))
-                detailBangunans.add(DetailBangunanModel("w", "0", "Tinggi Di Bawah Ambang"))
-                detailBangunans.add(DetailBangunanModel("b1", "0", "Lebar Atas"))
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "*Bc: Lebar Ambang"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "*B1: Lebar Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "*L: Panjang Ambang"))
+                detailBangunans.add(DetailBangunanModel("P", "0", "*P: Tinggi Ambang"))
+                detailBangunans.add(DetailBangunanModel("m", "0", "*m: Tinggi Di Atas Ambang"))
+                detailBangunans.add(DetailBangunanModel("w", "0", "*w: Tinggi Di Bawah Ambang"))
+                detailBangunans.add(DetailBangunanModel("b1", "0", "*b1: Lebar Atas"))
             }
             "Cut Throated Flume" -> {
-                detailBangunans.add(DetailBangunanModel("W", "0", "Lebar Tenggorokan"))
-                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Flume"))
+                detailBangunans.add(DetailBangunanModel("W", "0", "*W: Lebar Tenggorokan"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "*L: Panjang Flume"))
             }
             "Orifice" -> {
-                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Lubang"))
-                detailBangunans.add(DetailBangunanModel("W", "0", "Tinggi Lubang"))
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "*Bc: Lebar Lubang"))
+                detailBangunans.add(DetailBangunanModel("W", "0", "*W: Tinggi Lubang"))
             }
             "Romijn" -> {
-                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Meja"))
-                detailBangunans.add(DetailBangunanModel("B1", "0", "Tinggi Dasar"))
-                detailBangunans.add(DetailBangunanModel("L", "0", "Panjang Meja"))
-                detailBangunans.add(DetailBangunanModel("P", "0", "Tinggi Meja dari Dasar"))
-                detailBangunans.add(DetailBangunanModel("m", "0", "Tinggi Meja di Atas Meja"))
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "*Bc: Lebar Meja"))
+                detailBangunans.add(DetailBangunanModel("B1", "0", "*B1: Tinggi Dasar"))
+                detailBangunans.add(DetailBangunanModel("L", "0", "*L: Panjang Meja"))
+                detailBangunans.add(DetailBangunanModel("P", "0", "*P: Tinggi Meja dari Dasar"))
+                detailBangunans.add(DetailBangunanModel("m", "0", "*m: Tinggi Meja di Atas Meja"))
             }
             "Crump- De Gyuter" -> {
-                detailBangunans.add(DetailBangunanModel("Bc", "0", "Lebar Bukaan"))
-                detailBangunans.add(DetailBangunanModel("W", "0", "Tinggi Bukaan"))
+                detailBangunans.add(DetailBangunanModel("Bc", "0", "*Bc: Lebar Bukaan"))
+                detailBangunans.add(DetailBangunanModel("W", "0", "*W: Tinggi Bukaan"))
             }
         }
 

@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -91,6 +92,11 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.atsTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.atsTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.atsTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.atsTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.atsTable.setTitle(readTitle)
             mBinding.atsTable.setContent(readBody)
 
@@ -134,6 +140,11 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.atsReaktif.setTheme(LegacyTableView.CUSTOM)
+                mBinding.atsReaktif.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.atsReaktif.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.atsReaktif.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.atsReaktif.setTitle(readTitle)
                 mBinding.atsReaktif.setContent(readBody)
 
@@ -170,6 +181,11 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.atsCd.setTheme(LegacyTableView.CUSTOM)
+        mBinding.atsCd.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.atsCd.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.atsCd.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.atsCd.setTitle(readTitle)
         mBinding.atsCd.setContent(readBody)
 
@@ -217,6 +233,11 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.atsCdPenuh.setTheme(LegacyTableView.CUSTOM)
+        mBinding.atsCdPenuh.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.atsCdPenuh.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.atsCdPenuh.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.atsCdPenuh.setTitle(readTitle)
         mBinding.atsCdPenuh.setContent(readBody)
 
@@ -255,6 +276,11 @@ class AmbangTajamSegitigaActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.atsDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.atsDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.atsDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.atsDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.atsDebit.setTitle(readTitle)
         mBinding.atsDebit.setContent(readBody)
 

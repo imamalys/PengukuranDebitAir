@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.ReportFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/cl_top"
+            android:background="@drawable/main_menu_bottom_corner"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:id="@+id/iv_top_left"
+                android:src="@drawable/logo_app"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:background="@drawable/logo_background"
+                app:layout_constraintRight_toRightOf="parent">
+                <ImageView
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/pupr_logo"
+                    android:layout_marginRight="5dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                app:layout_constraintLeft_toLeftOf="@+id/iv_top_left"
+                app:layout_constraintRight_toRightOf="@id/iv_top_left"
+                app:layout_constraintTop_toBottomOf="@id/iv_top_left"
+                android:text="IRCAL-BOP"
+                android:textSize="@dimen/_14ssp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/rv_report"
+            app:layout_constraintTop_toBottomOf="@id/cl_top"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -8,13 +8,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "id.ias.calculationwaterdebit"
         minSdkVersion 22
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
@@ -61,32 +61,27 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     // Dependencies for working with Architecture components
     // You'll probably have to update the version numbers in build.gradle (Project)
-
     // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
-
     // Kotlin components
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
-
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.nav_version"
     // UI
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
-
-    // Testing
-    testImplementation "junit:junit:$rootProject.junitVersion"
-    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-    androidTestImplementation ("androidx.test.espresso:espresso-core:$rootProject.espressoVersion", {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
+    // Jetpack Compose Integration
+    implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
+    //other
     implementation 'com.blankj:utilcodex:1.30.4'
     implementation "androidx.multidex:multidex:$rootProject.multidex_version"
     implementation 'com.github.levitnudi:LegacyTableView:1.4'
@@ -97,4 +92,18 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     implementation 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+    implementation 'com.github.acefalobi:android-stepper:v.0.3.0'
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$rootProject.nav_version"
+    // Testing
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+    androidTestImplementation ("androidx.test.espresso:espresso-core:$rootProject.espressoVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$rootProject.nav_version"
 }

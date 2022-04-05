@@ -1,6 +1,6 @@
 package id.ias.calculationwaterdebit.ui
-
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.anychart.charts.Cartesian
 import com.anychart.charts.Scatter
-import com.anychart.core.cartesian.series.Line
 import com.anychart.data.Mapping
 import com.anychart.data.Set
 import com.anychart.enums.Anchor
@@ -252,6 +250,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisPertamaTable1.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisPertamaTable1.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisPertamaTable1.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisPertamaTable1.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisPertamaTable1.setTitle(readTitle)
         mBinding.analisisPertamaTable1.setContent(readBody)
 
@@ -365,6 +368,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisPertamaTable2.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisPertamaTable2.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisPertamaTable2.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisPertamaTable2.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisPertamaTable2.setTitle(readTitle)
         mBinding.analisisPertamaTable2.setContent(readBody)
 
@@ -516,6 +524,11 @@ class AnalisisActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.analisisKeduaTable1.setTheme(LegacyTableView.CUSTOM)
+            mBinding.analisisKeduaTable1.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.analisisKeduaTable1.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.analisisKeduaTable1.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.analisisKeduaTable1.setTitle(readTitle)
             mBinding.analisisKeduaTable1.setContent(readBody)
 
@@ -609,6 +622,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisKeduaTable2.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisKeduaTable2.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisKeduaTable2.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisKeduaTable2.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisKeduaTable2.setTitle(readTitle)
         mBinding.analisisKeduaTable2.setContent(readBody)
 
@@ -676,6 +694,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisKetigaRegresi.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisKetigaRegresi.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisKetigaRegresi.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisKetigaRegresi.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisKetigaRegresi.setTitle(readTitle)
         mBinding.analisisKetigaRegresi.setContent(readBody)
 
@@ -814,6 +837,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisKetigaTable1.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisKetigaTable1.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisKetigaTable1.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisKetigaTable1.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisKetigaTable1.setTitle(readTitle)
         mBinding.analisisKetigaTable1.setContent(readBody)
 
@@ -906,6 +934,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisKetigaTable2.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisKetigaTable2.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisKetigaTable2.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisKetigaTable2.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisKetigaTable2.setTitle(readTitle)
         mBinding.analisisKetigaTable2.setContent(readBody)
 
@@ -1012,6 +1045,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisResultTable1.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisResultTable1.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisResultTable1.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisResultTable1.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisResultTable1.setTitle(readTitle)
         mBinding.analisisResultTable1.setContent(readBody)
 
@@ -1103,6 +1141,11 @@ class AnalisisActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.analisisResultTable2.setTheme(LegacyTableView.CUSTOM)
+        mBinding.analisisResultTable2.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.analisisResultTable2.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.analisisResultTable2.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.analisisResultTable2.setTitle(readTitle)
         mBinding.analisisResultTable2.setContent(readBody)
 

@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -82,6 +83,11 @@ class CrumpActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.crumpTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.crumpTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.crumpTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.crumpTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.crumpTable.setTitle(readTitle)
             mBinding.crumpTable.setContent(readBody)
 
@@ -136,6 +142,11 @@ class CrumpActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.crumpDebit.setTheme(LegacyTableView.CUSTOM)
+                mBinding.crumpDebit.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.crumpDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.crumpDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.crumpDebit.setTitle(readTitle)
                 mBinding.crumpDebit.setContent(readBody)
 

@@ -35,10 +35,10 @@ class VariasiKetinggianAirActivity : AppCompatActivity() {
     }
 
     private fun setAction() {
-        mBinding.etVariasiKetinggianAir.filters = arrayOf<InputFilter>(MinMaxFilter("1", "30"))
+        mBinding.tieVariasiAir.filters = arrayOf<InputFilter>(MinMaxFilter("1", "30"))
 
         mBinding.btnNext.setOnClickListener {
-            if (mBinding.etVariasiKetinggianAir.text.toString() != "") {
+            if (mBinding.tieVariasiAir.text.toString() != "") {
                 val intent = Intent(
                     this@VariasiKetinggianAirActivity,
                     PengambilanDataActivity::class.java
@@ -48,7 +48,7 @@ class VariasiKetinggianAirActivity : AppCompatActivity() {
                 intent.putExtra("id_base_data", idBaseData)
                 intent.putExtra(
                     "variasi_ketinggian_air",
-                    mBinding.etVariasiKetinggianAir.text.toString()
+                    mBinding.tieVariasiAir.text.toString()
                 )
                 intent.putExtra("is_back", false)
                 intent.putExtra("current_variasi", 0)

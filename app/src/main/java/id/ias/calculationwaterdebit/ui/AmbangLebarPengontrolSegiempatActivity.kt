@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -90,6 +91,11 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.alpsTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.alpsTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.alpsTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.alpsTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.alpsTable.setTitle(readTitle)
             mBinding.alpsTable.setContent(readBody)
 
@@ -135,6 +141,11 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.alpsCd.setTheme(LegacyTableView.CUSTOM)
+                mBinding.alpsCd.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.alpsCd.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.alpsCd.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.alpsCd.setTitle(readTitle)
                 mBinding.alpsCd.setContent(readBody)
 
@@ -227,6 +238,11 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.alpsCv.setTheme(LegacyTableView.CUSTOM)
+        mBinding.alpsCv.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.alpsCv.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.alpsCv.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.alpsCv.setTitle(readTitle)
         mBinding.alpsCv.setContent(readBody)
 
@@ -262,6 +278,11 @@ class AmbangLebarPengontrolSegiempatActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.alpsDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.alpsDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.alpsDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.alpsDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.alpsDebit.setTitle(readTitle)
         mBinding.alpsDebit.setContent(readBody)
 

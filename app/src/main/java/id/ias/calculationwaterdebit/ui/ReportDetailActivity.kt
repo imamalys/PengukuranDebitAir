@@ -1,16 +1,14 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.Constraints
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Scatter
-import com.anychart.core.cartesian.series.Line
 import com.anychart.data.Mapping
 import com.anychart.data.Set
 import com.anychart.enums.Anchor
@@ -158,6 +156,11 @@ class ReportDetailActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.qTable1.setTheme(LegacyTableView.CUSTOM)
+        mBinding.qTable1.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.qTable1.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.qTable1.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.qTable1.setTitle(readTitle)
         mBinding.qTable1.setContent(readBody)
 
@@ -251,6 +254,11 @@ class ReportDetailActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.qTable2.setTheme(LegacyTableView.CUSTOM)
+        mBinding.qTable2.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.qTable2.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.qTable2.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.qTable2.setTitle(readTitle)
         mBinding.qTable2.setContent(readBody)
 
@@ -308,6 +316,7 @@ class ReportDetailActivity : AppCompatActivity() {
         series1.hovered().markers()
             .type(MarkerType.CIRCLE)
             .size(4.0)
+            .stroke("#3E8E7E")
         series1.tooltip()
             .position("right")
             .anchor(Anchor.LEFT_CENTER)
@@ -372,7 +381,7 @@ class ReportDetailActivity : AppCompatActivity() {
         if (isReport) {
             finish()
         } else {
-            val intent = Intent(this@ReportDetailActivity, MainMenuActivity::class.java)
+            val intent = Intent(this@ReportDetailActivity, BottomMainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }

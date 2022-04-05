@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ui.AboutActivity"></activity>
+        <activity
+            android:name=".ui.BottomMainActivity" />
+        <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.AmbangTajamSegiempatActivity" />
         <activity android:name=".ui.CrumpActivity" />
         <activity android:name=".ui.CutThroatedFlumeActivity" />
@@ -19,7 +21,8 @@
         <activity android:name=".ui.CipolettiActivity" />
         <activity android:name=".ui.AmbangTajamSegitigaActivity" />
         <activity android:name=".ui.AmbangLebarPengontrolTrapesiumActivity" />
-        <activity android:name=".ui.SplashScreenActivity">
+        <activity android:name=".ui.SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,13 +31,12 @@
         </activity>
         <activity android:name=".ui.ParshallFlumeActivity" />
         <activity android:name=".ui.OrificeActivity" />
-        <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.CheckKondisiActivity" />
         <activity android:name=".ui.ReportDetailActivity" />
         <activity android:name=".ui.RumusTabelDebitActivity" />
-        <activity android:name=".ui.AnalisisActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.AnalisisActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.VariasiKetinggianAirActivity" />
         <activity android:name=".ui.AmbangLebarPengontrolSegiempatActivity" />
         <activity android:name=".ui.VariasiOutputActivity" />
@@ -56,10 +58,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.DataInformasiActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".ui.MainMenuActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
     </application>

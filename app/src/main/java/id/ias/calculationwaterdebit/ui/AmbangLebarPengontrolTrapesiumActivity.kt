@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -89,6 +90,11 @@ class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.alptTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.alptTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.alptTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.alptTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.alptTable.setTitle(readTitle)
             mBinding.alptTable.setContent(readBody)
 
@@ -134,6 +140,11 @@ class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.alptCd.setTheme(LegacyTableView.CUSTOM)
+                mBinding.alptCd.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.alptCd.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.alptCd.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.alptCd.setTitle(readTitle)
                 mBinding.alptCd.setContent(readBody)
 
@@ -205,6 +216,11 @@ class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.alptCv.setTheme(LegacyTableView.CUSTOM)
+        mBinding.alptCv.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.alptCv.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.alptCv.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.alptCv.setTitle(readTitle)
         mBinding.alptCv.setContent(readBody)
 
@@ -243,6 +259,11 @@ class AmbangLebarPengontrolTrapesiumActivity : AppCompatActivity() {
         }
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.alptDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.alptDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.alptDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.alptDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.alptDebit.setTitle(readTitle)
         mBinding.alptDebit.setContent(readBody)
 

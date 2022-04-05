@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/_10sdp"
+        android:id="@+id/tv_date"
+        android:text="05 desember 2021"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_date"
+        android:text="Nama Saluran"
+        android:id="@+id/tv_nama_saluran"
+        android:textSize="@dimen/_11sdp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_nama_saluran"
+        android:text="Nama Daerah Irigasi"
+        android:id="@+id/tv_daerah_irigasi"
+        android:textSize="@dimen/_11sdp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_daerah_irigasi"
+        android:text="Instansi Pengelola"
+        android:id="@+id/tv_instansi_pengelola"
+        android:textSize="@dimen/_11sdp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_instansi_pengelola"
+        android:text="Bangunan Ukur"
+        android:id="@+id/tv_bangunan_ukur"
+        android:textSize="@dimen/_11sdp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_bangunan_ukur"
+        android:text="Tipe Bangunan"
+        android:id="@+id/tv_tipe_bangunan"
+        android:textSize="@dimen/_11sdp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.AboutFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/cl_top"
+            android:background="@drawable/main_menu_bottom_corner"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:id="@+id/iv_top_left"
+                android:src="@drawable/logo_app"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:background="@drawable/logo_background"
+                app:layout_constraintRight_toRightOf="parent">
+                <ImageView
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/pupr_logo"
+                    android:layout_marginRight="5dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                app:layout_constraintLeft_toLeftOf="@+id/iv_top_left"
+                app:layout_constraintRight_toRightOf="@id/iv_top_left"
+                app:layout_constraintTop_toBottomOf="@id/iv_top_left"
+                android:text="IRCAL-BOP"
+                android:textSize="@dimen/_14ssp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/cl_top"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:justificationMode="inter_word"
+                        android:text="IRCAL – BOP (Irrigation Calibration Bina Operasi dan Pemeliharaan), aplikasi yang disiapkan untuk membantu para petugas O&amp;P irigasi dalam melaksanakan kalibrasi bangunan ukur irigasi."
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Aplikasi dengan berbasis Android ini disiapkan sebagai tools untuk menghitung/menganalisis data debit (kalibrasi) menjadi tabel debit terkoreksi (debit operasi) secara efesien, efektif dan praktis"
+                        android:textSize="18sp"
+                        android:justificationMode="inter_word"
+                        android:textColor="#000000"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dipersiapkan oleh:"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Direktorat Bina Operasi dan Pemeliharaan"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dalam kegiatan:"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Aktualisasi CPNS PUPR 2021"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Disusun Oleh:"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tim Penyusun"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ir. Lilik Retno Cahyadiningsih, M.A\nsebagai Direktur Direktorat Bina Operasi dan Pemeliharan"
+                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Dadang Ridwan, S.T, MPSDA\nsebagai Mentor "
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Hanhan Ahmad Sofiyuddin, S.T.P, M.Agr\nsebagai Narasumber"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="M Arief Jamalludin, S.Tr.T\nsebagai Peserta Aktualisasi"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Tim Aplikasi"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Yusuf Wijayanto, S.Kom"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Imam  Aly Syafii, S.Kom"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Aplikasi ini mengacu pada"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Kriteria Perencanaan Jaringan Irigasi Bagian Bangunan 2013 (KP-04)"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SNI 8137: 2015 Tentang Pengukuran Debit pada Saluran Terbuka menggunakan Bangunan Ukur Tipe Pelimpah Atas"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SNI 8066: 2015 Tentang Tata Cara Pengukuran Debit Aliran Sungai dan Saluran Terbuka menggunakan Alat Ukur Arus dan Pelampung"
+                        android:textSize="18sp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="#000000"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

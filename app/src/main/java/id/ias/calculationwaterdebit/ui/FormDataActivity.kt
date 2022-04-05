@@ -69,8 +69,8 @@ class FormDataActivity : AppCompatActivity() {
             }
         }
 
-        mBinding.etH1.setText(formDataActivityViewModel.h1)
-        mBinding.etHb.setText(formDataActivityViewModel.hb)
+        mBinding.tieH1.setText(formDataActivityViewModel.h1)
+        mBinding.tieHb.setText(formDataActivityViewModel.hb)
 
         setAction()
         setViewModel()
@@ -86,7 +86,7 @@ class FormDataActivity : AppCompatActivity() {
     }
 
     fun setAction() {
-        mBinding.etH2.addTextChangedListener(object : TextWatcher {
+        mBinding.tieH2.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
@@ -112,7 +112,7 @@ class FormDataActivity : AppCompatActivity() {
             }
         })
 
-        mBinding.etJarakPias.addTextChangedListener(object : TextWatcher {
+        mBinding.tieJarak.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
                 start: Int,
@@ -210,9 +210,9 @@ class FormDataActivity : AppCompatActivity() {
         })
 
         mBinding.btnNext.setOnClickListener {
-            if(mBinding.etH2.text.toString() == "") {
+            if(mBinding.tieH2.text.toString() == "") {
                 ToastUtils.showLong("H2 belum diisi")
-            } else if(mBinding.etJarakPias.text.toString() == "") {
+            } else if(mBinding.tieJarak.text.toString() == "") {
                 ToastUtils.showLong("Jarak Antar Pias belum diisi")
             }
             else {
@@ -240,8 +240,8 @@ class FormDataActivity : AppCompatActivity() {
         piasModel.let {
             when {
                 isBack -> {
-                    mBinding.etH2.setText(piasModel[formDataActivityViewModel.currentPiasSize].h2.toString())
-                    mBinding.etJarakPias.setText(piasModel[formDataActivityViewModel.currentPiasSize].jarakAntarPias.toString())
+                    mBinding.tieH2.setText(piasModel[formDataActivityViewModel.currentPiasSize].h2.toString())
+                    mBinding.tieJarak.setText(piasModel[formDataActivityViewModel.currentPiasSize].jarakAntarPias.toString())
                     formDataActivityViewModel.h2 = piasModel[formDataActivityViewModel.currentPiasSize].h2.toString()
                     formDataActivityViewModel.jarakPias = piasModel[formDataActivityViewModel.currentPiasSize].jarakAntarPias.toString()
                     formDataActivityViewModel.kecepatanAirValues.value = FloatArray(3)
@@ -256,10 +256,8 @@ class FormDataActivity : AppCompatActivity() {
                 }
                 it.size < formDataActivityViewModel.jumlahPias -> {
     //                mBinding.etH1.setText("")
-                    mBinding.etH2.setText("")
-                    mBinding.etH2.hint = "0"
-                    mBinding.etJarakPias.setText("")
-                    mBinding.etJarakPias.hint = "0"
+                    mBinding.tieH2.setText("")
+                    mBinding.tieJarak.setText("")
                     formDataActivityViewModel.h2 = "0"
                     formDataActivityViewModel.jarakPias = "0"
                     formDataActivityViewModel.kecepatanAirValues.value = FloatArray(3)

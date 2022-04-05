@@ -104,7 +104,7 @@ class CirclePagerIndicatorDecoration(private val mContext: Context): RecyclerVie
         c: Canvas, indicatorStartX: Float, indicatorPosY: Float,
         highlightPosition: Int, progress: Float
     ) {
-        mPaint.color = mContext.resources.getColor(R.color.purple_200)
+        mPaint.color = mContext.resources.getColor(R.color.green_3E8E7E)
 
         // width of item indicator including padding
         val itemWidth = mIndicatorItemLength + mIndicatorItemPadding

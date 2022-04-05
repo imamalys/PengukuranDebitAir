@@ -2,7 +2,6 @@ package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,8 +11,8 @@ import id.ias.calculationwaterdebit.adapter.DetailBangunanAdapter
 import id.ias.calculationwaterdebit.database.model.*
 import id.ias.calculationwaterdebit.database.viewmodel.*
 import id.ias.calculationwaterdebit.databinding.ActivityDetailBangunanBinding
-import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.LoadingDialogUtil
+import id.ias.calculationwaterdebit.util.MessageDialogUtil
 import id.ias.calculationwaterdebit.util.PictureDialogUtil
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanUkurViewModelFactory
 import id.ias.calculationwaterdebit.viewmodel.DetailBangunanViewModel
@@ -297,7 +296,16 @@ class DetailBangunanActivity : AppCompatActivity() {
                     }
                 }
             )
+
             mBinding.rvDetailBangunan.adapter = adapter
+
+            var keterangan = "Keterangan:"
+            for (bangunan in detailBangunanViewModel.getDetailBangunan(it)) {
+                if (!bangunan.keterangan.equals("")) {
+                    keterangan += "\n${bangunan.keterangan}"
+                }
+            }
+            mBinding.tvKeterangan.text = keterangan
         }
 
         when(detailBangunanViewModel.detailBangunan.value) {

@@ -32,7 +32,6 @@ class DetailBangunanAdapter(
                     mBinding.tvInput.setText("")
                     mBinding.tvInput.isFocusable = false
                     mBinding.tvSatuan.text = "Satuan"
-                    mBinding.tvKeterangan.text = "Keterangan"
                     mBinding.tvInput.setBackgroundResource(0)
                 } else {
                     mBinding.tvInput.setBackgroundResource(R.drawable.edit_text_border)
@@ -44,7 +43,6 @@ class DetailBangunanAdapter(
                     }
                     mBinding.tvInput.isFocusable = true
                     mBinding.tvSatuan.text = "m"
-                    mBinding.tvKeterangan.text = this.keterangan
 
                     mBinding.tvInput.addTextChangedListener(object : TextWatcher {
                         override fun beforeTextChanged(

@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -85,6 +86,11 @@ class ParshallFlumeActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.parshallFlumeTable.setTheme(LegacyTableView.CUSTOM)
+        mBinding.parshallFlumeTable.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.parshallFlumeTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.parshallFlumeTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.parshallFlumeTable.setTitle(readTitle)
         mBinding.parshallFlumeTable.setContent(readBody)
 
@@ -130,6 +136,11 @@ class ParshallFlumeActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.parshallFlumeTable2.setTheme(LegacyTableView.CUSTOM)
+                mBinding.parshallFlumeTable2.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.parshallFlumeTable2.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.parshallFlumeTable2.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.parshallFlumeTable2.setTitle(readTitle)
                 mBinding.parshallFlumeTable2.setContent(readBody)
 
@@ -174,6 +185,11 @@ class ParshallFlumeActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.parshallFlumeDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.parshallFlumeDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.parshallFlumeDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.parshallFlumeDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.parshallFlumeDebit.setTitle(readTitle)
         mBinding.parshallFlumeDebit.setContent(readBody)
 

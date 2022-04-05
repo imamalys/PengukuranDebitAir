@@ -12,6 +12,13 @@ class LoadingDialogUtil {
 
     lateinit var dialog: CustomDialog
 
+    fun isShow(): Boolean {
+        return if (::dialog.isInitialized) {
+            dialog.isShowing
+        } else {
+            false
+        }
+    }
     fun show(context: Context, isCancelable: Boolean = false): Dialog {
         return show(context, null, isCancelable)
     }

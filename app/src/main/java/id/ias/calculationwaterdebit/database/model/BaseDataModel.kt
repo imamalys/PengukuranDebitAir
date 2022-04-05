@@ -13,6 +13,7 @@ data class BaseDataModel(
     var namaSaluran: String,
     @ColumnInfo(name = "nama_daerah_irigasi")
     var namaDaerahIrigasi: String,
+    //instansi pengeloa
     @ColumnInfo(name = "wilayah_kewenangan")
     var wilayahKewenangan: String,
     var provinsi: String,

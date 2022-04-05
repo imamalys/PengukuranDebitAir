@@ -52,7 +52,63 @@ class DataInformasiActivity : AppCompatActivity() {
     }
 
     private fun setAction() {
-        mBinding.etTanggal.setOnClickListener {
+        mBinding.tieNamaSaluran.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                mBinding.tieNamaSaluran.hint = ""
+            } else {
+                mBinding.tieNamaSaluran.hint = null
+            }
+        }
+
+        mBinding.tieNamaDaerah.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                mBinding.tieNamaDaerah.hint = ""
+            } else {
+                mBinding.tieNamaDaerah.hint = null
+            }
+        }
+
+        mBinding.tieInstansiPengelola.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                mBinding.tieInstansiPengelola.hint = "BBWS/BWS/Dinas PU SDA Provinsi/Kabupaten/Kota"
+            } else {
+                mBinding.tieNamaPengukur.hint = null
+            }
+        }
+
+        mBinding.tieProvinsi.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                mBinding.tieProvinsi.hint = ""
+            } else {
+                mBinding.tieProvinsi.hint = null
+            }
+        }
+
+        mBinding.tieKabupaten.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                mBinding.tieKabupaten.hint = ""
+            } else {
+                mBinding.tieKabupaten.hint = null
+            }
+        }
+
+        mBinding.tieNoPengukuran.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                mBinding.tieNoPengukuran.hint = "(Nomenklatur Bangun Ukur)"
+            } else {
+                mBinding.tieNamaPengukur.hint = null
+            }
+        }
+
+        mBinding.tieNamaPengukur.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                mBinding.tieNamaPengukur.hint = "(Nama)"
+            } else {
+                mBinding.tieNamaPengukur.hint = null
+            }
+        }
+
+        mBinding.tieTanggal.setOnClickListener {
             try {
                 onCreateDialog().show()
             } catch (e: Exception) {
@@ -62,29 +118,29 @@ class DataInformasiActivity : AppCompatActivity() {
 
         mBinding.btnNext.setOnClickListener {
             when("") {
-                mBinding.etNamaSaluran.text.toString() -> {
+                mBinding.tieNamaSaluran.text.toString() -> {
                     ToastUtils.showLong("Nama Saluran tidak boleh kosong")
                 }
 
-                mBinding.etNamaDaerah.text.toString() -> {
+                mBinding.tieNamaDaerah.text.toString() -> {
                     ToastUtils.showLong("Nama Daerah Irigasi tidak boleh kosong")
                 }
-                mBinding.etWilayahKewenangan.text.toString() -> {
-                    ToastUtils.showLong("Wilayah Kewenangan tidak boleh kosong")
+                mBinding.tieInstansiPengelola.text.toString() -> {
+                    ToastUtils.showLong("Instansi Pengelola tidak boleh kosong")
                 }
-                mBinding.etProvinsi.text.toString() -> {
+                mBinding.tieProvinsi.text.toString() -> {
                     ToastUtils.showLong("Provinsi tidak boleh kosong")
                 }
-                mBinding.etKabupaten.text.toString() -> {
+                mBinding.tieKabupaten.text.toString() -> {
                     ToastUtils.showLong("Kabupaten tidak boleh kosong")
                 }
-                mBinding.etTanggal.text.toString() -> {
+                mBinding.tieTanggal.text.toString() -> {
                     ToastUtils.showLong("Tanggal tidak boleh kosong")
                 }
-                mBinding.etNoPengukuran.text.toString() -> {
+                mBinding.tieNoPengukuran.text.toString() -> {
                     ToastUtils.showLong("No. Pengukuran tidak boleh kosong")
                 }
-                mBinding.etNamaPengukur.text.toString() -> {
+                mBinding.tieNamaPengukur.text.toString() -> {
                     ToastUtils.showLong("Nama Pengukur tidak boleh kosong")
                 }
                 else -> {
@@ -97,22 +153,22 @@ class DataInformasiActivity : AppCompatActivity() {
     private fun next() {
         loading.show(this)
         if (idBaseData.toInt() != 0) {
-            baseDataViewModel.updateLoad(idBaseData.toInt(), mBinding.etNamaSaluran.text.toString(),
-                    mBinding.etNamaDaerah.text.toString(), mBinding.etWilayahKewenangan.text.toString(),
-                    mBinding.etProvinsi.text.toString(), mBinding.etKabupaten.text.toString(),
-                    mBinding.etTanggal.text.toString(), mBinding.etNoPengukuran.text.toString(),
-                    mBinding.etNamaPengukur.text.toString())
+            baseDataViewModel.updateLoad(idBaseData.toInt(), mBinding.tieNamaSaluran.text.toString(),
+                    mBinding.tieNamaDaerah.text.toString(), mBinding.tieInstansiPengelola.text.toString(),
+                    mBinding.tieProvinsi.text.toString(), mBinding.tieKabupaten.text.toString(),
+                    mBinding.tieTanggal.text.toString(), mBinding.tieNoPengukuran.text.toString(),
+                    mBinding.tieNamaPengukur.text.toString())
         } else {
             val baseData = BaseDataModel(
                     null,
-                    mBinding.etNamaSaluran.text.toString(),
-                    mBinding.etNamaDaerah.text.toString(),
-                    mBinding.etWilayahKewenangan.text.toString(),
-                    mBinding.etProvinsi.text.toString(),
-                    mBinding.etKabupaten.text.toString(),
-                    mBinding.etTanggal.text.toString(),
-                    mBinding.etNoPengukuran.text.toString(),
-                    mBinding.etNamaPengukur.text.toString(),
+                    mBinding.tieNamaSaluran.text.toString(),
+                    mBinding.tieNamaDaerah.text.toString(),
+                    mBinding.tieInstansiPengelola.text.toString(),
+                    mBinding.tieProvinsi.text.toString(),
+                    mBinding.tieKabupaten.text.toString(),
+                    mBinding.tieTanggal.text.toString(),
+                    mBinding.tieNoPengukuran.text.toString(),
+                    mBinding.tieNamaPengukur.text.toString(),
                     null, null, null, null, null, null,
                     null, null, null, null, null, 0,
                     0, 0, 0, 0 ,0
@@ -130,21 +186,21 @@ class DataInformasiActivity : AppCompatActivity() {
 
     private val myDateListener: DatePickerDialog.OnDateSetListener =
         DatePickerDialog.OnDateSetListener { arg0, arg1, arg2, arg3 ->
-            mBinding.etTanggal.setText(DateUtil.getDateSpecific(arg1, arg2, arg3))
+            mBinding.tieTanggal.setText(DateUtil.getDateSpecific(arg1, arg2, arg3))
         }
 
     private fun setViewModel() {
         if (idBaseData.toInt() != 0) {
             baseDataViewModel.getBaseDataById(idBaseData.toInt())
             baseDataViewModel.baseDataById.observe(this, {
-                mBinding.etNamaSaluran.setText(it.namaSaluran)
-                mBinding.etNamaDaerah.setText(it.namaDaerahIrigasi)
-                mBinding.etWilayahKewenangan.setText(it.wilayahKewenangan)
-                mBinding.etProvinsi.setText(it.provinsi)
-                mBinding.etKabupaten.setText(it.kabupaten)
-                mBinding.etTanggal.setText(it.tanggal)
-                mBinding.etNoPengukuran.setText(it.noPengukuran)
-                mBinding.etNamaPengukur.setText(it.namaPengukur)
+                mBinding.tieNamaSaluran.setText(it.namaSaluran)
+                mBinding.tieNamaDaerah.setText(it.namaDaerahIrigasi)
+                mBinding.tieInstansiPengelola.setText(it.wilayahKewenangan)
+                mBinding.tieProvinsi.setText(it.provinsi)
+                mBinding.tieKabupaten.setText(it.kabupaten)
+                mBinding.tieTanggal.setText(it.tanggal)
+                mBinding.tieNoPengukuran.setText(it.noPengukuran)
+                mBinding.tieNamaPengukur.setText(it.namaPengukur)
             })
         }
 

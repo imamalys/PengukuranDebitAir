@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -88,6 +89,11 @@ class CipolettiActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.cipolettiTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.cipolettiTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.cipolettiTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.cipolettiTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.cipolettiTable.setTitle(readTitle)
             mBinding.cipolettiTable.setContent(readBody)
 
@@ -124,6 +130,11 @@ class CipolettiActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.cipolettiCd.setTheme(LegacyTableView.CUSTOM)
+            mBinding.cipolettiCd.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.cipolettiCd.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.cipolettiCd.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.cipolettiCd.setTitle(readTitle)
             mBinding.cipolettiCd.setContent(readBody)
 
@@ -172,6 +183,11 @@ class CipolettiActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.cipolettiCv.setTheme(LegacyTableView.CUSTOM)
+        mBinding.cipolettiCv.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.cipolettiCv.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.cipolettiCv.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.cipolettiCv.setTitle(readTitle)
         mBinding.cipolettiCv.setContent(readBody)
 
@@ -206,6 +222,11 @@ class CipolettiActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.cipolettiDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.cipolettiDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.cipolettiDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.cipolettiDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.cipolettiDebit.setTitle(readTitle)
         mBinding.cipolettiDebit.setContent(readBody)
 

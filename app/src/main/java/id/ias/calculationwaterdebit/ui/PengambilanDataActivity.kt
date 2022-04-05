@@ -69,7 +69,7 @@ class PengambilanDataActivity : AppCompatActivity() {
         mBinding.btnNext.setOnClickListener {
             if (pengambilanDataActivityViewModel.checkHaveValue()) {
                 if (::pengambilanDataModel.isInitialized) {
-                    if (mBinding.etJmlhSaluranBasah.text.toString().toInt() >= pengambilanDataModel.jumlahSaluranBasah) {
+                    if (mBinding.tieSaluranBasah.text.toString().toInt() >= pengambilanDataModel.jumlahSaluranBasah) {
                         updateOrCreate()
                     } else {
                         ToastUtils.showLong("Jumlah Penampang Pias harus sama atau lebih besar dari sebelumnya")
@@ -82,7 +82,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
         }
 
-        mBinding.etKetinggianBangunanUkur.addTextChangedListener(object: TextWatcher {
+        mBinding.tieKetinggianAirBangunan.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -100,7 +100,7 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
         })
 
-        mBinding.etKetinggianAirHulu.addTextChangedListener(object: TextWatcher {
+        mBinding.tieKetinggianAirHulu.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -118,8 +118,8 @@ class PengambilanDataActivity : AppCompatActivity() {
             }
         })
 
-        mBinding.etJmlhSaluranBasah.filters = arrayOf<InputFilter>(MinMaxFilter("1", "100"))
-        mBinding.etJmlhSaluranBasah.addTextChangedListener(object: TextWatcher {
+        mBinding.tieSaluranBasah.filters = arrayOf<InputFilter>(MinMaxFilter("1", "100"))
+        mBinding.tieSaluranBasah.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -127,11 +127,11 @@ class PengambilanDataActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString() != "" && s.toString() != ".") {
                     pengambilanDataActivityViewModel.pengambilValue.value!![2] = s.toString().toFloat()
-                    mBinding.etJumlahPias.setText((s.toString().toInt() - 1).toString())
+                    mBinding.tieJumlahPias.setText((s.toString().toInt() - 1).toString())
                 } else {
                     pengambilanDataActivityViewModel.pengambilValue.value!![2] = "0".toFloat()
-                    mBinding.etJumlahPias.setText("")
-                    mBinding.etJumlahPias.setHint("0")
+                    mBinding.tieJumlahPias.setText("")
+                    mBinding.tieJumlahPias.setHint("0")
                 }
             }
 
@@ -164,7 +164,7 @@ class PengambilanDataActivity : AppCompatActivity() {
                 intent.putExtra("tipe_bangunan", pengambilanDataActivityViewModel.detailBangunan.value)
                 intent.putExtra("id_pengambilan_data", pengambilanDataModel.id)
                 intent.putExtra("id_base_data", idBaseData)
-                intent.putExtra("jumlah_pias", mBinding.etJmlhSaluranBasah.text.toString().toInt())
+                intent.putExtra("jumlah_pias", mBinding.tieSaluranBasah.text.toString().toInt())
                 intent.putExtra("h1", pengambilanDataActivityViewModel.pengambilValue.value!![0])
                 intent.putExtra("hb", pengambilanDataActivityViewModel.pengambilValue.value!![1])
                 intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir)
@@ -184,7 +184,7 @@ class PengambilanDataActivity : AppCompatActivity() {
                 intent.putExtra("tipe_bangunan", pengambilanDataActivityViewModel.detailBangunan.value)
                 intent.putExtra("id_pengambilan_data", it.toInt())
                 intent.putExtra("id_base_data", idBaseData)
-                intent.putExtra("jumlah_pias", mBinding.etJmlhSaluranBasah.text.toString().toInt())
+                intent.putExtra("jumlah_pias", mBinding.tieSaluranBasah.text.toString().toInt())
                 intent.putExtra("h1", pengambilanDataActivityViewModel.pengambilValue.value!![0])
                 intent.putExtra("hb", pengambilanDataActivityViewModel.pengambilValue.value!![1])
                 intent.putExtra("variasi_Ketinggian_air", variasiKetinggianAir)
@@ -213,10 +213,10 @@ class PengambilanDataActivity : AppCompatActivity() {
                     if (currentVariasi < it.size ) {
                         pengambilanDataModel = it[currentVariasi]
                         idPengambilanData = it[currentVariasi].id!!
-                        mBinding.etKetinggianBangunanUkur.setText(it[currentVariasi].h1.toString())
-                        mBinding.etKetinggianAirHulu.setText(it[currentVariasi].hb.toString())
-                        mBinding.etJmlhSaluranBasah.setText(it[currentVariasi].jumlahSaluranBasah.toInt().toString())
-                        mBinding.etJmlhSaluranBasah.hint = it[currentVariasi].jumlahSaluranBasah.toInt().toString()
+                        mBinding.tieKetinggianAirBangunan.setText(it[currentVariasi].h1.toString())
+                        mBinding.tieKetinggianAirHulu.setText(it[currentVariasi].hb.toString())
+                        mBinding.tieSaluranBasah.setText(it[currentVariasi].jumlahSaluranBasah.toInt().toString())
+                        mBinding.tieSaluranBasah.setText(it[currentVariasi].jumlahSaluranBasah.toInt().toString())
                     } else {
                         isBack = false
                     }

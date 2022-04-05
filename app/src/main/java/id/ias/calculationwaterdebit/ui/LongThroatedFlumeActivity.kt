@@ -1,6 +1,7 @@
 package id.ias.calculationwaterdebit.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -90,6 +91,11 @@ class LongThroatedFlumeActivity : AppCompatActivity() {
 
             val readTitle = LegacyTableView.readLegacyTitle()
             val readBody = LegacyTableView.readLegacyContent()
+
+            mBinding.ltfTable.setTheme(LegacyTableView.CUSTOM)
+            mBinding.ltfTable.setBackgroundColor(Color.TRANSPARENT)
+            mBinding.ltfTable.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+            mBinding.ltfTable.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
             mBinding.ltfTable.setTitle(readTitle)
             mBinding.ltfTable.setContent(readBody)
 
@@ -136,6 +142,11 @@ class LongThroatedFlumeActivity : AppCompatActivity() {
 
                 val readTitle = LegacyTableView.readLegacyTitle()
                 val readBody = LegacyTableView.readLegacyContent()
+
+                mBinding.ltfCd.setTheme(LegacyTableView.CUSTOM)
+                mBinding.ltfCd.setBackgroundColor(Color.TRANSPARENT)
+                mBinding.ltfCd.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+                mBinding.ltfCd.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
                 mBinding.ltfCd.setTitle(readTitle)
                 mBinding.ltfCd.setContent(readBody)
 
@@ -215,6 +226,11 @@ class LongThroatedFlumeActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.ltfCv.setTheme(LegacyTableView.CUSTOM)
+        mBinding.ltfCv.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.ltfCv.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.ltfCv.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.ltfCv.setTitle(readTitle)
         mBinding.ltfCv.setContent(readBody)
 
@@ -250,6 +266,11 @@ class LongThroatedFlumeActivity : AppCompatActivity() {
 
         val readTitle = LegacyTableView.readLegacyTitle()
         val readBody = LegacyTableView.readLegacyContent()
+
+        mBinding.ltfDebit.setTheme(LegacyTableView.CUSTOM)
+        mBinding.ltfDebit.setBackgroundColor(Color.TRANSPARENT)
+        mBinding.ltfDebit.setHeaderBackgroundLinearGradientTOP("#3E8E7E")
+        mBinding.ltfDebit.setHeaderBackgroundLinearGradientBOTTOM("#3E8E7E")
         mBinding.ltfDebit.setTitle(readTitle)
         mBinding.ltfDebit.setContent(readBody)
 

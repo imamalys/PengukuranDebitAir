@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/checklist_navigation"
+    app:startDestination="@id/checklist1">
+    <fragment
+        android:id="@+id/checklist1"
+        android:name="id.ias.calculationwaterdebit.ui.fragment.ChecklistFragment"
+        android:label="Step 1" />
+    <fragment
+        android:id="@+id/checklist2"
+        android:name="id.ias.calculationwaterdebit.ui.fragment.ChecklistFragment"
+        android:label="Step 2" >
+        <argument
+            android:name="view"
+            app:argType="integer"
+            android:defaultValue="1"/>
+    </fragment>
+    <fragment
+        android:id="@+id/checklist3"
+        android:name="id.ias.calculationwaterdebit.ui.fragment.ChecklistFragment"
+        android:label="Step 3">
+        <argument
+            android:name="view"
+            app:argType="integer"
+            android:defaultValue="2"/>
+    </fragment>
+    <fragment
+        android:id="@+id/checklist4"
+        android:name="id.ias.calculationwaterdebit.ui.fragment.ChecklistFragment"
+        android:label="Step 4">
+        <argument
+            android:name="view"
+            app:argType="integer"
+            android:defaultValue="3"/>
+    </fragment>
+    <fragment
+        android:id="@+id/checklist5"
+        android:name="id.ias.calculationwaterdebit.ui.fragment.ChecklistFragment"
+        android:label="Step 5">
+        <argument
+            android:name="view"
+            app:argType="integer"
+            android:defaultValue="4"/>
+    </fragment>
+</navigation>

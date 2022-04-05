@@ -45,16 +45,16 @@ class RumusTabelDebitActivity : AppCompatActivity() {
 
     private fun setAction() {
         mBinding.btnNext.setOnClickListener {
-            if (mBinding.etVariablePertama.text.toString() == "" && mBinding.etVariablePertama.text.toString() == ","
-                && mBinding.etN.text.toString() == "" && mBinding.etN.text.toString() == ",") {
+            if (mBinding.tieVariablePertama.text.toString() == "" && mBinding.tieVariablePertama.text.toString() == ","
+                && mBinding.tieN.text.toString() == "" && mBinding.tieN.text.toString() == ",") {
                 ToastUtils.showLong("Data masih belum terisi")
             } else {
                 baseDataViewModel.update(id = idBaseData.toInt(),
-                    variablePertama = mBinding.etVariablePertama.text.toString(), n = mBinding.etN.text.toString())
+                    variablePertama = mBinding.tieVariablePertama.text.toString(), n = mBinding.tieN.text.toString())
             }
         }
 
-        mBinding.etVariablePertama.addTextChangedListener(object: TextWatcher {
+        mBinding.tieVariablePertama.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -72,7 +72,7 @@ class RumusTabelDebitActivity : AppCompatActivity() {
             }
         })
 
-        mBinding.etN.addTextChangedListener(object: TextWatcher {
+        mBinding.tieN.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -92,6 +92,13 @@ class RumusTabelDebitActivity : AppCompatActivity() {
     }
 
     private fun setViewModel() {
+        if (idBaseData.toInt() != 0) {
+            baseDataViewModel.getBaseDataById(idBaseData.toInt())
+            baseDataViewModel.baseDataById.observe(this, {
+                mBinding.tieVariablePertama.setText(it.variablePertama)
+                mBinding.tieN.setText(it.n)
+            })
+        }
         baseDataViewModel.baseDataUpdate.observe(this, {
             if (it != 0) {
                 val intent = Intent(this@RumusTabelDebitActivity, VariasiOutputActivity::class.java)

@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/data_informasi_bottom_corner"
-        android:paddingBottom="10dp"
+        android:background="@color/green_3E8E7E"
+        android:paddingBottom="@dimen/_20sdp"
         android:id="@+id/cl_top">
 
         <TextView
@@ -20,18 +20,26 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="IRCAL-BOP"
-            android:textSize="20sp"
+            android:textSize="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textColor="#000000"
-            android:padding="10dp" />
+            android:textColor="@color/white"
+            android:padding="@dimen/_10sdp" />
 
-        <ImageView
-            android:layout_width="160dp"
-            android:layout_height="70dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/pupr_logo"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:background="@drawable/logo_background"
+            app:layout_constraintRight_toRightOf="parent">
+            <ImageView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/pupr_logo"
+                android:layout_marginRight="5dp" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -112,42 +120,36 @@
                 android:layout_marginLeft="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/ctf_c"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_debit"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:id="@+id/tv_rumus_debit"
-                android:text="Rumus Debit ="
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <ImageView
-                android:layout_width="0dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="55dp"
-                app:layout_constraintLeft_toRightOf="@+id/tv_rumus_debit"
-                android:id="@+id/iv_rumus_debit"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/cut_throated_flume"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_rumus_debit"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_rumus_debit"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_debit"
+                app:cardCornerRadius="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:id="@+id/cv_iv_rumus_debit">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/iv_rumus_debit"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/cut_throated_flume"/>
+            </androidx.cardview.widget.CardView>
 
             <com.levitnudi.legacytableview.LegacyTableView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/ctf_debit"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_rumus_debit" />
+                app:layout_constraintTop_toBottomOf="@+id/cv_iv_rumus_debit" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:background="@null"
-                android:backgroundTint="#3F51B5"
+                android:backgroundTint="@color/green_3E8E7E"
                 android:text="Next"
                 android:id="@+id/btn_next"
                 android:layout_marginTop="10dp"

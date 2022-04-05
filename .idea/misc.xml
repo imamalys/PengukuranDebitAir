@@ -1,5 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.2676923076923077" />
+        <entry key="app/src/main/res/drawable/background_with_alpha.xml" value="0.27291666666666664" />
+        <entry key="app/src/main/res/drawable/bottom_nav_color.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/drawable/color_selector.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/drawable/data_informasi_bottom_corner.xml" value="0.27291666666666664" />
+        <entry key="app/src/main/res/drawable/edit_text_border.xml" value="0.27291666666666664" />
+        <entry key="app/src/main/res/drawable/logo_background.xml" value="0.27291666666666664" />
+        <entry key="app/src/main/res/drawable/main_menu_bottom_corner.xml" value="0.27291666666666664" />
+        <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.26871794871794874" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_ambang_lebar_pengontrol_segiempat.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_ambang_lebar_pengontrol_trapesium.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_ambang_tajam_segiempat.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_ambang_tajam_segitiga.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_analisis.xml" value="0.2528205128205128" />
+        <entry key="app/src/main/res/layout/activity_bottom_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_check_kondisi.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_cipoletti.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_crump.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_cut_throated_flume.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_data_informasi.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_detail_bangunan.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_form_data.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_long_throated_flume.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/activity_orifice.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_parshall_flume.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_pengambilan_data.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_report.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_report2.xml" value="0.2528205128205128" />
+        <entry key="app/src/main/res/layout/activity_romijn.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_rumus_tabel_debit.xml" value="0.2528205128205128" />
+        <entry key="app/src/main/res/layout/activity_tipe_bangunan_ukur.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_variasi_ketinggian_air.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_variasi_output.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/banner_tipe_bangunan_item.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/detail_bangunan_item.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_checklist.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_report.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/layout/new_report_item.xml" value="0.11971272369808238" />
+        <entry key="app/src/main/res/layout/riwayat_data_item.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/spinner_dropdown_item.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/spinner_item.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.2528205128205128" />
+        <entry key="app/src/main/res/menu/check_list_menu.xml" value="0.25677083333333334" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

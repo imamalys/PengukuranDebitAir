@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
-    android:textColor="#000000"
-    android:background="#F0F0F0"
+    android:textColor="@color/white"
+    android:background="@color/green_3E8E7E"
     style="?attr/spinnerDropDownItemStyle"
     android:singleLine="true"
     android:layout_width="match_parent"
